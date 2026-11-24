@@ -330,6 +330,69 @@
     body.shot-welcome #celebrate, body.shot-welcome .app-shell { display: none !important; }
     body.shot-celebrate #gate, body.shot-celebrate .app-shell { display: none !important; }
     body.shot-restyled #gate, body.shot-restyled #celebrate { display: none !important; }
+
+    .seg { display: flex; gap: 6px; background: rgba(10,14,24,0.45); border: 1px solid var(--line); border-radius: 14px; padding: 4px; margin: 0 0 14px; }
+    .seg button {
+      flex: 1; border: 0; background: transparent; color: var(--muted);
+      border-radius: 11px; padding: 9px 10px; font: inherit; font-weight: 720; cursor: pointer;
+    }
+    .seg button[aria-pressed="true"] { background: rgba(62, 224, 160, 0.14); color: var(--text); }
+    .live-meta { color: var(--muted); font-size: 12.5px; margin: 0 0 10px; }
+    .live-banner {
+      background: var(--wait-bg); color: #f6e3b3; border: 1px solid rgba(240,195,106,.28);
+      border-radius: 14px; padding: 10px 12px; font-size: 13px; margin: 0 0 12px;
+    }
+    .live-banner.err { background: var(--avoid-bg); color: #ffd0d0; border-color: rgba(255,122,122,.3); }
+    .live-books { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+    .book {
+      display: flex; justify-content: space-between; gap: 8px; align-items: baseline;
+      background: rgba(8,12,22,0.4); border-radius: 10px; padding: 7px 9px; font-size: 12.5px;
+    }
+    .book.ladbrokes { border: 1px solid rgba(232, 195, 122, 0.4); }
+    .book .bn { font-weight: 720; }
+    .book.ladbrokes .bn { color: var(--gold); }
+    .prices { color: var(--text); font-variant-numeric: tabular-nums; font-weight: 650; }
+    .kick { color: var(--faint); font-size: 12px; margin-top: 2px; }
+    button.use-odds { margin-top: 10px; }
+    .book { flex-wrap: wrap; }
+    .book .returns { width: 100%; margin-top: 4px; }
+    .returns {
+      margin-top: 8px; font-size: 13px; font-variant-numeric: tabular-nums; font-weight: 650; line-height: 1.35;
+    }
+    .returns .profit { color: var(--good); font-weight: 720; }
+    .returns.compact { margin-top: 2px; font-size: 11.5px; color: var(--muted); font-weight: 600; }
+    .field-table .returns { margin-top: 2px; font-size: 11px; }
+    .near-box {
+      background: linear-gradient(180deg, rgba(62, 224, 160, 0.14), rgba(20, 28, 44, 0.78));
+      border: 1px solid rgba(62, 224, 160, 0.45);
+      box-shadow: var(--shadow), 0 0 28px rgba(62, 224, 160, 0.08);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin: 0 0 14px;
+    }
+    .near-box h2 { font-size: 16px; letter-spacing: -.02em; margin: 0 0 6px; color: var(--good); }
+    .near-box .near-warn { margin: 0 0 6px; font-size: 13px; color: var(--text); }
+    .near-box .near-note { margin: 0; font-size: 11.5px; color: var(--faint); line-height: 1.45; }
+    .near-box.empty-near {
+      background: linear-gradient(180deg, rgba(30, 38, 58, 0.78), rgba(16, 22, 38, 0.68));
+      border-color: var(--line);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .near-box.empty-near h2 { color: var(--text); }
+    .near-list { list-style: none; margin: 10px 0 0; padding: 0; }
+    .near-list li {
+      padding: 10px 0; border-top: 1px solid var(--line); font-size: 13.5px; cursor: pointer;
+    }
+    .near-list li:first-child { border-top: 0; padding-top: 2px; }
+    .near-list .nm { font-weight: 720; }
+    .parlay-card {
+      background: linear-gradient(180deg, rgba(30, 38, 58, 0.78), rgba(16, 22, 38, 0.68));
+      border: 1px solid rgba(62, 224, 160, 0.35);
+      border-radius: var(--radius); padding: 14px; margin-bottom: 12px;
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .parlay-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 6px; }
+    .parlay-stats .metric:first-child { grid-column: 1 / -1; }
   </style>
 </head>
 <body>
@@ -384,6 +447,13 @@
       This is a probability, not a certainty — it can be wrong. General information only, not betting advice. Gamble responsibly. Gambling Help: 1800 858 858.
     </div>
     <div id="listView">
+      <div class="seg" id="mainTabs" role="tablist" aria-label="Picks, live odds or parlay map">
+        <button type="button" id="tabPicks" aria-pressed="true">Picks</button>
+        <button type="button" id="tabLive" aria-pressed="false">Live</button>
+        <button type="button" id="tabParlay" aria-pressed="false">Parlay map</button>
+      </div>
+      <div id="picksPane">
+      <div id="nearBox" class="near-box"></div>
       <details class="how">
         <summary>How it works</summary>
         <div class="body">
@@ -404,12 +474,24 @@
         <button type="button" class="primary" id="addBtn">Add a matchup</button>
       </div>
       <div id="multiWrap"></div>
+      </div>
+      <div id="livePane" class="hidden">
+        <div id="liveBanner"></div>
+        <p class="live-meta" id="liveMeta"></p>
+        <div class="chips" id="liveChips"></div>
+        <div id="liveList"></div>
+      </div>
+      <div id="parlayPane" class="hidden">
+        <div id="parlayBanner"></div>
+        <p class="live-meta" id="parlayMeta"></p>
+        <div id="parlayList"></div>
+      </div>
     </div>
     <div id="formView" class="hidden"></div>
     <footer class="legal">
       Probability, not certainty. It can be wrong. General information only, not betting advice. Gamble responsibly. Gambling Help: 1800 858 858.
       Example matchups are labelled example data and are not real team, player, runner or polling statistics. Political entries are betting-market examples only.
-      A later version could use a free public source such as the Squiggle API for AFL fixtures; this version does not fetch live odds, form or injuries, and it does not use paid or keyed APIs.
+      Live AU odds come from The Odds API through a server-side job that refreshes every 12 hours. The API key is never stored in this page. Horse and greyhound racing have no live source in that feed. Form and injuries are still entered by hand.
     </footer>
   </div>
   <script>
@@ -467,6 +549,8 @@
       factors: { availability: { w: 1.4, label: "Injuries & availability" }, form: { w: 1.2, label: "Current form (last 5)" }, h2h: { w: 0.7, label: "Head-to-head" }, experience: { w: 0.4, label: "Experience & age" }, home: { w: 0.8, label: "Home-court" }, rest: { w: 0.7, label: "Rest days" }, sentiment: { w: 0.25, label: "Fan sentiment" } } },
     afl: { id: "afl", name: "AFL", group: "team", kind: "h2h", side: "Team", homeOn: true, peakAge: 27, margin: 12, totalLbl: "Total points", lineLbl: "Handicap (points)",
       factors: { availability: { w: 1.3, label: "Injuries & availability" }, form: { w: 1.15, label: "Current form (last 5)" }, h2h: { w: 0.8, label: "Head-to-head" }, experience: { w: 0.5, label: "Experience & age" }, home: { w: 0.85, label: "Home ground" }, rest: { w: 0.5, label: "Rest days" }, sentiment: { w: 0.3, label: "Fan sentiment" } } },
+    nrl: { id: "nrl", name: "NRL", group: "team", kind: "h2h", side: "Team", homeOn: true, peakAge: 27, margin: 10, totalLbl: "Total points", lineLbl: "Handicap (points)",
+      factors: { availability: { w: 1.3, label: "Injuries & availability" }, form: { w: 1.15, label: "Current form (last 5)" }, h2h: { w: 0.8, label: "Head-to-head" }, experience: { w: 0.5, label: "Experience & age" }, home: { w: 0.85, label: "Home ground" }, rest: { w: 0.5, label: "Rest days" }, sentiment: { w: 0.3, label: "Fan sentiment" } } },
     cricket: { id: "cricket", name: "Cricket", group: "team", kind: "h2h", side: "Team", homeOn: true, peakAge: 29, margin: 22, totalLbl: "Total runs", lineLbl: "Line (runs)",
       factors: { availability: { w: 1.2, label: "Injuries & availability" }, form: { w: 1.2, label: "Current form (last 5)" }, h2h: { w: 0.9, label: "Head-to-head" }, experience: { w: 0.6, label: "Experience & age" }, home: { w: 0.9, label: "Home conditions" }, rest: { w: 0.4, label: "Rest days" }, sentiment: { w: 0.2, label: "Fan sentiment" } } },
     football: { id: "football", name: "Football", group: "team", kind: "h2h", side: "Team", homeOn: true, peakAge: 27, margin: 0.7, totalLbl: "Total goals", lineLbl: "Handicap (goals)", note: "This version models a two-way result (no draw). Football matches can be a draw.",
@@ -485,7 +569,7 @@
       factors: { poll: { w: 2.0, label: "Polling average" }, pollTrend: { w: 1.0, label: "Poll trend" }, incumbent: { w: 0.7, label: "Incumbency" }, marketMove: { w: 0.6, label: "Betting-market move" } } }
   };
 
-  const SPORT_ORDER = ["nba", "afl", "cricket", "football", "tennis", "boxing", "mma", "horse", "greyhound", "politics"];
+  const SPORT_ORDER = ["nba", "afl", "nrl", "cricket", "football", "tennis", "boxing", "mma", "horse", "greyhound", "politics"];
 
   function uid(prefix) {
     return (prefix || "m") + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
@@ -509,6 +593,31 @@
   function fmtOdds(o) {
     if (o == null || !isFinite(o)) return "—";
     return Number(o).toFixed(2);
+  }
+  const STAKE = 20;
+  const PARLAY_MIN_RETURN = 1000;
+  const PARLAY_MAX_LEGS = 20;
+  const PARLAY_BEAM = 80;
+  const PARLAY_TOP = 5;
+  function fmtMoney(n) {
+    if (n == null || !isFinite(n)) return "—";
+    const sign = n < 0 ? "-" : "";
+    const parts = Math.abs(n).toFixed(2).split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return sign + "$" + parts.join(".");
+  }
+  function stakeReturn(odds) {
+    const o = num(odds);
+    if (o == null || o <= 1) return null;
+    const ret = STAKE * o;
+    return { returns: ret, profit: ret - STAKE };
+  }
+  function returnsLine(odds, name, compact) {
+    const r = stakeReturn(odds);
+    if (!r) return "";
+    const who = name ? " on " + esc(name) : "";
+    return '<div class="returns' + (compact ? " compact" : "") + '">$20' + who + " returns " + fmtMoney(r.returns) +
+      ' <span class="profit">(profit ' + fmtMoney(r.profit) + ")</span></div>";
   }
   function fmtPts(n, d) {
     if (n == null || !isFinite(n)) return "—";
@@ -1177,6 +1286,8 @@
     const all = ranked();
     const rows = all.filter(function (r) { return filter === "all" || r.entry.sport === filter; });
     $("sortNote").textContent = rows.length ? ("Ranked by confidence · " + rows.length + " " + (rows.length === 1 ? "entry" : "entries")) : "";
+    $("nearBox").className = "near-box" + emptyNearClass(all);
+    $("nearBox").innerHTML = renderNear(all);
     $("matchupList").innerHTML = rows.length ? rows.map(renderCard).join("") : '<div class="empty">No matchups yet. Add one, or restore the example set.</div>';
     $("multiWrap").innerHTML = renderMulti(all);
     bindList();
@@ -1212,6 +1323,7 @@
     body += '<div class="pick-line">Pick <strong>' + esc(r.winnerName) + "</strong>";
     if (r.kind === "field" && r.placeN) body += " · Place " + fmtPct(r.winnerPlace);
     body += "</div>";
+    body += returnsLine(r.winnerOdds, r.winnerName);
     body += '<p class="why">' + esc(r.why) + "</p>";
     if (r.note) body += '<div class="tiny">' + esc(r.note) + "</div>";
     body += flag;
@@ -1260,7 +1372,7 @@
         rank++;
         h += '<tr class="' + (rank === 1 ? "top" : "") + '"><td>' + rank + '</td><td class="nm">' + esc(row.name) + "</td><td>" + fmtPct(row.p) + "</td>";
         if (r.placeN) h += "<td>" + fmtPct(row.place) + "</td>";
-        h += "<td>" + fmtOdds(row.odds) + "</td><td>" + (row.mispriced ? '<span class="badge Medium">Mispriced</span>' : "") + "</td></tr>";
+        h += "<td>" + fmtOdds(row.odds) + returnsLine(row.odds, row.name, true) + "</td><td>" + (row.mispriced ? '<span class="badge Medium">Mispriced</span>' : "") + "</td></tr>";
       });
       h += "</tbody></table>";
       if (r.placeN) h += '<div class="tiny">Place is a top-' + r.placeN + " finish, treating run-ins as independent (Harville).</div>";
@@ -1327,6 +1439,7 @@
       h += '<div class="tiny" style="margin-top:8px">Combined odds ' + (s.odds != null ? fmtOdds(s.odds) : "— (need odds on every leg)") +
         (s.mktP != null ? " · Market " + fmtPct(s.mktP) : "") +
         (s.ev != null ? " · EV " + fmtPts(s.ev, 2) + " per $1" : "") + "</div>";
+      if (s.odds != null) h += returnsLine(s.odds);
       h += '<ul class="legs">';
       s.legs.forEach(function (L) {
         h += "<li><strong>" + esc(L.label) + "</strong> · " + esc(L.sportName) + ' · <span class="badge ' + L.confidence + '">' + L.confidence + " · " + fmtPct(L.p) + "</span>";
@@ -1422,7 +1535,8 @@
   function bindForm() {
     const existing = currentFormEntry();
     formSport = $("sportSelect").value;
-    $("formFields").innerHTML = fieldsHtml(existing || seedForSport(formSport));
+    $("formFields").innerHTML = fieldsHtml(liveDraft || existing || seedForSport(formSport));
+    if (liveDraft) liveDraft = null;
     $("cancelBtn").onclick = function () { view = "list"; render(); };
     $("sportSelect").onchange = function () {
       formSport = $("sportSelect").value;
@@ -1882,6 +1996,419 @@
   window.__pxOpenApp = openApp;
   window.__pxShowGate = showGate;
   window.__pxHoldCelebrate = false;
+
+
+  let mainTab = "picks";
+  let liveDraft = null;
+  let liveCache = null;
+  let liveFilter = "all";
+  function isLocalHost() {
+    const h = (location && location.hostname) || "";
+    return h === "localhost" || h === "127.0.0.1";
+  }
+  const LIVE_URLS = isLocalHost()
+    ? ["./odds.json", "http://127.0.0.1:8751/odds.json"]
+    : ["./odds.json"];
+  const SPORT_FROM_API = {
+    aussierules_afl: "afl", basketball_nba: "nba", boxing_boxing: "boxing",
+    mma_mixed_martial_arts: "mma", rugbyleague_nrl: "nrl"
+  };
+  function mapLiveSport(key) {
+    if (SPORT_FROM_API[key]) return SPORT_FROM_API[key];
+    if (String(key).indexOf("cricket_") === 0) return "cricket";
+    if (String(key).indexOf("soccer_") === 0) return "football";
+    if (String(key).indexOf("tennis_") === 0) return "tennis";
+    if (String(key).indexOf("politics_") === 0) return "politics";
+    return null;
+  }
+  function fmtSydney(iso) {
+    const d = new Date(iso);
+    if (isNaN(d)) return "—";
+    return new Intl.DateTimeFormat("en-AU", {
+      timeZone: "Australia/Sydney",
+      weekday: "short", day: "numeric", month: "short",
+      hour: "numeric", minute: "2-digit", hour12: true
+    }).format(d) + " Sydney";
+  }
+  function eventStarted(iso) {
+    const d = Date.parse(iso);
+    return isFinite(d) && d <= Date.now();
+  }
+  function preferredBooks(ev) {
+    const books = ev.bookmakers || [];
+    const order = ["ladbrokes_au", "sportsbet", "tab", "neds"];
+    const ranked = [];
+    order.forEach(function (k) {
+      const b = books.filter(function (x) { return x.key === k; })[0];
+      if (b) ranked.push(b);
+    });
+    books.forEach(function (b) {
+      if (!ranked.some(function (x) { return x.key === b.key; })) ranked.push(b);
+    });
+    return ranked;
+  }
+  function pricesForSides(book, home, away) {
+    const out = { home: null, away: null, draw: null };
+    (book && book.outcomes || []).forEach(function (o) {
+      if (o.name === home) out.home = o.price;
+      else if (o.name === away) out.away = o.price;
+      else if (/draw/i.test(o.name || "")) out.draw = o.price;
+    });
+    return out;
+  }
+  function upcoming(data) {
+    return (data && data.events || []).filter(function (e) {
+      return e && e.commence_time && !eventStarted(e.commence_time) && (e.bookmakers || []).length;
+    });
+  }
+  function fetchLive() {
+    return new Promise(function (resolve) {
+      let i = 0;
+      function next() {
+        if (i >= LIVE_URLS.length) { resolve(null); return; }
+        const url = LIVE_URLS[i++];
+        fetch(url, { cache: "no-store" }).then(function (res) {
+          if (!res.ok) { next(); return; }
+          return res.json();
+        }).then(function (data) {
+          if (data && data.ok) resolve(data);
+          else next();
+        }).catch(function () { next(); });
+      }
+      next();
+    });
+  }
+  function renderLive(data) {
+    const banner = $("liveBanner"), meta = $("liveMeta"), list = $("liveList"), chips = $("liveChips");
+    banner.className = "live-banner";
+    banner.textContent = "Horse racing and greyhound racing have no live source in this feed, so no race fields are shown. Tennis is currently out of season on the odds feed.";
+    if (!data || !data.ok) {
+      banner.className = "live-banner err";
+      banner.textContent = "Live odds unavailable. Example matchups on the Picks tab are unchanged.";
+      meta.textContent = "";
+      chips.innerHTML = "";
+      list.innerHTML = "";
+      return;
+    }
+    let rows = upcoming(data);
+    const sports = [];
+    rows.forEach(function (e) {
+      const k = e.sport_title || e.sport_key;
+      if (sports.indexOf(k) < 0) sports.push(k);
+    });
+    if (liveFilter !== "all") rows = rows.filter(function (e) { return (e.sport_title || e.sport_key) === liveFilter; });
+    const updated = data.updated ? fmtSydney(data.updated) : "—";
+    meta.textContent = "Odds updated " + updated + ". Refreshes every 12 hours. · " + rows.length + " upcoming · AU books (Ladbrokes, Sportsbet)";
+    let ch = '<button type="button" data-live="all" aria-pressed="' + (liveFilter === "all") + '">All</button>';
+    sports.forEach(function (s) {
+      ch += '<button type="button" data-live="' + esc(s) + '" aria-pressed="' + (liveFilter === s) + '">' + esc(s) + "</button>";
+    });
+    chips.innerHTML = ch;
+    if (!rows.length) {
+      list.innerHTML = '<div class="empty">No upcoming live events in this list.</div>';
+      return;
+    }
+    list.innerHTML = rows.map(renderLiveCard).join("");
+  }
+  function renderLiveCard(ev) {
+    const books = preferredBooks(ev).slice(0, 3);
+    let h = '<article class="card" data-live-id="' + esc(ev.id) + '">';
+    h += '<div class="card-top"><span class="sport-tag">' + esc(ev.sport_title || ev.sport_key) + "</span></div>";
+    h += '<div class="title">' + esc(ev.away_team || "Away") + " vs " + esc(ev.home_team || "Home") + "</div>";
+    h += '<div class="kick">' + esc(fmtSydney(ev.commence_time)) + " · " + esc(ev.home_team) + " at home</div>";
+    h += '<div class="live-books">';
+    books.forEach(function (b) {
+      const pr = pricesForSides(b, ev.home_team, ev.away_team);
+      const lad = b.key === "ladbrokes_au";
+      h += '<div class="book' + (lad ? " ladbrokes" : "") + '"><span class="bn">' + esc(lad ? "Ladbrokes" : (b.title || b.key)) + "</span>";
+      h += '<span class="prices">' + esc(ev.away_team) + " " + fmtOdds(pr.away) + " · " + esc(ev.home_team) + " " + fmtOdds(pr.home);
+      if (pr.draw) h += " · Draw " + fmtOdds(pr.draw);
+      h += "</span>";
+      h += returnsLine(pr.away, ev.away_team, true);
+      h += returnsLine(pr.home, ev.home_team, true);
+      if (pr.draw) h += returnsLine(pr.draw, "Draw", true);
+      h += "</div>";
+    });
+    h += "</div>";
+    if (mapLiveSport(ev.sport_key)) h += '<button type="button" class="secondary use-odds" data-use-live="' + esc(ev.id) + '">Use these odds</button>';
+    h += "</article>";
+    return h;
+  }
+
+  function collectNear(allRanked) {
+    const out = [];
+    allRanked.forEach(function (item) {
+      const m = item.entry, r = item.res, sp = sport(m.sport);
+      if (r.kind === "field" && r.rows) {
+        r.rows.forEach(function (row) {
+          if (row.scratched || row.implied == null || row.implied < 0.9 || row.implied > 1) return;
+          out.push({ id: m.id, name: row.name, event: eventTitle(m), sportName: sp.name, p: row.implied, odds: row.odds, example: !!m.isExample });
+        });
+      } else if (r.market) {
+        const sides = [
+          { name: m.a && m.a.name, p: r.market.impliedA, odds: m.oddsA },
+          { name: m.b && m.b.name, p: r.market.impliedB, odds: m.oddsB }
+        ];
+        sides.forEach(function (s) {
+          if (!s.name || s.p == null || s.p < 0.9 || s.p > 1) return;
+          out.push({ id: m.id, name: s.name, event: eventTitle(m), sportName: sp.name, p: s.p, odds: s.odds, example: !!m.isExample });
+        });
+      }
+    });
+    out.sort(function (a, b) { return b.p - a.p; });
+    return out;
+  }
+  function renderNear(allRanked) {
+    const items = collectNear(allRanked);
+    const warn = '<p class="near-warn">No outcome is ever 100% sure.</p>';
+    const note = '<p class="near-note">Selections are listed when the bookmaker&rsquo;s implied chance, after the margin is removed, is between 90% and 100%. That market figure is not a guarantee.</p>';
+    if (!items.length) {
+      return '<h2>Near-certain — not guaranteed</h2>' + warn + note +
+        '<p class="hint" style="margin:10px 0 0">None of the current selections sit in that 90–100% implied range.</p>';
+    }
+    let h = '<h2>Near-certain — not guaranteed</h2>' + warn + note + '<ul class="near-list">';
+    items.forEach(function (it) {
+      h += '<li data-near-id="' + esc(it.id) + '"><div><span class="nm">' + esc(it.name) + "</span> · " + esc(it.sportName);
+      if (it.example) h += ' · <span class="ex-badge">Example data</span>';
+      h += "</div><div class=\"tiny\" style=\"margin:0\">" + esc(it.event) + " · " + fmtPct(it.p) + " implied</div>";
+      h += returnsLine(it.odds, it.name, true) + "</li>";
+    });
+    return h + "</ul>";
+  }
+  function emptyNearClass(allRanked) {
+    return collectNear(allRanked).length ? "" : " empty-near";
+  }
+  function impliedOutcomes(outcomes) {
+    let sum = 0;
+    const raw = outcomes.map(function (o) {
+      const p = o && o.price > 1 ? 1 / o.price : null;
+      if (p) sum += p;
+      return p;
+    });
+    if (sum <= 0) return outcomes.map(function () { return null; });
+    return raw.map(function (p) { return p == null ? null : p / sum; });
+  }
+  function parlayEventGroups(data) {
+    const events = upcoming(data);
+    const groups = [];
+    events.forEach(function (ev) {
+      const book = preferredBooks(ev)[0];
+      if (!book) return;
+      const outcomes = (book.outcomes || []).filter(function (o) { return o && o.price > 1; });
+      if (outcomes.length < 2) return;
+      const implied = impliedOutcomes(outcomes);
+      const legs = [];
+      outcomes.forEach(function (o, i) {
+        if (implied[i] == null) return;
+        legs.push({
+          eventId: ev.id,
+          event: (ev.away_team || "Away") + " vs " + (ev.home_team || "Home"),
+          sport: ev.sport_title || ev.sport_key,
+          name: o.name,
+          odds: o.price,
+          p: implied[i],
+          book: book.key === "ladbrokes_au" ? "Ladbrokes" : (book.title || book.key)
+        });
+      });
+      if (legs.length) groups.push({ eventId: ev.id, legs: legs });
+    });
+    return groups;
+  }
+  function findParlays(data) {
+    const groups = parlayEventGroups(data);
+    const n = groups.length;
+    if (n < 2) return [];
+    let found = [];
+    const seen = {};
+    function consider(legs, odds, p) {
+      if (legs.length < 2) return;
+      if (STAKE * odds < PARLAY_MIN_RETURN) return;
+      const key = legs.map(function (L) { return L.eventId + ":" + L.name; }).sort().join("|");
+      if (seen[key]) return;
+      seen[key] = true;
+      found.push({ legs: legs, odds: odds, p: p });
+      found.sort(function (a, b) { return b.p - a.p; });
+      if (found.length > PARLAY_TOP + 10) found = found.slice(0, PARLAY_TOP + 10);
+    }
+    function cutoff() {
+      return found.length >= PARLAY_TOP ? found[PARLAY_TOP - 1].p : 0;
+    }
+    // Exhaustive 2-leg pass so high-odds short parlays are not dropped by the beam.
+    let under = [];
+    for (let i = 0; i < n; i++) {
+      const gi = groups[i].legs;
+      for (let a = 0; a < gi.length; a++) {
+        const A = gi[a];
+        for (let j = i + 1; j < n; j++) {
+          const gj = groups[j].legs;
+          for (let b = 0; b < gj.length; b++) {
+            const B = gj[b];
+            const odds = A.odds * B.odds, p = A.p * B.p;
+            const legs = [A, B];
+            consider(legs, odds, p);
+            under.push({ idx: j + 1, odds: odds, p: p, legs: legs });
+          }
+        }
+      }
+    }
+    under.sort(function (x, y) { return y.p - x.p; });
+    let beam = under.filter(function (x) {
+      return STAKE * x.odds < PARLAY_MIN_RETURN && x.p >= cutoff();
+    }).slice(0, 200);
+    for (let depth = 3; depth <= PARLAY_MAX_LEGS; depth++) {
+      const next = [];
+      const cut = cutoff();
+      for (let b = 0; b < beam.length; b++) {
+        const st = beam[b];
+        if (cut && st.p < cut) continue;
+        for (let g = st.idx; g < n; g++) {
+          const ev = groups[g].legs;
+          for (let i = 0; i < ev.length; i++) {
+            const leg = ev[i];
+            const p = st.p * leg.p;
+            if (cut && p < cut) continue;
+            const odds = st.odds * leg.odds;
+            const legs = st.legs.concat([leg]);
+            consider(legs, odds, p);
+            if (STAKE * odds < PARLAY_MIN_RETURN) next.push({ idx: g + 1, odds: odds, p: p, legs: legs });
+          }
+        }
+      }
+      next.sort(function (x, y) { return y.p - x.p; });
+      const cut2 = cutoff();
+      beam = next.filter(function (x) { return !cut2 || x.p >= cut2; }).slice(0, PARLAY_BEAM);
+      if (!beam.length) break;
+    }
+    found.sort(function (a, b) { return b.p - a.p; });
+    return found.slice(0, PARLAY_TOP);
+  }
+
+  let parlayCache = null;
+  function renderParlay(data) {
+    const banner = $("parlayBanner"), meta = $("parlayMeta"), list = $("parlayList");
+    banner.className = "live-banner";
+    banner.textContent = "Combinations use live AU odds (Ladbrokes when available). Chance is the product of margin-removed implied probabilities, treating legs as independent — the true chance may be lower. Not betting advice. Racing is not included (no live source).";
+    if (!data || !data.ok) {
+      banner.className = "live-banner err";
+      banner.textContent = "Live odds unavailable, so the parlay map has nothing to search. No combinations are invented.";
+      meta.textContent = "";
+      list.innerHTML = "";
+      parlayCache = null;
+      return;
+    }
+    if (!parlayCache || parlayCache.updated !== data.updated) {
+      parlayCache = { updated: data.updated, rows: findParlays(data) };
+    }
+    const rows = parlayCache.rows;
+    meta.textContent = rows.length
+      ? ("Top " + rows.length + " by chance of landing, among combinations with a $20 return of at least $1,000")
+      : "No combinations currently return $1,000 or more from a $20 stake";
+    if (!rows.length) {
+      list.innerHTML = '<div class="empty">No parlays to show. Nothing has been invented to fill the list.</div>';
+      return;
+    }
+    let h = "";
+    rows.forEach(function (s, i) {
+      const ret = stakeReturn(s.odds);
+      h += '<article class="parlay-card">';
+      h += '<div class="card-top"><strong>#' + (i + 1) + " · " + s.legs.length + "-leg</strong>";
+      h += '<span class="badge High">Chance ' + fmtPct(s.p, 2) + "</span></div>";
+      h += '<div class="parlay-stats">';
+      h += metric("Combined odds", fmtOdds(s.odds));
+      if (ret) {
+        h += metric("$20 returns", fmtMoney(ret.returns));
+        h += metric("Profit", fmtMoney(ret.profit));
+      }
+      h += metric("Combo chance", fmtPct(s.p, 2));
+      h += "</div>";
+      h += '<ul class="legs">';
+      s.legs.forEach(function (L) {
+        h += "<li><strong>" + esc(L.name) + "</strong> · " + fmtOdds(L.odds);
+        h += '<div class="why-s">' + esc(L.event) + " · " + esc(L.sport) + " · " + esc(L.book) + "</div></li>";
+      });
+      h += "</ul></article>";
+    });
+    list.innerHTML = h;
+  }
+
+  function setMainTab(tab) {
+    mainTab = tab;
+    $("tabPicks").setAttribute("aria-pressed", tab === "picks" ? "true" : "false");
+    $("tabLive").setAttribute("aria-pressed", tab === "live" ? "true" : "false");
+    $("tabParlay").setAttribute("aria-pressed", tab === "parlay" ? "true" : "false");
+    $("picksPane").classList.toggle("hidden", tab !== "picks");
+    $("livePane").classList.toggle("hidden", tab !== "live");
+    $("parlayPane").classList.toggle("hidden", tab !== "parlay");
+  }
+  function ensureLive(then) {
+    if (liveCache) { then(liveCache); return; }
+    fetchLive().then(function (data) {
+      liveCache = data;
+      then(liveCache);
+    });
+  }
+  function showLive() {
+    setMainTab("live");
+    $("liveMeta").textContent = "Loading live odds…";
+    ensureLive(renderLive);
+  }
+  function showPicks() {
+    setMainTab("picks");
+  }
+  function showParlay() {
+    setMainTab("parlay");
+    $("parlayMeta").textContent = "Searching combinations…";
+    ensureLive(function (data) { renderParlay(data); });
+  }
+  function useLiveOdds(id) {
+    if (!liveCache) return;
+    const ev = (liveCache.events || []).filter(function (e) { return e.id === id; })[0];
+    if (!ev) return;
+    const sid = mapLiveSport(ev.sport_key);
+    if (!sid) return;
+    const book = preferredBooks(ev)[0];
+    const pr = pricesForSides(book, ev.home_team, ev.away_team);
+    const draft = seedForSport(sid);
+    draft.a.name = ev.home_team;
+    draft.b.name = ev.away_team;
+    draft.home = "a";
+    draft.oddsA = pr.home;
+    draft.oddsB = pr.away;
+    draft.label = "Live odds · " + ev.sport_title + " · " + (book && book.key === "ladbrokes_au" ? "Ladbrokes" : (book && book.title || ""));
+    draft.isExample = false;
+    liveDraft = draft;
+    formSport = sid;
+    editingId = null;
+    showPicks();
+    view = "form";
+    render();
+  }
+  $("tabLive").onclick = showLive;
+  $("tabPicks").onclick = showPicks;
+  $("tabParlay").onclick = showParlay;
+  $("nearBox").addEventListener("click", function (ev) {
+    const item = ev.target.closest("[data-near-id]");
+    if (!item) return;
+    const id = item.getAttribute("data-near-id");
+    showPicks();
+    openId = id;
+    filter = "all";
+    view = "list";
+    render();
+    const el = document.querySelector('.card[data-id="' + id + '"]');
+    if (el) el.scrollIntoView({ block: "start" });
+  });
+  $("liveChips").addEventListener("click", function (ev) {
+    const b = ev.target.closest("[data-live]");
+    if (!b) return;
+    liveFilter = b.getAttribute("data-live");
+    renderLive(liveCache);
+  });
+  $("liveList").addEventListener("click", function (ev) {
+    const b = ev.target.closest("[data-use-live]");
+    if (!b) return;
+    useLiveOdds(b.getAttribute("data-use-live"));
+  });
 
   showGate();
 })();
