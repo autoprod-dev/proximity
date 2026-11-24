@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0c0e12">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Proximity weighs matchup factors and ranks a likely winner. Probability, not certainty. General information only, not betting advice.">
+  <title>Proximity</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <style>
+    :root {
+      --bg: #0c0e12;
+      --bg-2: #12151c;
+      --card: #171b24;
+      --card-2: #1d2330;
+      --line: #2a3140;
+      --text: #eef1f6;
+      --muted: #8b93a7;
+      --faint: #6a7388;
+      --good: #3dd68c;
+      --good-bg: rgba(61, 214, 140, 0.12);
+      --wait: #f5c15a;
+      --wait-bg: rgba(245, 193, 90, 0.12);
+      --avoid: #ff6b6b;
+      --avoid-bg: rgba(255, 107, 107, 0.12);
+      --accent: #3dd68c;
+      --accent-2: #7aa2ff;
+      --gold: #e0b15b;
+      --side-b: #7aa2ff;
+      --side-b-bg: rgba(122, 162, 255, 0.14);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); }
+    body {
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.45;
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 640px; margin: 0 auto; padding: 18px 16px 64px; padding-bottom: max(64px, env(safe-area-inset-bottom)); }
+    header.top { padding: 4px 0 10px; }
+    .brand { display: flex; gap: 12px; align-items: center; }
+    .mark {
+      width: 44px; height: 44px; flex: 0 0 44px; border-radius: 14px;
+      background: radial-gradient(circle at 50% 50%, rgba(61,214,140,.2), transparent 62%), #151a22;
+      border: 1px solid #2c3a33;
+      position: relative;
+    }
+    .mark::before, .mark::after {
+      content: ""; position: absolute; inset: 50% auto auto 50%;
+      border: 2px solid var(--accent); border-radius: 50%; transform: translate(-50%, -50%);
+      opacity: .9;
+    }
+    .mark::before { width: 22px; height: 22px; }
+    .mark::after { width: 10px; height: 10px; background: var(--accent); border-width: 0; }
+    .kicker { color: var(--gold); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 650; }
+    h1 { font-size: 28px; letter-spacing: -.04em; margin: 2px 0 0; font-weight: 720; }
+    .sub { color: var(--muted); font-size: 13.5px; margin: 10px 0 0; }
+    .notice {
+      background: var(--card); border: 1px solid rgba(245, 193, 90, .35); border-radius: var(--radius);
+      padding: 11px 13px; color: #f6e3b3; font-size: 12.5px; margin: 12px 0;
+    }
+    details.how {
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 10px 14px; margin: 0 0 12px; font-size: 13.5px;
+    }
+    details.how summary { cursor: pointer; font-weight: 650; color: var(--text); }
+    details.how .body { color: var(--muted); margin-top: 8px; }
+    details.how ul { margin: 6px 0 0; padding-left: 18px; }
+    details.how li { margin: 0 0 4px; }
+    .toolbar { display: flex; gap: 8px; align-items: center; margin: 4px 0 10px; flex-wrap: wrap; }
+    .chips { display: flex; gap: 6px; flex-wrap: wrap; margin: 0 0 12px; }
+    .chips button {
+      border: 1px solid var(--line); background: var(--card); color: var(--muted);
+      border-radius: 999px; padding: 6px 11px; font-size: 12.5px; font-weight: 650; cursor: pointer;
+    }
+    .chips button[aria-pressed="true"] { background: #1c2a22; color: var(--accent); border-color: #2f4a3c; }
+    label.field { display: block; color: var(--faint); font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin: 0 0 5px; }
+    select, input[type="text"], input[type="number"], textarea {
+      width: 100%; background: var(--card); color: var(--text); border: 1px solid var(--line);
+      border-radius: 12px; padding: 10px 12px; font: inherit; font-size: 16px; outline: none;
+    }
+    textarea { min-height: 70px; resize: vertical; }
+    select:focus, input:focus, textarea:focus { border-color: var(--accent); }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .stack { display: flex; flex-direction: column; gap: 12px; }
+    button.primary, button.secondary, button.danger, button.ghost {
+      border: 0; border-radius: 12px; padding: 11px 14px; font: inherit; font-weight: 750; cursor: pointer;
+    }
+    button.primary { background: var(--accent); color: #0b1020; width: 100%; }
+    button.secondary { background: var(--card-2); color: var(--text); border: 1px solid var(--line); width: 100%; }
+    button.danger { background: transparent; color: #ff9b9b; border: 1px solid rgba(255,107,107,.35); }
+    button.ghost { background: none; color: var(--faint); padding: 8px 0; font-weight: 650; }
+    button.linkish { background: none; border: 0; color: var(--accent-2); font: inherit; font-size: 13px; font-weight: 650; cursor: pointer; padding: 0; }
+    .add-bar { margin: 8px 0 16px; }
+    .sort-note { color: var(--faint); font-size: 12px; margin: 0 0 8px; }
+    .card {
+      background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 14px; margin-bottom: 10px; box-shadow: var(--shadow);
+    }
+    .card.high { border-color: rgba(61, 214, 140, .35); }
+    .card-top { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+    .sport-tag { color: var(--faint); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .ex-badge {
+      display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+      padding: 3px 7px; border-radius: 999px; border: 1px solid #3a4254; color: var(--muted); margin-right: 6px;
+    }
+    .title { font-weight: 720; letter-spacing: -.02em; font-size: 16.5px; margin: 6px 0 2px; }
+    .vs { color: var(--muted); font-weight: 500; }
+    .pick-line { margin-top: 8px; font-size: 14px; }
+    .pick-line strong { font-weight: 720; }
+    .badge {
+      display: inline-block; font-size: 11.5px; font-weight: 750; letter-spacing: .02em;
+      padding: 4px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .badge.High { background: var(--good-bg); color: var(--good); }
+    .badge.Medium { background: var(--wait-bg); color: var(--wait); }
+    .badge.Low { background: var(--avoid-bg); color: var(--avoid); }
+    .why { margin: 8px 0 0; color: var(--text); font-size: 13.5px; }
+    .flag {
+      margin-top: 8px; background: var(--wait-bg); color: #f8d998; border-radius: 10px;
+      padding: 7px 9px; font-size: 12.5px; font-weight: 650;
+    }
+    .flag.warn { background: var(--avoid-bg); color: #ffd0d0; }
+    .details { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .card.open .details { display: block; }
+    .sec-title { font-size: 11.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--faint); font-weight: 700; margin: 14px 0 8px; }
+    .sec-title:first-child { margin-top: 0; }
+    .prob {
+      display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center;
+      font-size: 12.5px; margin-bottom: 10px;
+    }
+    .prob .pa { font-weight: 720; color: var(--good); }
+    .prob .pb { font-weight: 720; color: var(--side-b); text-align: right; }
+    .prob-track { height: 8px; background: var(--side-b); border-radius: 99px; overflow: hidden; grid-column: 1 / -1; }
+    .prob-track span { display: block; height: 100%; background: var(--good); }
+    .factor { margin-bottom: 8px; }
+    .factor-top { display: flex; justify-content: space-between; gap: 8px; font-size: 12.5px; margin-bottom: 4px; }
+    .factor-val { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .factor-track { position: relative; height: 8px; background: var(--bg-2); border-radius: 99px; overflow: hidden; }
+    .factor-mid { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--line); }
+    .factor-bar { position: absolute; top: 0; height: 100%; border-radius: 99px; }
+    .factor-bar.a { left: 50%; background: var(--good); }
+    .factor-bar.b { right: 50%; background: var(--side-b); }
+    .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .metric { background: var(--bg-2); border-radius: 12px; padding: 8px 10px; }
+    .metric .lbl { color: var(--faint); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
+    .metric .val { font-weight: 650; font-variant-numeric: tabular-nums; margin-top: 2px; }
+    .field-table { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+    .field-table th { text-align: left; color: var(--faint); font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 0 4px 6px; }
+    .field-table td { padding: 6px 4px; border-top: 1px solid var(--line); vertical-align: top; }
+    .field-table tr.top td { color: var(--good); font-weight: 700; }
+    .field-table tr.scratched td { color: var(--faint); text-decoration: line-through; }
+    .field-table .nm { font-weight: 650; color: var(--text); text-decoration: none; font-variant-numeric: normal; }
+    .tiny { color: var(--faint); font-size: 11px; margin-top: 3px; }
+    .card-actions { display: flex; gap: 14px; margin-top: 12px; }
+    .form-block { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; }
+    .runner {
+      background: var(--bg-2); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; margin-bottom: 8px;
+    }
+    .runner-h { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .runner-h strong { font-size: 13px; }
+    .check { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 13px; }
+    .check input { width: auto; accent-color: var(--accent); }
+    .range { width: 100%; accent-color: var(--accent); }
+    .sent-lbl { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--muted); margin-bottom: 4px; }
+    .multi-head { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; margin-bottom: 8px; }
+    .multi-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; margin-bottom: 10px; }
+    .multi-card.best { border-color: rgba(61, 214, 140, .4); }
+    .best-badge { background: var(--good-bg); color: var(--good); font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: 3px 7px; border-radius: 999px; }
+    .legs { margin: 8px 0 0; padding: 0; list-style: none; }
+    .legs li { padding: 8px 0; border-top: 1px solid var(--line); font-size: 13px; }
+    .legs .why-s { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+    footer.legal {
+      margin-top: 22px; color: var(--faint); font-size: 12px; line-height: 1.5;
+      border-top: 1px solid var(--line); padding-top: 14px;
+    }
+    .empty { color: var(--muted); text-align: center; padding: 28px 8px; }
+    .hidden { display: none !important; }
+    .back { margin-bottom: 8px; }
+    h2 { font-size: 22px; letter-spacing: -.03em; margin: 0 0 12px; }
+    .hint { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+    body.shot-detail details.how,
+    body.shot-detail .toolbar,
+    body.shot-detail .chips,
+    body.shot-detail .notice,
+    body.shot-detail .add-bar,
+    body.shot-detail #multiWrap,
+    body.shot-detail footer.legal,
+    body.shot-detail .card:not(.open) { display: none !important; }
+    body.shot-multi details.how,
+    body.shot-multi .toolbar,
+    body.shot-multi .chips,
+    body.shot-multi .notice,
+    body.shot-multi .add-bar,
+    body.shot-multi #matchupList,
+    body.shot-multi footer.legal,
+    body.shot-multi .sub { display: none !important; }
+    body.shot-greyhound details.how,
+    body.shot-greyhound .toolbar,
+    body.shot-greyhound .chips,
+    body.shot-greyhound .notice,
+    body.shot-greyhound .add-bar,
+    body.shot-greyhound #multiWrap,
+    body.shot-greyhound footer.legal,
+    body.shot-greyhound .card:not([data-sport="greyhound"]) { display: none !important; }
+    body.shot-boxing details.how,
+    body.shot-boxing .toolbar,
+    body.shot-boxing .chips,
+    body.shot-boxing .notice,
+    body.shot-boxing .add-bar,
+    body.shot-boxing #multiWrap,
+    body.shot-boxing footer.legal,
+    body.shot-boxing .card:not([data-sport="boxing"]) { display: none !important; }
+    body.shot-detail header.top,
+    body.shot-detail .sort-note,
+    body.shot-greyhound header.top,
+    body.shot-greyhound .sort-note,
+    body.shot-boxing header.top,
+    body.shot-boxing .sort-note { display: none !important; }
+    body.shot-detail .wrap,
+    body.shot-greyhound .wrap,
+    body.shot-boxing .wrap { padding-top: 10px; }
+    body.shot-multi .sort-note { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div>
+          <div class="kicker">Autoprod</div>
+          <h1>Proximity</h1>
+        </div>
+      </div>
+      <p class="sub">Weighs the factors a person can't hold in their head — form, injuries, the market and more — then ranks a likely winner. Probability, not certainty.</p>
+    </header>
+    <div class="notice">
+      This is a probability, not a certainty — it can be wrong. General information only, not betting advice. Gamble responsibly. Gambling Help: 1800 858 858.
+    </div>
+    <div id="listView">
+      <details class="how">
+        <summary>How it works</summary>
+        <div class="body">
+          You enter the facts you have. Proximity weighs them — the mix changes by sport — and turns that into a win probability. In a race or a political market, each runner or candidate gets a share that adds to 100%, plus a place chance for racing.
+          <ul>
+            <li><strong>Team and racket:</strong> NBA, AFL, cricket, football (soccer) and tennis. Tennis includes surface and per-surface records. Football is modelled as a two-way result (no draw).</li>
+            <li><strong>Combat:</strong> boxing and MMA, including reach, height, stance or style, layoff and recent bouts.</li>
+            <li><strong>Racing:</strong> horse and greyhound fields, using common Australian form-guide terms such as barrier or box, weight carried or weight change, track and distance record, and days since last run.</li>
+            <li><strong>Political markets:</strong> example betting markets only, not a forecast of how people will vote.</li>
+          </ul>
+          Odds you type in are converted to an implied probability after the bookmaker's margin is removed. If the model and the market disagree by more than 5 percentage points, it flags “Line looks mispriced”. Example entries are labelled and are not real statistics. Real data is entered by hand.
+        </div>
+      </details>
+      <div class="chips" id="chips" role="tablist" aria-label="Filter by sport"></div>
+      <p class="sort-note" id="sortNote"></p>
+      <div id="matchupList"></div>
+      <div class="add-bar">
+        <button type="button" class="primary" id="addBtn">Add a matchup</button>
+      </div>
+      <div id="multiWrap"></div>
+    </div>
+    <div id="formView" class="hidden"></div>
+    <footer class="legal">
+      Probability, not certainty. It can be wrong. General information only, not betting advice. Gamble responsibly. Gambling Help: 1800 858 858.
+      Example matchups are labelled example data and are not real team, player, runner or polling statistics. Political entries are betting-market examples only.
+      A later version could use a free public source such as the Squiggle API for AFL fixtures; this version does not fetch live odds, form or injuries, and it does not use paid or keyed APIs.
+    </footer>
+  </div>
+  <script>
+(function () {
+  "use strict";
+
+  const STORAGE_KEY = "proximity-entries-v1";
+  const MISPRICE = 0.05;
+  const MAX_RUNNERS = 20;
+
+  const AVAIL = [
+    { id: "", label: "Not set" },
+    { id: "full", label: "All available", val: 1 },
+    { id: "minor", label: "Minor concern", val: 0.55 },
+    { id: "doubt", label: "Key player doubtful", val: 0.1 },
+    { id: "out", label: "Key player out", val: -0.45 },
+    { id: "multi", label: "Multiple key outs", val: -0.85 }
+  ];
+  const RATING = [
+    { id: "", label: "Not set" },
+    { id: "5", label: "In form", val: 1 },
+    { id: "4", label: "Solid", val: 0.5 },
+    { id: "3", label: "Average", val: 0 },
+    { id: "2", label: "Quiet", val: -0.45 },
+    { id: "1", label: "Concern", val: -0.85 }
+  ];
+  const SPEED = [
+    { id: "", label: "Not set" },
+    { id: "E", label: "Excellent", val: 1 },
+    { id: "G", label: "Good", val: 0.5 },
+    { id: "F", label: "Fair", val: 0 },
+    { id: "S", label: "Slow", val: -0.7 }
+  ];
+  const TRACKS = ["", "Firm", "Good", "Soft", "Heavy"];
+  const WEATHER = ["", "Fine", "Overcast", "Showers", "Rain"];
+  const SURFACES = ["", "hard", "clay", "grass"];
+  const STANCES = ["", "orthodox", "southpaw"];
+  const STYLES = ["", "striker", "grappler", "wrestler", "well-rounded"];
+  const LAYOFF = [
+    { id: "", label: "Not set" },
+    { id: "fresh", label: "Active / recent bout", val: 0.2 },
+    { id: "ok", label: "Typical layoff", val: 0 },
+    { id: "long", label: "Long layoff", val: -0.35 },
+    { id: "injury", label: "Injury concern", val: -0.7 }
+  ];
+  const WCLASS = [
+    { id: "", label: "Not set" },
+    { id: "same", label: "Same division", val: 0 },
+    { id: "up", label: "Moving up", val: -0.25 },
+    { id: "down", label: "Moving down", val: 0.15 }
+  ];
+
+  const SPORTS = {
+    nba: { id: "nba", name: "NBA", group: "team", kind: "h2h", side: "Team", homeOn: true, peakAge: 27, margin: 5.5, totalLbl: "Total points", lineLbl: "Handicap (points)",
+      factors: { availability: { w: 1.4, label: "Injuries & availability" }, form: { w: 1.2, label: "Current form (last 5)" }, h2h: { w: 0.7, label: "Head-to-head" }, experience: { w: 0.4, label: "Experience & age" }, home: { w: 0.8, label: "Home-court" }, rest: { w: 0.7, label: "Rest days" }, sentiment: { w: 0.25, label: "Fan sentiment" } } },
+    afl: { id: "afl", name: "AFL", group: "team", kind: "h2h", side: "Team", homeOn: true, peakAge: 27, margin: 12, totalLbl: "Total points", lineLbl: "Handicap (points)",
+      factors: { availability: { w: 1.3, label: "Injuries & availability" }, form: { w: 1.15, label: "Current form (last 5)" }, h2h: { w: 0.8, label: "Head-to-head" }, experience: { w: 0.5, label: "Experience & age" }, home: { w: 0.85, label: "Home ground" }, rest: { w: 0.5, label: "Rest days" }, sentiment: { w: 0.3, label: "Fan sentiment" } } },
+    cricket: { id: "cricket", name: "Cricket", group: "team", kind: "h2h", side: "Team", homeOn: true, peakAge: 29, margin: 22, totalLbl: "Total runs", lineLbl: "Line (runs)",
+      factors: { availability: { w: 1.2, label: "Injuries & availability" }, form: { w: 1.2, label: "Current form (last 5)" }, h2h: { w: 0.9, label: "Head-to-head" }, experience: { w: 0.6, label: "Experience & age" }, home: { w: 0.9, label: "Home conditions" }, rest: { w: 0.4, label: "Rest days" }, sentiment: { w: 0.2, label: "Fan sentiment" } } },
+    football: { id: "football", name: "Football", group: "team", kind: "h2h", side: "Team", homeOn: true, peakAge: 27, margin: 0.7, totalLbl: "Total goals", lineLbl: "Handicap (goals)", note: "This version models a two-way result (no draw). Football matches can be a draw.",
+      factors: { availability: { w: 1.2, label: "Injuries & availability" }, form: { w: 1.15, label: "Current form (last 5)" }, h2h: { w: 0.85, label: "Head-to-head" }, experience: { w: 0.45, label: "Experience & age" }, home: { w: 0.9, label: "Home ground" }, rest: { w: 0.5, label: "Rest days" }, sentiment: { w: 0.25, label: "Fan sentiment" } } },
+    tennis: { id: "tennis", name: "Tennis", group: "team", kind: "h2h", side: "Player", homeOn: true, homeLbl: "Home nation", surface: true, peakAge: 26, margin: 2.2, totalLbl: "Total games", lineLbl: "Games handicap",
+      factors: { availability: { w: 0.9, label: "Fitness & availability" }, form: { w: 1.1, label: "Current form (last 5)" }, h2h: { w: 1.0, label: "Head-to-head" }, surfaceRec: { w: 1.9, label: "Surface record" }, experience: { w: 0.6, label: "Experience & age" }, home: { w: 0.25, label: "Home nation" }, rest: { w: 0.5, label: "Rest days" }, sentiment: { w: 0.2, label: "Fan sentiment" } } },
+    boxing: { id: "boxing", name: "Boxing", group: "combat", kind: "h2h", side: "Fighter", homeOn: true, homeLbl: "Home / venue edge", peakAge: 29, margin: 0,
+      factors: { reach: { w: 1.0, label: "Reach" }, height: { w: 0.6, label: "Height" }, experience: { w: 0.8, label: "Age" }, stance: { w: 0.5, label: "Stance matchup" }, layoff: { w: 1.0, label: "Injury / layoff" }, boutForm: { w: 1.2, label: "Recent bouts & KO rate" }, wclass: { w: 0.6, label: "Weight-class change" }, home: { w: 0.4, label: "Home / venue" } } },
+    mma: { id: "mma", name: "MMA", group: "combat", kind: "h2h", side: "Fighter", homeOn: true, homeLbl: "Home / venue edge", peakAge: 29, margin: 0,
+      factors: { reach: { w: 0.8, label: "Reach" }, height: { w: 0.5, label: "Height" }, experience: { w: 0.8, label: "Age" }, style: { w: 1.1, label: "Style matchup" }, layoff: { w: 1.0, label: "Injury / layoff" }, boutForm: { w: 1.2, label: "Recent bouts, KO & sub rate" }, wclass: { w: 0.6, label: "Weight-class change" }, home: { w: 0.4, label: "Home / venue" } } },
+    horse: { id: "horse", name: "Horse racing", group: "racing", kind: "field", runner: "Horse", max: 20, placeN: "auto",
+      factors: { age: { w: 0.6, label: "Age" }, weightKg: { w: 1.0, label: "Weight carried" }, barrier: { w: 0.7, label: "Barrier" }, conditionFit: { w: 1.1, label: "Track condition" }, jockey: { w: 0.8, label: "Jockey" }, trainer: { w: 0.7, label: "Trainer" }, emergency: { w: 0.4, label: "Emergency / substitute" }, trackRec: { w: 1.0, label: "Track record" }, distRec: { w: 1.0, label: "Distance record" }, formLine: { w: 1.3, label: "Recent form" }, daysSince: { w: 0.7, label: "Days since last run" } } },
+    greyhound: { id: "greyhound", name: "Greyhounds", group: "racing", kind: "field", runner: "Greyhound", max: 10, placeN: "auto",
+      factors: { box: { w: 0.6, label: "Box" }, boxHist: { w: 1.0, label: "Box history at this track" }, earlySpeed: { w: 1.2, label: "Early speed" }, trackDistRec: { w: 1.3, label: "Track & distance record" }, formLine: { w: 1.2, label: "Recent form" }, wtChange: { w: 0.7, label: "Weight change" }, reserve: { w: 0.4, label: "Reserve" }, trainer: { w: 0.6, label: "Trainer" }, weatherFit: { w: 0.5, label: "Weather / track" } } },
+    politics: { id: "politics", name: "Political markets", group: "politics", kind: "field", runner: "Candidate", max: 12, placeN: 0, marketOnly: true,
+      factors: { poll: { w: 2.0, label: "Polling average" }, pollTrend: { w: 1.0, label: "Poll trend" }, incumbent: { w: 0.7, label: "Incumbency" }, marketMove: { w: 0.6, label: "Betting-market move" } } }
+  };
+
+  const SPORT_ORDER = ["nba", "afl", "cricket", "football", "tennis", "boxing", "mma", "horse", "greyhound", "politics"];
+
+  function uid(prefix) {
+    return (prefix || "m") + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  }
+  function sport(id) { return SPORTS[id] || SPORTS.nba; }
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c];
+    });
+  }
+  function num(v) {
+    if (v === "" || v == null) return null;
+    const n = Number(v);
+    return isFinite(n) ? n : null;
+  }
+  function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
+  function fmtPct(p, d) {
+    if (p == null || !isFinite(p)) return "—";
+    return (p * 100).toFixed(d == null ? 0 : d) + "%";
+  }
+  function fmtOdds(o) {
+    if (o == null || !isFinite(o)) return "—";
+    return Number(o).toFixed(2);
+  }
+  function fmtPts(n, d) {
+    if (n == null || !isFinite(n)) return "—";
+    const x = Number(n).toFixed(d == null ? 0 : d);
+    return (n > 0 ? "+" : "") + x;
+  }
+  function lookup(list, id) {
+    for (let i = 0; i < list.length; i++) if (list[i].id === id) return list[i];
+    return null;
+  }
+  function wr(wins, starts) {
+    const w = num(wins), s = num(starts);
+    if (w == null || s == null || s <= 0) return null;
+    return clamp(w / s, 0, 1);
+  }
+  function shrink(n, full) { return Math.min(1, (n || 0) / (full || 8)); }
+
+  function parseForm(s) {
+    if (!s) return [];
+    const t = String(s).trim();
+    let parts;
+    if (t.indexOf("-") >= 0 || t.indexOf(",") >= 0) parts = t.split(/[-,\s]+/);
+    else parts = t.split("");
+    const out = [];
+    for (let i = 0; i < parts.length; i++) {
+      const p = parts[i].trim().toLowerCase();
+      if (!p || p === "x" || p === "/" || p === "-") continue;
+      if (p === "0") { out.push(10); continue; }
+      const n = parseInt(p, 10);
+      if (isFinite(n) && n > 0) out.push(n);
+    }
+    return out.slice(-5);
+  }
+  function formQuality(places) {
+    if (!places.length) return null;
+    let wsum = 0, w = 0;
+    for (let i = 0; i < places.length; i++) {
+      const rec = (i + 1) / places.length;
+      const q = 1 - (Math.min(places[i], 10) - 1) / 9;
+      wsum += q * rec;
+      w += rec;
+    }
+    return wsum / w;
+  }
+  function ageQuality(age, peak) {
+    if (age == null) return null;
+    const d = age - peak;
+    return Math.exp(-0.5 * Math.pow(d / 6, 2));
+  }
+  function restQuality(days, sid) {
+    if (days == null) return null;
+    if (sid === "nba") {
+      if (days <= 0) return 0.15;
+      if (days === 1) return 0.55;
+      if (days <= 3) return 1;
+      if (days === 4) return 0.9;
+      return Math.max(0.5, 1 - (days - 4) * 0.08);
+    }
+    if (days <= 1) return 0.45;
+    if (days <= 6) return 1;
+    return Math.max(0.55, 1 - (days - 6) * 0.05);
+  }
+  function horseDaysQuality(d) {
+    if (d == null) return null;
+    if (d <= 6) return 0.45;
+    if (d <= 21) return 1;
+    if (d <= 35) return 0.85;
+    if (d <= 80) return 0.55;
+    return 0.4;
+  }
+  function barrierScore(barrier, distance, fieldN) {
+    if (barrier == null) return null;
+    const sprint = !distance || distance <= 1400;
+    const wide = fieldN >= 12 ? 11 : 9;
+    if (barrier <= 1) return sprint ? 0.15 : 0.05;
+    if (barrier <= 6) return 0.3 - (barrier - 2) * 0.04;
+    if (barrier <= wide) return 0;
+    const over = barrier - wide;
+    return -Math.min(0.55, over * (sprint ? 0.12 : 0.07));
+  }
+  function boxScore(box, speedVal) {
+    if (box == null) return null;
+    let s = 0;
+    if (box === 1) s = 0.25;
+    else if (box === 2 || box === 3) s = 0.1;
+    else if (box === 8) s = 0.05;
+    if (speedVal != null && box >= 6 && speedVal >= 0.5) s += 0.2;
+    if (speedVal != null && box <= 2 && speedVal >= 0.5) s += 0.15;
+    if (speedVal != null && box === 1 && speedVal < 0) s -= 0.15;
+    return clamp(s, -1, 1);
+  }
+  function styleMatchup(a, b) {
+    if (!a || !b) return null;
+    if (a === b) return 0;
+    const map = {
+      "striker|grappler": -0.35, "grappler|striker": 0.35,
+      "striker|wrestler": -0.4, "wrestler|striker": 0.4,
+      "grappler|wrestler": -0.2, "wrestler|grappler": 0.2,
+      "well-rounded|striker": 0.15, "striker|well-rounded": -0.15,
+      "well-rounded|grappler": 0.1, "grappler|well-rounded": -0.1,
+      "well-rounded|wrestler": 0.05, "wrestler|well-rounded": -0.05
+    };
+    const k = a + "|" + b;
+    return map[k] != null ? map[k] : 0;
+  }
+  function devigTwo(oA, oB) {
+    const a = num(oA), b = num(oB);
+    if (a == null || b == null || a <= 1 || b <= 1) return null;
+    const iA = 1 / a, iB = 1 / b, s = iA + iB;
+    if (s <= 0) return null;
+    return { impliedA: iA / s, impliedB: iB / s, overround: s - 1, rawA: iA, rawB: iB };
+  }
+  function devigField(odds) {
+    const raw = odds.map(function (o) { return o != null && o > 1 ? 1 / o : null; });
+    let sum = 0, n = 0;
+    for (let i = 0; i < raw.length; i++) if (raw[i] != null) { sum += raw[i]; n++; }
+    if (n < 2 || sum <= 0) return null;
+    return raw.map(function (r) { return r == null ? null : r / sum; });
+  }
+  function confidence(p, reliability, gap) {
+    const spread = Math.abs(p - 0.5);
+    const g = gap == null ? spread : gap;
+    if (g >= 0.15 && reliability >= 0.7) return "High";
+    if (g >= 0.07 && reliability >= 0.4) return "Medium";
+    return "Low";
+  }
+  function fieldConfidence(pWin, p2, reliability) {
+    const gap = pWin - (p2 || 0);
+    if (pWin >= 0.28 && gap >= 0.08 && reliability >= 0.65) return "High";
+    if (pWin >= 0.18 && gap >= 0.03 && reliability >= 0.4) return "Medium";
+    return "Low";
+  }
+
+  function scoreH2H(m) {
+    const sp = sport(m.sport);
+    const factors = [];
+    let sumW = 0, sumC = 0, possible = 0;
+    function add(key, score) {
+      const f = sp.factors[key];
+      if (!f || score == null || !isFinite(score)) return;
+      const s = clamp(score, -1, 1);
+      factors.push({ key: key, label: f.label, score: s, weight: f.w, contribution: f.w * s });
+      sumW += f.w;
+      sumC += f.w * s;
+    }
+    Object.keys(sp.factors).forEach(function (k) { possible += sp.factors[k].w; });
+
+    const a = m.a || {}, b = m.b || {};
+    const avA = lookup(AVAIL, a.avail), avB = lookup(AVAIL, b.avail);
+    if (avA && avB && avA.val != null && avB.val != null) add("availability", (avA.val - avB.val) / 1.85);
+
+    const fA = num(a.form5), fB = num(b.form5);
+    if (fA != null && fB != null) add("form", (clamp(fA, 0, 5) - clamp(fB, 0, 5)) / 5);
+
+    const hA = num(a.h2h), hB = num(b.h2h);
+    if (hA != null && hB != null && hA + hB > 0) {
+      const n = hA + hB;
+      add("h2h", ((hA - hB) / n) * shrink(n, 4));
+    }
+
+    if (sp.surface && m.surface) {
+      const nA = (num(a.surfW) || 0) + (num(a.surfL) || 0);
+      const nB = (num(b.surfW) || 0) + (num(b.surfL) || 0);
+      const rA = wr(a.surfW, nA), rB = wr(b.surfW, nB);
+      if (rA != null && rB != null) {
+        add("surfaceRec", (rA - rB) * Math.min(1, Math.min(nA, nB) / 8));
+      }
+    }
+
+    const ageA = ageQuality(num(a.age), sp.peakAge), ageB = ageQuality(num(b.age), sp.peakAge);
+    const exA = num(a.exp), exB = num(b.exp);
+    let expS = null;
+    if (exA != null && exB != null) expS = Math.tanh((exA - exB) / 6);
+    if (ageA != null && ageB != null) {
+      const ag = ageA - ageB;
+      expS = expS == null ? ag : (expS + ag) / 2;
+    }
+    add("experience", expS);
+
+    if (sp.homeOn && (m.home === "a" || m.home === "b")) add("home", m.home === "a" ? 1 : -1);
+
+    const rqA = restQuality(num(a.rest), m.sport), rqB = restQuality(num(b.rest), m.sport);
+    if (rqA != null && rqB != null) add("rest", rqA - rqB);
+
+    const sent = num(m.sentiment);
+    if (sent != null && sent !== 50) add("sentiment", (sent - 50) / 50);
+
+    const rcA = num(a.reach), rcB = num(b.reach);
+    if (rcA != null && rcB != null) add("reach", clamp((rcA - rcB) / 12, -1, 1));
+    const htA = num(a.height), htB = num(b.height);
+    if (htA != null && htB != null) add("height", clamp((htA - htB) / 15, -1, 1));
+
+    if (m.sport === "boxing" && a.stance && b.stance && a.stance !== b.stance) {
+      add("stance", a.stance === "southpaw" && b.stance === "orthodox" ? 0.3 : (b.stance === "southpaw" && a.stance === "orthodox" ? -0.3 : 0));
+    }
+    add("style", styleMatchup(a.style, b.style));
+
+    const loA = lookup(LAYOFF, a.layoff), loB = lookup(LAYOFF, b.layoff);
+    if (loA && loB && loA.val != null && loB.val != null) add("layoff", (loA.val - loB.val) / 0.9);
+
+    const bfA = num(a.form5), bfB = num(b.form5);
+    const koA = num(a.koRate), koB = num(b.koRate);
+    const subA = num(a.subRate), subB = num(b.subRate);
+    if (bfA != null && bfB != null) {
+      let s = (clamp(bfA, 0, 5) - clamp(bfB, 0, 5)) / 5;
+      if (koA != null && koB != null) s = s * 0.7 + clamp((koA - koB) / 100, -1, 1) * 0.3;
+      if (subA != null && subB != null) s = s * 0.85 + clamp((subA - subB) / 100, -1, 1) * 0.15;
+      add("boutForm", s);
+    }
+
+    const wcA = lookup(WCLASS, a.wclass), wcB = lookup(WCLASS, b.wclass);
+    if (wcA && wcB && (a.wclass || b.wclass)) add("wclass", ((wcA.val || 0) - (wcB.val || 0)) / 0.4);
+
+    const reliability = possible > 0 ? clamp(sumW / (0.65 * possible), 0.25, 1) : 0.25;
+    let pA = 0.5;
+    if (sumW > 0) {
+      const S = sumC / sumW;
+      const raw = 1 / (1 + Math.exp(-2.15 * S));
+      pA = 0.5 + (raw - 0.5) * reliability;
+    }
+    pA = clamp(pA, 0.02, 0.98);
+    const pB = 1 - pA;
+    const winner = pA >= pB ? "a" : "b";
+    const winnerName = winner === "a" ? (a.name || "Side A") : (b.name || "Side B");
+    const winnerP = winner === "a" ? pA : pB;
+    const conf = confidence(pA, sumW > 0 ? reliability : 0.2);
+
+    factors.sort(function (x, y) { return Math.abs(y.contribution) - Math.abs(x.contribution); });
+    const why = whyText(factors, a.name || "Side A", b.name || "Side B");
+
+    const mkt = devigTwo(m.oddsA, m.oddsB);
+    let market = null;
+    if (mkt) {
+      const edgeA = pA - mkt.impliedA;
+      const edgeW = winner === "a" ? edgeA : (pB - mkt.impliedB);
+      market = {
+        impliedA: mkt.impliedA, impliedB: mkt.impliedB, overround: mkt.overround,
+        edgeA: edgeA, edgeWinner: edgeW,
+        mispriced: Math.abs(edgeA) >= MISPRICE,
+        againstPick: edgeW <= -MISPRICE
+      };
+    }
+
+    let handicap = null;
+    if (sp.margin && (m.lineA != null && m.lineA !== "")) {
+      const line = num(m.lineA);
+      const eps = 0.01;
+      const p = clamp(pA, eps, 1 - eps);
+      const modelMargin = sp.margin * Math.log(p / (1 - p));
+      if (line != null) {
+        const coverA = modelMargin + line;
+        handicap = {
+          modelMargin: modelMargin, line: line,
+          lean: Math.abs(coverA) < 0.15 ? "Push / close" : (coverA > 0 ? (a.name || "A") + " cover" : (b.name || "B") + " cover")
+        };
+      }
+    }
+    let total = null;
+    const tLine = num(m.total), tEst = num(m.totalEst);
+    if (tLine != null && tEst != null) {
+      const d = tEst - tLine;
+      total = { line: tLine, est: tEst, lean: Math.abs(d) < 0.15 ? "Close to the line" : (d > 0 ? "Over" : "Under") };
+    } else if (tLine != null) {
+      total = { line: tLine, est: null, lean: "Enter an estimated total to compare" };
+    }
+    let prop = null;
+    if (m.prop && (m.prop.player || m.prop.market)) {
+      const pl = num(m.prop.line), pe = num(m.prop.est);
+      let lean = null;
+      if (pl != null && pe != null) lean = Math.abs(pe - pl) < 0.05 ? "Close to the line" : (pe > pl ? "Over" : "Under");
+      prop = { player: m.prop.player || "", market: m.prop.market || "", line: pl, est: pe, lean: lean };
+    }
+
+    return {
+      kind: "h2h", pA: pA, pB: pB, winner: winner, winnerName: winnerName, winnerP: winnerP,
+      winnerOdds: winner === "a" ? num(m.oddsA) : num(m.oddsB),
+      confidence: conf, reliability: reliability, factors: factors, why: why,
+      market: market, handicap: handicap, total: total, prop: prop, note: sp.note || null
+    };
+  }
+
+  function whyText(factors, nA, nB) {
+    const top = factors.filter(function (f) { return Math.abs(f.score) >= 0.08; }).slice(0, 2);
+    if (!top.length) return "The sides look closely matched on the facts entered.";
+    function lean(f) { return f.score > 0 ? nA : nB; }
+    if (top.length === 1) return lean(top[0]) + " has the edge on " + top[0].label.toLowerCase() + ".";
+    if ((top[0].score > 0) === (top[1].score > 0)) {
+      return lean(top[0]) + " looks stronger on " + top[0].label.toLowerCase() + " and " + top[1].label.toLowerCase() + ".";
+    }
+    return lean(top[0]) + " leads on " + top[0].label.toLowerCase() + ", while " + lean(top[1]) + " has " + top[1].label.toLowerCase() + ".";
+  }
+
+  function runnerParts(r, race, sp) {
+    const parts = [];
+    function add(key, score) {
+      const f = sp.factors[key];
+      if (!f || score == null || !isFinite(score)) return;
+      const s = clamp(score, -1, 1);
+      parts.push({ key: key, label: f.label, score: s, weight: f.w, contribution: f.w * s });
+    }
+    add("age", (function () {
+      const age = num(r.age);
+      if (age == null) return null;
+      return (ageQuality(age, 4.5) - 0.7) / 0.3;
+    })());
+    const wts = (race.runners || []).map(function (x) { return num(x.weightKg); }).filter(function (x) { return x != null; });
+    if (wts.length && num(r.weightKg) != null) {
+      const mean = wts.reduce(function (s, x) { return s + x; }, 0) / wts.length;
+      add("weightKg", clamp((mean - num(r.weightKg)) / 3, -1, 1));
+    }
+    const fieldN = (race.runners || []).filter(function (x) { return !x.scratched; }).length;
+    add("barrier", barrierScore(num(r.barrier), num(race.distance), fieldN));
+    if (r.condW != null || r.condS != null) {
+      const rate = wr(r.condW, r.condS);
+      if (rate != null) add("conditionFit", (rate - 0.2) / 0.3);
+    }
+    const jk = lookup(RATING, r.jockey);
+    if (jk && jk.val != null) add("jockey", jk.val);
+    const tr = lookup(RATING, r.trainer);
+    if (tr && tr.val != null) add("trainer", tr.val);
+    if (r.emergency) add("emergency", -0.7);
+    if (r.reserve) add("reserve", -0.7);
+    add("trackRec", (function () {
+      const rate = wr(r.trackW, r.trackS);
+      return rate == null ? null : (rate - 0.18) / 0.3;
+    })());
+    add("distRec", (function () {
+      const rate = wr(r.distW, r.distS);
+      return rate == null ? null : (rate - 0.18) / 0.3;
+    })());
+    add("trackDistRec", (function () {
+      const rate = wr(r.tdW, r.tdS);
+      return rate == null ? null : (rate - 0.2) / 0.3;
+    })());
+    const fq = formQuality(parseForm(r.form));
+    if (fq != null) add("formLine", (fq - 0.45) / 0.35);
+    add("daysSince", (function () {
+      const q = horseDaysQuality(num(r.daysSince));
+      return q == null ? null : (q - 0.7) / 0.3;
+    })());
+    const spVal = lookup(SPEED, r.earlySpeed);
+    add("earlySpeed", spVal && spVal.val != null ? spVal.val : null);
+    add("box", boxScore(num(r.box), spVal && spVal.val != null ? spVal.val : null));
+    add("boxHist", (function () {
+      const rate = wr(r.boxW, r.boxS);
+      return rate == null ? null : (rate - 0.125) / 0.25;
+    })());
+    const wc = num(r.wtChange);
+    if (wc != null) add("wtChange", -clamp(Math.abs(wc) / 2, 0, 1));
+    if (r.handlesWet === "yes" && /rain|showers/i.test(race.weather || "")) add("weatherFit", 0.5);
+    if (r.handlesWet === "no" && /rain|showers/i.test(race.weather || "")) add("weatherFit", -0.5);
+    const poll = num(r.poll);
+    if (poll != null) add("poll", clamp((poll - 25) / 25, -1, 1));
+    const trn = num(r.pollTrend);
+    if (trn != null) add("pollTrend", clamp(trn / 6, -1, 1));
+    if (r.incumbent) add("incumbent", 0.7);
+    const mv = num(r.marketMove);
+    if (mv != null) add("marketMove", clamp(mv / 20, -1, 1));
+    let sumW = 0, sumC = 0;
+    for (let i = 0; i < parts.length; i++) { sumW += parts[i].weight; sumC += parts[i].contribution; }
+    return { parts: parts, sumW: sumW, sumC: sumC, raw: sumW > 0 ? sumC / sumW : 0 };
+  }
+
+  function harvillePlace(probs, nPlace) {
+    const n = probs.length;
+    const place = probs.map(function () { return 0; });
+    if (nPlace <= 1) return probs.slice();
+    function rec(used, depth, pPath) {
+      if (depth === nPlace) return;
+      let denom = 0;
+      for (let i = 0; i < n; i++) if (!used[i]) denom += probs[i];
+      if (denom <= 0) return;
+      for (let i = 0; i < n; i++) {
+        if (used[i]) continue;
+        const p = pPath * (probs[i] / denom);
+        place[i] += p;
+        used[i] = true;
+        rec(used, depth + 1, p);
+        used[i] = false;
+      }
+    }
+    rec(probs.map(function () { return false; }), 0, 1);
+    return place;
+  }
+
+  function scoreField(race) {
+    const sp = sport(race.sport);
+    const runners = (race.runners || []).map(function (r, i) {
+      return Object.assign({ _i: i }, r);
+    });
+    const live = runners.filter(function (r) { return !r.scratched; });
+    const scored = live.map(function (r) { return { r: r, s: runnerParts(r, race, sp) }; });
+    let possible = 0;
+    Object.keys(sp.factors).forEach(function (k) { possible += sp.factors[k].w; });
+    const k = 2.4;
+    let z = 0;
+    const exps = scored.map(function (x) { const e = Math.exp(k * x.s.raw); z += e; return e; });
+    const probs = exps.map(function (e) { return z > 0 ? e / z : 1 / Math.max(scored.length, 1); });
+    const avgRel = scored.length ? scored.reduce(function (s, x) { return s + (possible ? clamp(x.s.sumW / (0.6 * possible), 0.25, 1) : 0.25); }, 0) / scored.length : 0.25;
+    const nPlace = sp.placeN === 0 ? 0 : (live.length >= 8 ? 3 : (live.length >= 5 ? 2 : (live.length >= 2 ? 2 : 1)));
+    const place = nPlace ? harvillePlace(probs, nPlace) : probs.slice();
+    const mkt = devigField(scored.map(function (x) { return num(x.r.odds); }));
+
+    const rows = scored.map(function (x, i) {
+      const p = probs[i];
+      const implied = mkt ? mkt[i] : null;
+      const edge = implied != null ? p - implied : null;
+      return {
+        id: x.r.id, name: x.r.name || ("Runner " + (i + 1)), scratched: false,
+        p: p, place: place[i], odds: num(x.r.odds), implied: implied, edge: edge,
+        mispriced: edge != null && Math.abs(edge) >= MISPRICE,
+        againstPick: false,
+        parts: x.s.parts.slice().sort(function (a, b) { return Math.abs(b.contribution) - Math.abs(a.contribution); }),
+        raw: x.s.raw
+      };
+    });
+    rows.sort(function (a, b) { return b.p - a.p; });
+    if (rows[0] && rows[0].edge != null) rows[0].againstPick = rows[0].edge <= -MISPRICE;
+    const scratchedRows = runners.filter(function (r) { return r.scratched; }).map(function (r) {
+      return { id: r.id, name: r.name || "Runner", scratched: true, p: 0, place: 0, odds: num(r.odds), implied: null, edge: null, mispriced: false, parts: [] };
+    });
+    const winner = rows[0] || null;
+    const second = rows[1] || null;
+    const conf = winner ? fieldConfidence(winner.p, second ? second.p : 0, avgRel) : "Low";
+    const why = winner ? fieldWhy(winner, rows) : "The field looks tightly bunched on the facts entered.";
+    const market = winner && winner.implied != null ? {
+      impliedA: winner.implied, edgeWinner: winner.edge, mispriced: winner.mispriced, againstPick: winner.againstPick
+    } : null;
+    return {
+      kind: "field", rows: rows.concat(scratchedRows), liveRows: rows,
+      winnerName: winner ? winner.name : "—", winnerP: winner ? winner.p : 0,
+      winnerPlace: winner ? winner.place : 0, winnerOdds: winner ? winner.odds : null,
+      placeN: nPlace, confidence: conf, reliability: avgRel, why: why, market: market,
+      factors: winner ? winner.parts : [], note: sp.marketOnly ? "Betting market only — example data. Not a forecast of how people will vote." : null
+    };
+  }
+
+  function fieldWhy(winner, rows) {
+    const top = (winner.parts || []).filter(function (f) { return f.score > 0.08; }).slice(0, 2);
+    const gap = rows[1] ? winner.p - rows[1].p : winner.p;
+    if (!top.length) {
+      return gap >= 0.05 ? (winner.name + " leads the field on the combined figures.") : "The field looks tightly bunched on the facts entered.";
+    }
+    if (top.length === 1) return winner.name + " leads on " + top[0].label.toLowerCase() + ".";
+    return winner.name + " looks stronger on " + top[0].label.toLowerCase() + " and " + top[1].label.toLowerCase() + ".";
+  }
+
+  function analyse(entry) {
+    const sp = sport(entry.sport);
+    return sp.kind === "field" ? scoreField(entry) : scoreH2H(entry);
+  }
+
+  function pickFrom(entry, res) {
+    return {
+      id: entry.id,
+      sport: entry.sport,
+      sportName: sport(entry.sport).name,
+      label: res.winnerName + (sport(entry.sport).kind === "field" ? " to win" : ""),
+      event: eventTitle(entry),
+      p: res.winnerP,
+      odds: res.winnerOdds,
+      marketP: res.market && (res.kind === "h2h" ? (res.winner === "a" ? res.market.impliedA : res.market.impliedB) : res.market.impliedA),
+      confidence: res.confidence,
+      why: res.why,
+      mispriced: !!(res.market && res.market.mispriced),
+      againstPick: !!(res.market && res.market.againstPick),
+      edge: res.market ? res.market.edgeWinner : null
+    };
+  }
+
+  function eventTitle(m) {
+    if (m.kind === "field" || sport(m.sport).kind === "field") return m.title || "Field";
+    return (m.a && m.a.name || "Side A") + " vs " + (m.b && m.b.name || "Side B");
+  }
+
+  function combinations(arr, k) {
+    const out = [];
+    function rec(start, acc) {
+      if (acc.length === k) { out.push(acc.slice()); return; }
+      for (let i = start; i < arr.length; i++) {
+        acc.push(arr[i]);
+        rec(i + 1, acc);
+        acc.pop();
+      }
+    }
+    rec(0, []);
+    return out;
+  }
+
+  function suggestMultis(picks) {
+    const usable = picks.filter(function (p) { return p && p.p > 0; });
+    const n = usable.length;
+    if (n < 2) return [];
+    const maxLegs = Math.min(5, n);
+    const all = [];
+    for (let k = 2; k <= maxLegs; k++) {
+      combinations(usable, k).forEach(function (legs) {
+        let modelP = 1, odds = 1, mktP = 1, hasOdds = true, hasMkt = true;
+        const warnings = [];
+        for (let i = 0; i < legs.length; i++) {
+          const L = legs[i];
+          modelP *= L.p;
+          if (L.odds != null && L.odds > 1) odds *= L.odds; else hasOdds = false;
+          if (L.marketP != null) mktP *= L.marketP; else hasMkt = false;
+          if (L.confidence === "Low") warnings.push("Low confidence on " + L.label + ".");
+          if (L.againstPick) warnings.push("The market leans against " + L.label + ".");
+        }
+        const ev = hasOdds ? modelP * odds - 1 : null;
+        all.push({
+          legs: legs, modelP: modelP, odds: hasOdds ? odds : null,
+          mktP: hasMkt ? mktP : null, ev: ev, warnings: warnings
+        });
+      });
+    }
+    all.sort(function (a, b) {
+      const sa = (a.ev != null ? (a.ev + 1) : 1) * Math.sqrt(a.modelP);
+      const sb = (b.ev != null ? (b.ev + 1) : 1) * Math.sqrt(b.modelP);
+      return sb - sa;
+    });
+    return all.slice(0, 8);
+  }
+
+  function side(o) { return o; }
+  const EXAMPLES = [
+    {
+      id: "ex-nba-1", isExample: true, sport: "nba",
+      label: "Example data",
+      a: side({ name: "Metro Hawks", avail: "full", form5: 4, h2h: 3, exp: 6, age: 27, rest: 2 }),
+      b: side({ name: "River Kings", avail: "out", form5: 2, h2h: 1, exp: 5, age: 26, rest: 0 }),
+      home: "a", sentiment: 55, oddsA: 1.85, oddsB: 2.05, lineA: -4.5, total: 224.5, totalEst: 221
+    },
+    {
+      id: "ex-afl-1", isExample: true, sport: "afl",
+      label: "Example data",
+      a: side({ name: "Harbour Magpies", avail: "full", form5: 3, h2h: 2, exp: 8, age: 26, rest: 6 }),
+      b: side({ name: "Ridge Roos", avail: "minor", form5: 4, h2h: 2, exp: 7, age: 27, rest: 7 }),
+      home: "a", sentiment: 60, oddsA: 1.90, oddsB: 1.95, lineA: -2.5, total: 162.5, totalEst: 164
+    },
+    {
+      id: "ex-cricket-1", isExample: true, sport: "cricket",
+      label: "Example data · one-day",
+      a: side({ name: "Southern Stars", avail: "full", form5: 4, h2h: 4, exp: 7, age: 28, rest: 4 }),
+      b: side({ name: "Northern Lights", avail: "out", form5: 1, h2h: 1, exp: 6, age: 27, rest: 3 }),
+      home: "a", sentiment: 58, oddsA: 1.40, oddsB: 3.10
+    },
+    {
+      id: "ex-football-1", isExample: true, sport: "football",
+      label: "Example data · two-way odds",
+      a: side({ name: "Portside FC", avail: "full", form5: 3, h2h: 3, exp: 8, age: 26, rest: 6 }),
+      b: side({ name: "Hilltown United", avail: "minor", form5: 3, h2h: 2, exp: 7, age: 27, rest: 5 }),
+      home: "a", sentiment: 50, oddsA: 2.20, oddsB: 3.40, lineA: -0.25, total: 2.5, totalEst: 2.4
+    },
+    {
+      id: "ex-tennis-1", isExample: true, sport: "tennis",
+      label: "Example data · clay",
+      a: side({ name: "A. Moretti", avail: "full", form5: 5, h2h: 2, exp: 8, age: 25, rest: 3, surfW: 28, surfL: 6 }),
+      b: side({ name: "J. Brennan", avail: "full", form5: 2, h2h: 3, exp: 12, age: 32, rest: 2, surfW: 11, surfL: 15 }),
+      surface: "clay", home: "neutral", sentiment: 45, oddsA: 2.20, oddsB: 1.72
+    },
+    {
+      id: "ex-boxing-1", isExample: true, sport: "boxing",
+      label: "Example data",
+      a: side({ name: "K. Okonkwo", reach: 198, height: 188, age: 28, exp: 12, stance: "southpaw", layoff: "fresh", form5: 5, koRate: 62, wclass: "same" }),
+      b: side({ name: "M. Pellier", reach: 188, height: 185, age: 34, exp: 16, stance: "orthodox", layoff: "long", form5: 3, koRate: 40, wclass: "same" }),
+      home: "a", oddsA: 2.10, oddsB: 1.80
+    },
+    {
+      id: "ex-mma-1", isExample: true, sport: "mma",
+      label: "Example data",
+      a: side({ name: "R. Valez", reach: 186, height: 178, age: 27, exp: 9, style: "wrestler", layoff: "ok", form5: 4, koRate: 20, subRate: 45, wclass: "same" }),
+      b: side({ name: "T. McCann", reach: 190, height: 180, age: 31, exp: 11, style: "striker", layoff: "fresh", form5: 3, koRate: 55, subRate: 10, wclass: "up" }),
+      home: "neutral", oddsA: 1.95, oddsB: 1.95
+    }
+  ];
+
+  EXAMPLES.push({
+    id: "ex-horse-1", isExample: true, sport: "horse", kind: "field",
+    title: "Riverside 1200m", label: "Example data",
+    distance: 1200, trackCondition: "Good", weather: "Fine",
+    runners: [
+      { id: "h1", name: "Night Orchid", age: 5, weightKg: 58, barrier: 3, condW: 4, condS: 9, jockey: "5", trainer: "5", trackW: 3, trackS: 7, distW: 4, distS: 8, form: "3-1-2-1-2", daysSince: 16, odds: 4.20 },
+      { id: "h2", name: "Copper Thread", age: 4, weightKg: 56.5, barrier: 6, condW: 2, condS: 6, jockey: "4", trainer: "5", trackW: 1, trackS: 4, distW: 2, distS: 5, form: "1-5-2-3-1", daysSince: 14, odds: 5.50 },
+      { id: "h3", name: "Vale Dancer", age: 6, weightKg: 59, barrier: 1, condW: 3, condS: 11, jockey: "4", trainer: "4", trackW: 2, trackS: 10, distW: 3, distS: 9, form: "4-2-6-3-4", daysSince: 21, odds: 7.00 },
+      { id: "h4", name: "Miss Lumen", age: 4, weightKg: 54.5, barrier: 8, condW: 3, condS: 7, jockey: "5", trainer: "4", trackW: 2, trackS: 5, distW: 1, distS: 3, form: "2-1-3-4-2", daysSince: 12, odds: 6.50 },
+      { id: "h5", name: "Bold Terrace", age: 7, weightKg: 60, barrier: 12, condW: 1, condS: 8, jockey: "3", trainer: "3", trackW: 1, trackS: 9, distW: 2, distS: 11, form: "6-8-4-7-5", daysSince: 28, odds: 13.00 },
+      { id: "h6", name: "River Psalm", age: 5, weightKg: 57, barrier: 4, condW: 2, condS: 6, jockey: "4", trainer: "4", trackW: 0, trackS: 3, distW: 2, distS: 6, form: "5-3-1-4-3", daysSince: 18, odds: 8.00 },
+      { id: "h7", name: "Quick Theory", age: 3, weightKg: 54, barrier: 2, condW: 1, condS: 3, jockey: "3", trainer: "5", trackW: 1, trackS: 2, distW: 0, distS: 2, form: "2-3-1", daysSince: 20, odds: 9.50 },
+      { id: "h8", name: "Gold Lantern", age: 5, weightKg: 56, barrier: 10, condW: 5, condS: 8, jockey: "4", trainer: "3", trackW: 3, trackS: 6, distW: 2, distS: 7, form: "1-4-2-8-3", daysSince: 10, odds: 8.50 },
+      { id: "h9", name: "Sunday Pilot", age: 8, weightKg: 55, barrier: 14, condW: 2, condS: 14, jockey: "2", trainer: "3", trackW: 2, trackS: 16, distW: 1, distS: 12, form: "7-9-5-8-6", daysSince: 35, odds: 21.00 },
+      { id: "h10", name: "Maple Crown", age: 4, weightKg: 55.5, barrier: 7, condW: 1, condS: 5, jockey: "4", trainer: "4", trackW: 0, trackS: 2, distW: 1, distS: 4, form: "4-2-5-3-4", daysSince: 15, odds: 11.00 }
+    ]
+  });
+  EXAMPLES.push({
+    id: "ex-grey-1", isExample: true, sport: "greyhound", kind: "field",
+    title: "Midweek sprint 520m", label: "Example data",
+    distance: 520, weather: "Fine",
+    runners: [
+      { id: "g1", name: "Redline Daisy", box: 1, boxW: 4, boxS: 9, earlySpeed: "E", tdW: 5, tdS: 12, form: "1-2-1-3-1", wtChange: 0.1, trainer: "5", odds: 3.80 },
+      { id: "g2", name: "Torque Banner", box: 2, boxW: 2, boxS: 7, earlySpeed: "G", tdW: 3, tdS: 10, form: "2-1-4-2-3", wtChange: -0.2, trainer: "4", odds: 5.00 },
+      { id: "g3", name: "Ash Circuit", box: 3, boxW: 1, boxS: 6, earlySpeed: "G", tdW: 2, tdS: 8, form: "3-2-2-5-1", wtChange: 0.4, trainer: "4", odds: 6.50 },
+      { id: "g4", name: "Penny Volt", box: 4, boxW: 1, boxS: 8, earlySpeed: "F", tdW: 2, tdS: 11, form: "4-3-1-6-4", wtChange: 0, trainer: "3", odds: 9.00 },
+      { id: "g5", name: "Coastal Jig", box: 5, boxW: 0, boxS: 5, earlySpeed: "F", tdW: 1, tdS: 7, form: "5-4-3-5-2", wtChange: 0.8, trainer: "4", odds: 12.00 },
+      { id: "g6", name: "Nitro Marley", box: 6, boxW: 2, boxS: 6, earlySpeed: "E", tdW: 3, tdS: 9, form: "1-3-2-1-4", wtChange: -0.3, trainer: "5", odds: 7.50 },
+      { id: "g7", name: "Quiet Ember", box: 7, boxW: 0, boxS: 7, earlySpeed: "S", tdW: 1, tdS: 10, form: "6-5-7-4-6", wtChange: 1.6, trainer: "3", odds: 18.00 },
+      { id: "g8", name: "Steel Ribbon", box: 8, boxW: 2, boxS: 8, earlySpeed: "G", tdW: 2, tdS: 8, form: "2-4-1-3-5", wtChange: 0.2, trainer: "4", odds: 8.00 }
+    ]
+  });
+  EXAMPLES.push({
+    id: "ex-pol-1", isExample: true, sport: "politics", kind: "field",
+    title: "Northbridge seat market", label: "Example data · betting market only",
+    runners: [
+      { id: "p1", name: "S. Hart (Civic Alliance)", poll: 38, pollTrend: 1.5, incumbent: true, marketMove: 8, odds: 1.65 },
+      { id: "p2", name: "M. Quinn (Harbour Party)", poll: 34, pollTrend: -1.0, incumbent: false, marketMove: -5, odds: 2.80 },
+      { id: "p3", name: "L. Dela Cruz (Independents)", poll: 16, pollTrend: 3.0, incumbent: false, marketMove: 12, odds: 9.00 },
+      { id: "p4", name: "P. Ng (Greenfield)", poll: 12, pollTrend: -0.5, incumbent: false, marketMove: 0, odds: 15.00 }
+    ]
+  });
+
+  let entries = [];
+  let view = "list";
+  let editingId = null;
+  let openId = null;
+  let filter = "all";
+  let multiOpen = false;
+  let formSport = "nba";
+
+  function loadEntries() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return EXAMPLES.map(clone);
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed) || !parsed.length) return EXAMPLES.map(clone);
+      return parsed;
+    } catch (e) {
+      return EXAMPLES.map(clone);
+    }
+  }
+  function saveEntries() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(entries)); } catch (e) {}
+  }
+  function clone(x) { return JSON.parse(JSON.stringify(x)); }
+
+  function ranked() {
+    return entries.map(function (e) {
+      const res = analyse(e);
+      return { entry: e, res: res, pick: pickFrom(e, res) };
+    }).sort(function (a, b) {
+      const rank = { High: 3, Medium: 2, Low: 1 };
+      const d = (rank[b.res.confidence] || 0) - (rank[a.res.confidence] || 0);
+      if (d) return d;
+      return (b.res.winnerP || 0) - (a.res.winnerP || 0);
+    });
+  }
+
+  const $ = function (id) { return document.getElementById(id); };
+
+  function render() {
+    $("listView").classList.toggle("hidden", view !== "list");
+    $("formView").classList.toggle("hidden", view !== "form");
+    if (view === "form") {
+      $("formView").innerHTML = renderForm();
+      bindForm();
+      return;
+    }
+    renderChips();
+    const all = ranked();
+    const rows = all.filter(function (r) { return filter === "all" || r.entry.sport === filter; });
+    $("sortNote").textContent = rows.length ? ("Ranked by confidence · " + rows.length + " " + (rows.length === 1 ? "entry" : "entries")) : "";
+    $("matchupList").innerHTML = rows.length ? rows.map(renderCard).join("") : '<div class="empty">No matchups yet. Add one, or restore the example set.</div>';
+    $("multiWrap").innerHTML = renderMulti(all);
+    bindList();
+  }
+
+  function renderChips() {
+    const counts = {};
+    entries.forEach(function (e) { counts[e.sport] = (counts[e.sport] || 0) + 1; });
+    let html = '<button type="button" data-filter="all" aria-pressed="' + (filter === "all") + '">All</button>';
+    SPORT_ORDER.forEach(function (id) {
+      if (counts[id]) {
+        html += '<button type="button" data-filter="' + id + '" aria-pressed="' + (filter === id) + '">' + esc(SPORTS[id].name) + "</button>";
+      }
+    });
+    $("chips").innerHTML = html;
+  }
+
+  function renderCard(item) {
+    const m = item.entry, r = item.res, sp = sport(m.sport);
+    const open = openId === m.id ? " open" : "";
+    const high = r.confidence === "High" ? " high" : "";
+    const title = eventTitle(m);
+    let flag = "";
+    if (r.market && r.market.mispriced) {
+      flag = '<div class="flag">Line looks mispriced · model ' + fmtPct(r.winnerP) + " vs market " +
+        fmtPct(r.kind === "h2h" ? (r.winner === "a" ? r.market.impliedA : r.market.impliedB) : r.market.impliedA) +
+        " (" + fmtPts(Math.round((r.market.edgeWinner || 0) * 100)) + " pts on " + esc(r.winnerName) + ")</div>";
+    }
+    let body = '<div class="card-top"><div><span class="ex-badge' + (m.isExample ? "" : " hidden") + '">Example data</span> <span class="sport-tag">' + esc(sp.name) + "</span></div>" +
+      '<span class="badge ' + r.confidence + '">' + r.confidence + " · " + fmtPct(r.winnerP) + "</span></div>";
+    body += '<div class="title">' + esc(title) + "</div>";
+    if (m.label) body += '<div class="tiny">' + esc(m.label) + "</div>";
+    body += '<div class="pick-line">Pick <strong>' + esc(r.winnerName) + "</strong>";
+    if (r.kind === "field" && r.placeN) body += " · Place " + fmtPct(r.winnerPlace);
+    body += "</div>";
+    body += '<p class="why">' + esc(r.why) + "</p>";
+    if (r.note) body += '<div class="tiny">' + esc(r.note) + "</div>";
+    body += flag;
+    body += '<div class="details">' + renderDetails(m, r) + "</div>";
+    return '<article class="card' + open + high + '" data-id="' + esc(m.id) + '" data-sport="' + esc(m.sport) + '">' + body + "</article>";
+  }
+
+  function renderDetails(m, r) {
+    let h = "";
+    if (r.kind === "h2h") {
+      h += '<div class="prob"><span class="pa">' + esc(m.a && m.a.name || "A") + " " + fmtPct(r.pA) + '</span><span></span><span class="pb">' + esc(m.b && m.b.name || "B") + " " + fmtPct(r.pB) + "</span>";
+      h += '<div class="prob-track"><span style="width:' + (r.pA * 100).toFixed(1) + '%"></span></div></div>';
+    }
+    h += '<div class="sec-title">Factor breakdown</div>';
+    if (r.kind === "h2h") {
+      const nA = m.a && m.a.name || "A", nB = m.b && m.b.name || "B";
+      const maxC = Math.max.apply(null, r.factors.map(function (f) { return Math.abs(f.contribution); }).concat([0.01]));
+      r.factors.forEach(function (f) {
+        const pct = Math.min(50, (Math.abs(f.contribution) / maxC) * 50);
+        const lean = f.score > 0.02 ? nA : (f.score < -0.02 ? nB : "Even");
+        const cls = f.score >= 0 ? "a" : "b";
+        h += '<div class="factor"><div class="factor-top"><span>' + esc(f.label) + '</span><span class="factor-val">' +
+          (Math.abs(f.score) < 0.02 ? "Even" : fmtPts(f.score, 2) + " " + esc(lean)) + "</span></div>";
+        h += '<div class="factor-track"><div class="factor-mid"></div><div class="factor-bar ' + cls + '" style="width:' + pct + '%"></div></div></div>';
+      });
+      if (!r.factors.length) h += '<div class="tiny">Add some factors to see a breakdown.</div>';
+    } else if (r.factors && r.factors.length) {
+      const maxC = Math.max.apply(null, r.factors.map(function (f) { return Math.abs(f.contribution); }).concat([0.01]));
+      r.factors.slice(0, 8).forEach(function (f) {
+        const pct = Math.min(50, (Math.abs(f.contribution) / maxC) * 50);
+        const cls = f.score >= 0 ? "a" : "b";
+        h += '<div class="factor"><div class="factor-top"><span>' + esc(f.label) + '</span><span class="factor-val">' +
+          fmtPts(f.score, 2) + " vs field</span></div>";
+        h += '<div class="factor-track"><div class="factor-mid"></div><div class="factor-bar ' + cls + '" style="width:' + pct + '%"></div></div></div>';
+      });
+    }
+    if (r.kind === "field") {
+      h += '<div class="sec-title">Field ranking</div>';
+      h += '<table class="field-table"><thead><tr><th>#</th><th>Runner</th><th>Win</th>' + (r.placeN ? "<th>Place</th>" : "") + "<th>Odds</th><th></th></tr></thead><tbody>";
+      let rank = 0;
+      r.rows.forEach(function (row) {
+        if (row.scratched) {
+          h += '<tr class="scratched"><td></td><td class="nm">' + esc(row.name) + '</td><td colspan="4">Scratched</td></tr>';
+          return;
+        }
+        rank++;
+        h += '<tr class="' + (rank === 1 ? "top" : "") + '"><td>' + rank + '</td><td class="nm">' + esc(row.name) + "</td><td>" + fmtPct(row.p) + "</td>";
+        if (r.placeN) h += "<td>" + fmtPct(row.place) + "</td>";
+        h += "<td>" + fmtOdds(row.odds) + "</td><td>" + (row.mispriced ? '<span class="badge Medium">Mispriced</span>' : "") + "</td></tr>";
+      });
+      h += "</tbody></table>";
+      if (r.placeN) h += '<div class="tiny">Place is a top-' + r.placeN + " finish, treating run-ins as independent (Harville).</div>";
+    }
+    h += '<div class="sec-title">Market</div><div class="metrics">';
+    if (r.kind === "h2h" && r.market) {
+      h += metric("Model", fmtPct(r.winnerP) + " " + (m[r.winner] && m[r.winner].name || r.winnerName));
+      h += metric("Market (devigged)", fmtPct(r.winner === "a" ? r.market.impliedA : r.market.impliedB));
+      h += metric("Odds", fmtOdds(m.oddsA) + " / " + fmtOdds(m.oddsB));
+      h += metric("Bookmaker margin", fmtPct(r.market.overround, 1));
+    } else if (r.kind === "field" && r.market) {
+      h += metric("Model (pick)", fmtPct(r.winnerP));
+      h += metric("Market (devigged)", fmtPct(r.market.impliedA));
+      h += metric("Odds (pick)", fmtOdds(r.winnerOdds));
+      h += metric("Edge", fmtPts(Math.round((r.market.edgeWinner || 0) * 100)) + " pts");
+    } else {
+      h += '<div class="tiny" style="grid-column:1/-1">Add decimal odds to compare with the market.</div>';
+    }
+    h += "</div>";
+    if (r.handicap) {
+      h += '<div class="sec-title">Handicap</div><div class="metrics">';
+      h += metric("Model margin", fmtPts(r.handicap.modelMargin, 1));
+      h += metric("Line (side A)", fmtPts(r.handicap.line, 2));
+      h += '</div><div class="tiny" style="margin-top:6px">Lean: ' + esc(r.handicap.lean) + "</div>";
+    }
+    if (r.total) {
+      h += '<div class="sec-title">Total</div><div class="metrics">';
+      h += metric("Line", String(r.total.line));
+      h += metric("Estimate", r.total.est == null ? "—" : String(r.total.est));
+      h += '</div><div class="tiny" style="margin-top:6px">Lean: ' + esc(r.total.lean) + "</div>";
+    }
+    if (r.prop) {
+      h += '<div class="sec-title">Player prop</div><div class="metrics">';
+      h += metric("Market", (r.prop.player ? r.prop.player + " · " : "") + (r.prop.market || "—"));
+      h += metric("Line / est.", (r.prop.line == null ? "—" : r.prop.line) + " / " + (r.prop.est == null ? "—" : r.prop.est));
+      h += "</div>" + (r.prop.lean ? '<div class="tiny" style="margin-top:6px">Lean: ' + esc(r.prop.lean) + "</div>" : '<div class="tiny" style="margin-top:6px">Enter an estimate to compare.</div>');
+    }
+    if (m.sport === "tennis" && m.surface) h += '<div class="tiny" style="margin-top:10px">Surface: ' + esc(m.surface) + "</div>";
+    h += '<div class="card-actions"><button type="button" class="linkish" data-act="edit">Edit</button><button type="button" class="linkish" data-act="remove">Remove</button></div>';
+    return h;
+  }
+  function metric(lbl, val) {
+    return '<div class="metric"><div class="lbl">' + esc(lbl) + '</div><div class="val">' + esc(val) + "</div></div>";
+  }
+
+  function renderMulti(allRanked) {
+    const picks = allRanked.map(function (x) { return x.pick; });
+    let h = '<div class="multi-head"><div><h2 style="margin:0 0 4px;font-size:18px">What if I multi?</h2>';
+    h += '<p class="hint" style="margin:0">Suggestions only — not a bet slip. Legs are treated as independent, so more legs means a lower chance of getting up.</p></div></div>';
+    h += '<button type="button" class="secondary" id="multiBtn">' + (multiOpen ? "Hide suggestions" : "What if I multi?") + "</button>";
+    if (!multiOpen) return h;
+    if (picks.length < 2) {
+      return h + '<p class="hint" style="margin-top:12px">Add at least two matchups to see suggested combinations of your current picks.</p>';
+    }
+    const sugg = suggestMultis(picks);
+    if (!sugg.length) return h + '<p class="hint" style="margin-top:12px">No combinations to suggest yet.</p>';
+    h += '<div style="height:12px"></div>';
+    sugg.forEach(function (s, i) {
+      const best = i < 3;
+      h += '<div class="multi-card' + (best ? " best" : "") + '">';
+      h += '<div class="card-top"><div>' + (best ? '<span class="best-badge">Best · ' + (i + 1) + "</span> " : "") +
+        "<strong>" + s.legs.length + "-leg</strong></div>";
+      h += '<span class="badge ' + (s.modelP >= 0.25 ? "High" : s.modelP >= 0.12 ? "Medium" : "Low") + '">Model ' + fmtPct(s.modelP) + "</span></div>";
+      h += '<div class="tiny" style="margin-top:8px">Combined odds ' + (s.odds != null ? fmtOdds(s.odds) : "— (need odds on every leg)") +
+        (s.mktP != null ? " · Market " + fmtPct(s.mktP) : "") +
+        (s.ev != null ? " · EV " + fmtPts(s.ev, 2) + " per $1" : "") + "</div>";
+      h += '<ul class="legs">';
+      s.legs.forEach(function (L) {
+        h += "<li><strong>" + esc(L.label) + "</strong> · " + esc(L.sportName) + ' · <span class="badge ' + L.confidence + '">' + L.confidence + " · " + fmtPct(L.p) + "</span>";
+        h += '<div class="why-s">' + esc(L.event) + " — " + esc(L.why) + "</div></li>";
+      });
+      h += "</ul>";
+      s.warnings.forEach(function (w) { h += '<div class="flag warn">' + esc(w) + "</div>"; });
+      h += "</div>";
+    });
+    return h;
+  }
+
+  function bindList() {
+    $("chips").onclick = function (ev) {
+      const b = ev.target.closest("button[data-filter]");
+      if (!b) return;
+      filter = b.getAttribute("data-filter");
+      render();
+    };
+    $("matchupList").onclick = function (ev) {
+      const act = ev.target.closest("[data-act]");
+      const card = ev.target.closest(".card");
+      if (!card) return;
+      const id = card.getAttribute("data-id");
+      if (act && act.getAttribute("data-act") === "edit") { startEdit(id); return; }
+      if (act && act.getAttribute("data-act") === "remove") {
+        entries = entries.filter(function (e) { return e.id !== id; });
+        if (openId === id) openId = null;
+        saveEntries();
+        render();
+        return;
+      }
+      openId = openId === id ? null : id;
+      render();
+    };
+    $("addBtn").onclick = function () { startAdd(); };
+    const mb = $("multiBtn");
+    if (mb) mb.onclick = function () { multiOpen = !multiOpen; render(); };
+  }
+
+  function startAdd() {
+    editingId = null;
+    formSport = filter !== "all" ? filter : "nba";
+    view = "form";
+    render();
+  }
+  function startEdit(id) {
+    editingId = id;
+    const e = entries.filter(function (x) { return x.id === id; })[0];
+    formSport = e ? e.sport : "nba";
+    view = "form";
+    render();
+  }
+  function defaultSide() {
+    return { name: "", avail: "", form5: "", h2h: "", exp: "", age: "", rest: "", surfW: "", surfL: "", reach: "", height: "", stance: "", style: "", layoff: "", koRate: "", subRate: "", wclass: "" };
+  }
+  function blankRunner() {
+    return { id: uid("r"), name: "", odds: "", scratched: false, emergency: false, reserve: false, incumbent: false };
+  }
+  function currentFormEntry() {
+    if (!editingId) return null;
+    for (let i = 0; i < entries.length; i++) if (entries[i].id === editingId) return clone(entries[i]);
+    return null;
+  }
+
+  function renderForm() {
+    const existing = currentFormEntry();
+    const sid = existing ? existing.sport : formSport;
+    let h = '<button type="button" class="ghost back" id="cancelBtn">← Back</button>';
+    h += "<h2>" + (existing ? "Edit matchup" : "Add a matchup") + "</h2>";
+    h += '<p class="hint">Enter your own figures. Samples are labelled example data and are not real statistics.</p>';
+    h += '<div class="stack">';
+    h += '<div><label class="field" for="sampleSelect">Start from a sample</label><select id="sampleSelect"><option value="">—</option>';
+    EXAMPLES.forEach(function (ex) {
+      h += '<option value="' + esc(ex.id) + '">' + esc(sport(ex.sport).name + " · " + eventTitle(ex)) + "</option>";
+    });
+    h += "</select></div>";
+    h += '<div><label class="field" for="sportSelect">Sport</label><select id="sportSelect">';
+    SPORT_ORDER.forEach(function (id) {
+      h += '<option value="' + id + '"' + (id === sid ? " selected" : "") + ">" + esc(SPORTS[id].name) + "</option>";
+    });
+    h += "</select></div>";
+    h += '<div id="formFields"></div>';
+    h += '<button type="button" class="primary" id="saveBtn">Save</button>';
+    if (existing) h += '<button type="button" class="danger" id="deleteBtn">Remove this matchup</button>';
+    if (!entries.some(function (e) { return e.isExample; })) {
+      h += '<button type="button" class="secondary" id="restoreBtn">Restore example set</button>';
+    }
+    h += "</div>";
+    return h;
+  }
+
+  function bindForm() {
+    const existing = currentFormEntry();
+    formSport = $("sportSelect").value;
+    $("formFields").innerHTML = fieldsHtml(existing || seedForSport(formSport));
+    $("cancelBtn").onclick = function () { view = "list"; render(); };
+    $("sportSelect").onchange = function () {
+      formSport = $("sportSelect").value;
+      $("formFields").innerHTML = fieldsHtml(seedForSport(formSport));
+      bindFieldExtras();
+    };
+    $("sampleSelect").onchange = function () {
+      const id = $("sampleSelect").value;
+      const ex = EXAMPLES.filter(function (x) { return x.id === id; })[0];
+      if (!ex) return;
+      formSport = ex.sport;
+      $("sportSelect").value = ex.sport;
+      $("formFields").innerHTML = fieldsHtml(clone(ex));
+      bindFieldExtras();
+    };
+    $("saveBtn").onclick = saveForm;
+    const del = $("deleteBtn");
+    if (del) del.onclick = function () {
+      entries = entries.filter(function (e) { return e.id !== editingId; });
+      saveEntries();
+      view = "list";
+      render();
+    };
+    const rs = $("restoreBtn");
+    if (rs) rs.onclick = function () {
+      entries = EXAMPLES.map(clone);
+      saveEntries();
+      view = "list";
+      render();
+    };
+    bindFieldExtras();
+  }
+  function bindFieldExtras() {
+    const addR = $("addRunnerBtn");
+    if (addR) addR.onclick = function () {
+      const data = readForm();
+      if (!data.runners) data.runners = [];
+      if (data.runners.length >= (sport(data.sport).max || MAX_RUNNERS)) return;
+      data.runners.push(blankRunner());
+      $("formFields").innerHTML = fieldsHtml(data);
+      bindFieldExtras();
+    };
+    const box = $("formFields");
+    box.querySelectorAll("[data-del-runner]").forEach(function (b) {
+      b.onclick = function () {
+        const data = readForm();
+        const id = b.getAttribute("data-del-runner");
+        data.runners = (data.runners || []).filter(function (r) { return r.id !== id; });
+        $("formFields").innerHTML = fieldsHtml(data);
+        bindFieldExtras();
+      };
+    });
+    const sent = $("sentiment");
+    if (sent) sent.oninput = function () { updateSentLabel(); };
+    updateSentLabel();
+  }
+  function updateSentLabel() {
+    const sent = $("sentiment"), sentLbl = $("sentVal");
+    if (!sent || !sentLbl) return;
+    const a = ($("nameA") && $("nameA").value) || "Side A";
+    const b = ($("nameB") && $("nameB").value) || "Side B";
+    const v = Number(sent.value);
+    if (v === 50) sentLbl.textContent = "Even";
+    else if (v > 50) sentLbl.textContent = a + " lean (" + v + ")";
+    else sentLbl.textContent = b + " lean (" + (100 - v) + ")";
+  }
+  function seedForSport(sid) {
+    const sp = sport(sid);
+    if (sp.kind === "field") {
+      const n = sid === "politics" ? 4 : 8;
+      const runners = [];
+      for (let i = 0; i < n; i++) {
+        const r = blankRunner();
+        if (sid === "greyhound") r.box = i + 1;
+        runners.push(r);
+      }
+      return { sport: sid, kind: "field", title: "", label: "", distance: sid === "greyhound" ? 520 : 1200, trackCondition: "Good", weather: "Fine", runners: runners };
+    }
+    return { sport: sid, a: defaultSide(), b: defaultSide(), home: sp.homeOn ? "a" : "neutral", sentiment: 50, surface: sp.surface ? "hard" : "", oddsA: "", oddsB: "", lineA: "", total: "", totalEst: "", prop: { player: "", market: "", line: "", est: "" } };
+  }
+
+  function sel(id, list, val, labels) {
+    let h = '<select id="' + id + '">';
+    if (Array.isArray(list) && list.length && typeof list[0] === "object") {
+      list.forEach(function (o) {
+        h += '<option value="' + esc(o.id) + '"' + (String(val || "") === String(o.id) ? " selected" : "") + ">" + esc(o.label) + "</option>";
+      });
+    } else {
+      (list || []).forEach(function (o) {
+        const lab = labels && labels[o] ? labels[o] : (o === "" ? "Not set" : o.charAt(0).toUpperCase() + o.slice(1));
+        h += '<option value="' + esc(o) + '"' + (String(val || "") === String(o) ? " selected" : "") + ">" + esc(lab) + "</option>";
+      });
+    }
+    return h + "</select>";
+  }
+  function inp(id, val, ph, type) {
+    return '<input type="' + (type || "text") + '" id="' + id + '" value="' + esc(val == null ? "" : val) + '"' + (ph ? ' placeholder="' + esc(ph) + '"' : "") + (type === "number" ? ' inputmode="decimal" step="any"' : "") + ">";
+  }
+  function fld(lab, inner) { return '<div><label class="field">' + esc(lab) + "</label>" + inner + "</div>"; }
+  function fieldsHtml(m) {
+    const sid = m.sport || formSport;
+    const sp = sport(sid);
+    if (sp.kind === "field") return fieldFields(m, sp);
+    return h2hFields(m, sp);
+  }
+
+  function h2hFields(m, sp) {
+    const a = m.a || {}, b = m.b || {};
+    let h = '<div class="form-block stack">';
+    if (sp.note) h += '<p class="hint">' + esc(sp.note) + "</p>";
+    h += '<div class="row-2">' + fld(sp.side + " A", inp("nameA", a.name, "Name")) + fld(sp.side + " B", inp("nameB", b.name, "Name")) + "</div>";
+    if (sp.surface) h += fld("Surface", sel("surface", SURFACES, m.surface || "hard"));
+    if (sp.factors.availability) {
+      h += '<div class="row-2">' + fld("Availability A", sel("availA", AVAIL, a.avail)) + fld("Availability B", sel("availB", AVAIL, b.avail)) + "</div>";
+    }
+    if (sp.factors.form || sp.factors.boutForm) {
+      h += '<div class="row-2">' + fld("Wins in last 5 · A", inp("formA", a.form5, "0–5", "number")) + fld("Wins in last 5 · B", inp("formB", b.form5, "0–5", "number")) + "</div>";
+    }
+    if (sp.factors.h2h) {
+      h += '<div class="row-2">' + fld("Head-to-head wins · A", inp("h2hA", a.h2h, "", "number")) + fld("Head-to-head wins · B", inp("h2hB", b.h2h, "", "number")) + "</div>";
+    }
+    if (sp.factors.surfaceRec) {
+      h += '<div class="row-2">' + fld("Surface wins–losses · A", inp("surfA", (a.surfW != null && a.surfW !== "" ? a.surfW + "-" + (a.surfL || 0) : ""), "e.g. 24-8")) + fld("Surface wins–losses · B", inp("surfB", (b.surfW != null && b.surfW !== "" ? b.surfW + "-" + (b.surfL || 0) : ""), "e.g. 11-15")) + "</div>";
+    }
+    if (sp.factors.experience) {
+      h += '<div class="row-2">' + fld("Age · A", inp("ageA", a.age, "", "number")) + fld("Age · B", inp("ageB", b.age, "", "number")) + "</div>";
+      if (!sp.factors.reach) h += '<div class="row-2">' + fld("Years at this level · A", inp("expA", a.exp, "", "number")) + fld("Years at this level · B", inp("expB", b.exp, "", "number")) + "</div>";
+    }
+    if (sp.factors.reach) {
+      h += '<div class="row-2">' + fld("Reach cm · A", inp("reachA", a.reach, "", "number")) + fld("Reach cm · B", inp("reachB", b.reach, "", "number")) + "</div>";
+      h += '<div class="row-2">' + fld("Height cm · A", inp("heightA", a.height, "", "number")) + fld("Height cm · B", inp("heightB", b.height, "", "number")) + "</div>";
+    }
+    if (sp.factors.stance) {
+      h += '<div class="row-2">' + fld("Stance · A", sel("stanceA", STANCES, a.stance)) + fld("Stance · B", sel("stanceB", STANCES, b.stance)) + "</div>";
+    }
+    if (sp.factors.style) {
+      h += '<div class="row-2">' + fld("Style · A", sel("styleA", STYLES, a.style)) + fld("Style · B", sel("styleB", STYLES, b.style)) + "</div>";
+    }
+    if (sp.factors.layoff) {
+      h += '<div class="row-2">' + fld("Injury / layoff · A", sel("layoffA", LAYOFF, a.layoff)) + fld("Injury / layoff · B", sel("layoffB", LAYOFF, b.layoff)) + "</div>";
+    }
+    if (sp.factors.boutForm) {
+      h += '<div class="row-2">' + fld("KO rate % · A", inp("koA", a.koRate, "", "number")) + fld("KO rate % · B", inp("koB", b.koRate, "", "number")) + "</div>";
+      if (m.sport === "mma") h += '<div class="row-2">' + fld("Sub rate % · A", inp("subA", a.subRate, "", "number")) + fld("Sub rate % · B", inp("subB", b.subRate, "", "number")) + "</div>";
+    }
+    if (sp.factors.wclass) {
+      h += '<div class="row-2">' + fld("Weight class · A", sel("wclassA", WCLASS, a.wclass)) + fld("Weight class · B", sel("wclassB", WCLASS, b.wclass)) + "</div>";
+    }
+    if (sp.homeOn) {
+      h += fld(sp.homeLbl || "Home / venue", sel("home", [
+        { id: "a", label: "A is home" }, { id: "b", label: "B is home" }, { id: "neutral", label: "Neutral / not set" }
+      ], m.home || "neutral"));
+    }
+    if (sp.factors.rest) {
+      h += '<div class="row-2">' + fld("Rest days · A", inp("restA", a.rest, "", "number")) + fld("Rest days · B", inp("restB", b.rest, "", "number")) + "</div>";
+    }
+    if (sp.factors.sentiment) {
+      h += '<div><div class="sent-lbl"><span>Fan sentiment</span><span id="sentVal">Even</span></div><input class="range" type="range" id="sentiment" min="0" max="100" step="1" value="' + esc(m.sentiment == null ? 50 : m.sentiment) + '"></div>';
+    }
+    h += '<div class="row-2">' + fld("Decimal odds · A", inp("oddsA", m.oddsA, "e.g. 1.85", "number")) + fld("Decimal odds · B", inp("oddsB", m.oddsB, "e.g. 2.10", "number")) + "</div>";
+    if (sp.lineLbl) h += fld(sp.lineLbl + " for A (e.g. -4.5)", inp("lineA", m.lineA, "", "number"));
+    if (sp.totalLbl) h += '<div class="row-2">' + fld(sp.totalLbl + " line", inp("total", m.total, "", "number")) + fld("Your estimated total", inp("totalEst", m.totalEst, "", "number")) + "</div>";
+    if (sp.group === "team") {
+      const pr = m.prop || {};
+      h += '<div class="row-2">' + fld("Prop player / market", inp("propPlayer", pr.player, "Player")) + fld("Prop label", inp("propMarket", pr.market, "e.g. points")) + "</div>";
+      h += '<div class="row-2">' + fld("Prop line", inp("propLine", pr.line, "", "number")) + fld("Your estimate", inp("propEst", pr.est, "", "number")) + "</div>";
+    }
+    h += fld("Note (optional)", inp("noteLbl", m.label, "e.g. Saturday night"));
+    h += "</div>";
+    return h;
+  }
+
+  function parseWL(s) {
+    if (!s) return { w: "", l: "", s: "" };
+    const p = String(s).trim().split(/[-–:/]/);
+    return { w: p[0] || "", l: p[1] || "", s: p[1] || "" };
+  }
+
+  function fieldFields(m, sp) {
+    let h = '<div class="form-block stack">';
+    if (sp.marketOnly) h += '<p class="hint">Betting market only — example or hand-entered figures, not a forecast of how people will vote.</p>';
+    h += fld(sp.group === "politics" ? "Market name" : "Race name", inp("raceTitle", m.title, sp.id === "greyhound" ? "e.g. Midweek sprint 520m" : "e.g. Riverside 1200m"));
+    if (sp.group === "racing") {
+      h += '<div class="row-2">' + fld("Distance (m)", inp("distance", m.distance, "", "number")) +
+        (sp.id === "horse" ? fld("Track condition", sel("trackCondition", TRACKS, m.trackCondition)) : fld("Weather", sel("weather", WEATHER, m.weather))) + "</div>";
+      if (sp.id === "horse") h += fld("Weather", sel("weather", WEATHER, m.weather));
+    }
+    h += fld("Note (optional)", inp("noteLbl", m.label, "Example data"));
+    h += '<div class="sec-title" style="margin-top:4px">' + esc(sp.runner) + "s</div>";
+    (m.runners || []).forEach(function (r, i) { h += runnerEditor(r, i, sp); });
+    h += '<button type="button" class="secondary" id="addRunnerBtn">Add ' + esc(sp.runner.toLowerCase()) + "</button>";
+    h += "</div>";
+    return h;
+  }
+
+  function runnerEditor(r, i, sp) {
+    const pfx = "rn_" + i + "_";
+    let h = '<div class="runner" data-runner-id="' + esc(r.id) + '">';
+    h += '<div class="runner-h"><strong>' + esc(sp.runner) + " " + (i + 1) + '</strong><button type="button" class="linkish" data-del-runner="' + esc(r.id) + '">Remove</button></div>';
+    h += '<div class="stack">';
+    h += fld("Name", inp(pfx + "name", r.name, "Name"));
+    h += '<div class="row-2">' + fld("Decimal odds", inp(pfx + "odds", r.odds, "", "number")) +
+      '<div style="display:flex;align-items:flex-end;padding-bottom:8px"><label class="check"><input type="checkbox" id="' + pfx + 'scratched"' + (r.scratched ? " checked" : "") + "> Scratched</label></div></div>";
+    if (sp.id === "horse") {
+      h += '<div class="row-2">' + fld("Age", inp(pfx + "age", r.age, "", "number")) + fld("Weight carried (kg)", inp(pfx + "weightKg", r.weightKg, "", "number")) + "</div>";
+      h += '<div class="row-2">' + fld("Barrier", inp(pfx + "barrier", r.barrier, "", "number")) + fld("Days since last run", inp(pfx + "daysSince", r.daysSince, "", "number")) + "</div>";
+      h += '<div class="row-2">' + fld("Jockey", sel(pfx + "jockey", RATING, r.jockey)) + fld("Trainer", sel(pfx + "trainer", RATING, r.trainer)) + "</div>";
+      h += '<div class="row-2">' + fld("Form last 5 (newest last)", inp(pfx + "form", r.form, "e.g. 3-1-2-5-4")) + fld("This condition wins–starts", inp(pfx + "cond", joinWS(r.condW, r.condS), "e.g. 4-9")) + "</div>";
+      h += '<div class="row-2">' + fld("Track wins–starts", inp(pfx + "track", joinWS(r.trackW, r.trackS), "e.g. 3-7")) + fld("Distance wins–starts", inp(pfx + "dist", joinWS(r.distW, r.distS), "e.g. 4-8")) + "</div>";
+      h += '<label class="check"><input type="checkbox" id="' + pfx + 'emergency"' + (r.emergency ? " checked" : "") + "> Emergency / substitute</label>";
+    }
+    if (sp.id === "greyhound") {
+      h += '<div class="row-2">' + fld("Box (1–8)", inp(pfx + "box", r.box, "", "number")) + fld("Early speed", sel(pfx + "earlySpeed", SPEED, r.earlySpeed)) + "</div>";
+      h += '<div class="row-2">' + fld("Box history wins–starts at this track", inp(pfx + "boxh", joinWS(r.boxW, r.boxS), "e.g. 4-9")) + fld("Track & distance wins–starts", inp(pfx + "td", joinWS(r.tdW, r.tdS), "e.g. 5-12")) + "</div>";
+      h += '<div class="row-2">' + fld("Form last 5 (newest last)", inp(pfx + "form", r.form, "e.g. 1-2-1-3-1")) + fld("Weight change (kg)", inp(pfx + "wtChange", r.wtChange, "", "number")) + "</div>";
+      h += '<div class="row-2">' + fld("Trainer", sel(pfx + "trainer", RATING, r.trainer)) + fld("Handles wet?", sel(pfx + "handlesWet", ["", "yes", "no"], r.handlesWet, { "": "Not set", yes: "Yes", no: "No" })) + "</div>";
+      h += '<label class="check"><input type="checkbox" id="' + pfx + 'reserve"' + (r.reserve ? " checked" : "") + "> Reserve</label>";
+    }
+    if (sp.id === "politics") {
+      h += '<div class="row-2">' + fld("Polling average %", inp(pfx + "poll", r.poll, "", "number")) + fld("Poll trend (pts)", inp(pfx + "pollTrend", r.pollTrend, "e.g. +1.5", "number")) + "</div>";
+      h += '<div class="row-2">' + fld("Market move (shortening +pts)", inp(pfx + "marketMove", r.marketMove, "", "number")) +
+        '<div style="display:flex;align-items:flex-end;padding-bottom:8px"><label class="check"><input type="checkbox" id="' + pfx + 'incumbent"' + (r.incumbent ? " checked" : "") + "> Incumbent</label></div></div>";
+    }
+    h += "</div></div>";
+    return h;
+  }
+  function joinWS(w, s) {
+    if (w == null || w === "" || s == null || s === "") return w || s || "";
+    return w + "-" + s;
+  }
+
+  function val(id) { const el = $(id); return el ? el.value : ""; }
+
+  function readForm() {
+    const sid = val("sportSelect") || formSport;
+    const sp = sport(sid);
+    if (sp.kind === "field") {
+      const runners = [];
+      const nodes = document.querySelectorAll("#formFields .runner");
+      nodes.forEach(function (node, i) {
+        const pfx = "rn_" + i + "_";
+        const g = function (k) { const el = document.getElementById(pfx + k); return el ? (el.type === "checkbox" ? el.checked : el.value) : ""; };
+        const cond = parseWL(g("cond")), track = parseWL(g("track")), dist = parseWL(g("dist")), boxh = parseWL(g("boxh")), td = parseWL(g("td"));
+        runners.push({
+          id: node.getAttribute("data-runner-id") || uid("r"),
+          name: g("name"), odds: g("odds"), scratched: !!g("scratched"),
+          emergency: !!g("emergency"), reserve: !!g("reserve"), incumbent: !!g("incumbent"),
+          age: g("age"), weightKg: g("weightKg"), barrier: g("barrier"), daysSince: g("daysSince"),
+          jockey: g("jockey"), trainer: g("trainer"), form: g("form"),
+          condW: cond.w, condS: cond.s, trackW: track.w, trackS: track.s, distW: dist.w, distS: dist.s,
+          box: g("box"), earlySpeed: g("earlySpeed"), boxW: boxh.w, boxS: boxh.s, tdW: td.w, tdS: td.s,
+          wtChange: g("wtChange"), handlesWet: g("handlesWet"),
+          poll: g("poll"), pollTrend: g("pollTrend"), marketMove: g("marketMove")
+        });
+      });
+      return {
+        id: editingId || uid("m"), sport: sid, kind: "field", isExample: false,
+        title: val("raceTitle"), label: val("noteLbl"),
+        distance: val("distance"), trackCondition: val("trackCondition"), weather: val("weather"),
+        runners: runners
+      };
+    }
+    const sA = parseWL(val("surfA")), sB = parseWL(val("surfB"));
+    return {
+      id: editingId || uid("m"), sport: sid, kind: "h2h", isExample: false,
+      label: val("noteLbl"),
+      surface: val("surface"), home: val("home") || "neutral", sentiment: val("sentiment") || 50,
+      oddsA: val("oddsA"), oddsB: val("oddsB"), lineA: val("lineA"), total: val("total"), totalEst: val("totalEst"),
+      prop: { player: val("propPlayer"), market: val("propMarket"), line: val("propLine"), est: val("propEst") },
+      a: {
+        name: val("nameA"), avail: val("availA"), form5: val("formA"), h2h: val("h2hA"), exp: val("expA"), age: val("ageA"), rest: val("restA"),
+        surfW: sA.w, surfL: sA.l, reach: val("reachA"), height: val("heightA"), stance: val("stanceA"), style: val("styleA"),
+        layoff: val("layoffA"), koRate: val("koA"), subRate: val("subA"), wclass: val("wclassA")
+      },
+      b: {
+        name: val("nameB"), avail: val("availB"), form5: val("formB"), h2h: val("h2hB"), exp: val("expB"), age: val("ageB"), rest: val("restB"),
+        surfW: sB.w, surfL: sB.l, reach: val("reachB"), height: val("heightB"), stance: val("stanceB"), style: val("styleB"),
+        layoff: val("layoffB"), koRate: val("koB"), subRate: val("subB"), wclass: val("wclassB")
+      }
+    };
+  }
+
+  function saveForm() {
+    const data = readForm();
+    const sp = sport(data.sport);
+    if (sp.kind === "field") {
+      if (!String(data.title || "").trim()) { alert("Please enter a race or market name."); return; }
+      data.runners = (data.runners || []).filter(function (r) { return String(r.name || "").trim(); });
+      if (data.runners.length < 2) { alert("Please name at least two runners."); return; }
+    } else {
+      if (!String(data.a.name || "").trim() || !String(data.b.name || "").trim()) { alert("Please enter both names."); return; }
+    }
+    if (editingId) {
+      entries = entries.map(function (e) { return e.id === editingId ? data : e; });
+    } else {
+      entries.unshift(data);
+    }
+    openId = data.id;
+    saveEntries();
+    view = "list";
+    render();
+  }
+
+  entries = loadEntries();
+  $("addBtn").onclick = startAdd;
+  render();
+})();
+
+  </script>
+</body>
+</html>
