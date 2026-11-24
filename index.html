@@ -345,16 +345,19 @@
     .live-banner.err { background: var(--avoid-bg); color: #ffd0d0; border-color: rgba(255,122,122,.3); }
     .live-books { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
     .book {
-      display: flex; justify-content: space-between; gap: 8px; align-items: baseline;
+      display: flex; flex-direction: column; align-items: stretch; gap: 6px;
       background: rgba(8,12,22,0.4); border-radius: 10px; padding: 7px 9px; font-size: 12.5px;
     }
+    .book-head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; flex-wrap: wrap; }
     .book.ladbrokes { border: 1px solid rgba(232, 195, 122, 0.4); }
     .book .bn { font-weight: 720; }
     .book.ladbrokes .bn { color: var(--gold); }
     .prices { color: var(--text); font-variant-numeric: tabular-nums; font-weight: 650; }
     .kick { color: var(--faint); font-size: 12px; margin-top: 2px; }
     button.use-odds { margin-top: 10px; }
-    .book { flex-wrap: wrap; }
+    .book .metrics, .card > .metrics.brackets { width: 100%; margin-top: 2px; }
+    .card > .metrics.brackets { margin-top: 10px; }
+    .brackets .profit { color: var(--good); font-weight: 720; font-size: 12px; }
     .book .returns { width: 100%; margin-top: 4px; }
     .returns {
       margin-top: 8px; font-size: 13px; font-variant-numeric: tabular-nums; font-weight: 650; line-height: 1.35;
@@ -618,6 +621,26 @@
     const who = name ? " on " + esc(name) : "";
     return '<div class="returns' + (compact ? " compact" : "") + '">$20' + who + " returns " + fmtMoney(r.returns) +
       ' <span class="profit">(profit ' + fmtMoney(r.profit) + ")</span></div>";
+  }
+  function returnsBrackets(sides) {
+    const items = [];
+    (sides || []).forEach(function (s) {
+      if (!s || !s.name) return;
+      const r = stakeReturn(s.odds);
+      if (!r) return;
+      items.push({ name: s.name, odds: s.odds, ret: r });
+    });
+    if (!items.length) return "";
+    let h = '<div class="metrics brackets">';
+    items.forEach(function (s) {
+      h += '<div class="metric">';
+      h += '<div class="lbl">' + esc(s.name) + " · " + fmtOdds(s.odds) + "</div>";
+      h += '<div class="val">$20 returns ' + fmtMoney(s.ret.returns) + "</div>";
+      h += '<div class="profit">profit ' + fmtMoney(s.ret.profit) + "</div>";
+      h += "</div>";
+    });
+    h += "</div>";
+    return h;
   }
   function fmtPts(n, d) {
     if (n == null || !isFinite(n)) return "—";
@@ -1323,7 +1346,14 @@
     body += '<div class="pick-line">Pick <strong>' + esc(r.winnerName) + "</strong>";
     if (r.kind === "field" && r.placeN) body += " · Place " + fmtPct(r.winnerPlace);
     body += "</div>";
-    body += returnsLine(r.winnerOdds, r.winnerName);
+    if (r.kind === "h2h") {
+      body += returnsBrackets([
+        { name: m.a && m.a.name, odds: m.oddsA },
+        { name: m.b && m.b.name, odds: m.oddsB }
+      ]);
+    } else {
+      body += returnsLine(r.winnerOdds, r.winnerName);
+    }
     body += '<p class="why">' + esc(r.why) + "</p>";
     if (r.note) body += '<div class="tiny">' + esc(r.note) + "</div>";
     body += flag;
@@ -2120,13 +2150,16 @@
     books.forEach(function (b) {
       const pr = pricesForSides(b, ev.home_team, ev.away_team);
       const lad = b.key === "ladbrokes_au";
-      h += '<div class="book' + (lad ? " ladbrokes" : "") + '"><span class="bn">' + esc(lad ? "Ladbrokes" : (b.title || b.key)) + "</span>";
+      h += '<div class="book' + (lad ? " ladbrokes" : "") + '">';
+      h += '<div class="book-head"><span class="bn">' + esc(lad ? "Ladbrokes" : (b.title || b.key)) + "</span>";
       h += '<span class="prices">' + esc(ev.away_team) + " " + fmtOdds(pr.away) + " · " + esc(ev.home_team) + " " + fmtOdds(pr.home);
       if (pr.draw) h += " · Draw " + fmtOdds(pr.draw);
-      h += "</span>";
-      h += returnsLine(pr.away, ev.away_team, true);
-      h += returnsLine(pr.home, ev.home_team, true);
-      if (pr.draw) h += returnsLine(pr.draw, "Draw", true);
+      h += "</span></div>";
+      h += returnsBrackets([
+        { name: ev.away_team, odds: pr.away },
+        { name: ev.home_team, odds: pr.home },
+        pr.draw ? { name: "Draw", odds: pr.draw } : null
+      ]);
       h += "</div>";
     });
     h += "</div>";
