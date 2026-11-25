@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#0a0716">
-  <meta name="px-version" content="9.0">
+  <meta name="px-version" content="9.1">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="Proximity weighs matchup factors and ranks a likely winner. Probability, not certainty. General information only, not betting advice.">
+  <meta name="description" content="Proximity flags only research-backed 90%+ picks and highlights the predicted winner in gold. Probability, not certainty. General information only, not betting advice.">
   <title>Proximity</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -749,6 +749,87 @@
       .spot-inner, #pxToast, .seg button, .seg button .ti, button, .hstat { transition: none !important; }
       #fxCanvas { display: none !important; }
     }
+  
+    /* ===================== v9.1 90%+ picks ===================== */
+    .near-box { scroll-margin-top: 72px; }
+    .flag-toggle {
+      display: flex; gap: 6px; margin: 0 0 12px; padding: 4px;
+      background: rgba(16, 12, 36, .72);
+      border: 1px solid rgba(251, 191, 36, .28);
+      border-radius: 999px;
+    }
+    .flag-toggle button {
+      flex: 1; border: 0; background: transparent; color: var(--muted);
+      font-weight: 750; font-size: 13px; letter-spacing: .02em;
+      padding: 8px 10px; border-radius: 999px; cursor: pointer;
+    }
+    .flag-toggle button[aria-pressed="true"] {
+      background: linear-gradient(90deg, #fbbf24, #f59e0b);
+      color: #1a1204; box-shadow: 0 0 18px rgba(251, 191, 36, .35);
+    }
+    .near-box.gold-board, .flag-board {
+      background: linear-gradient(165deg, rgba(251, 191, 36, .16), rgba(40, 24, 70, .9) 55%, rgba(16, 12, 36, .92));
+      border: 1px solid rgba(251, 191, 36, .45);
+      box-shadow: var(--shadow), 0 0 32px rgba(251, 191, 36, .12);
+    }
+    .near-box.gold-board h2, .flag-board h2 { color: #fbbf24; }
+    .honest-note {
+      margin: 0 0 10px; font-size: 12px; color: var(--muted); line-height: 1.45;
+    }
+    .empty-90 {
+      margin: 8px 0 12px; font-size: 16px; font-weight: 750; letter-spacing: -.02em;
+    }
+    .cand-kicker {
+      margin: 4px 0 10px; font-size: 12px; color: var(--faint); text-transform: uppercase;
+      letter-spacing: .12em; font-weight: 750;
+    }
+    .gold-pick, article.card.gold-pick {
+      border: 1px solid rgba(251, 191, 36, .75);
+      background: linear-gradient(165deg, rgba(251, 191, 36, .18), rgba(28, 18, 48, .94) 42%, rgba(14, 10, 28, .96));
+      box-shadow: 0 0 28px rgba(251, 191, 36, .22), var(--shadow);
+    }
+    .gold-pick::before {
+      content: ""; position: absolute; inset: 0 auto 0 0; width: 4px;
+      background: linear-gradient(180deg, #fde68a, #f59e0b); border-radius: 18px 0 0 18px;
+    }
+    .gold-badge {
+      display: inline-block; background: linear-gradient(90deg, #fde68a, #fbbf24 40%, #f59e0b);
+      color: #1a1204; font-weight: 850; font-size: 10.5px; letter-spacing: .08em;
+      text-transform: uppercase; padding: 3px 8px; border-radius: 999px;
+      box-shadow: 0 0 10px rgba(251, 191, 36, .35);
+    }
+    .gold-name, .pbar.gold .nm, .winner-gold {
+      color: #fbbf24 !important; font-weight: 850;
+      text-shadow: 0 0 12px rgba(251, 191, 36, .35);
+    }
+    .pbar.gold .pc { color: #fbbf24; }
+    .pbar.gold .fill {
+      background: linear-gradient(90deg, #fde68a, #f59e0b);
+      box-shadow: 0 0 14px rgba(251, 191, 36, .45);
+    }
+    .cand-card {
+      border: 1px solid rgba(251, 191, 36, .28);
+      background: linear-gradient(165deg, rgba(40, 30, 70, .7), rgba(16, 12, 36, .86));
+      border-radius: var(--radius); padding: 12px 14px; margin: 0 0 10px;
+    }
+    .reasons { list-style: none; margin: 10px 0 0; padding: 0; }
+    .reasons li {
+      font-size: 12.5px; color: var(--muted); line-height: 1.45;
+      padding: 8px 0 8px 0; border-top: 1px solid var(--line);
+    }
+    .reasons li:first-child { border-top: 0; padding-top: 2px; }
+    .reasons .rf {
+      display: inline-block; font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+      font-weight: 800; color: #fbbf24; margin-right: 6px;
+    }
+    .reasons a { color: #fde68a; }
+    .research-meta { font-size: 11px; color: var(--faint); margin: 8px 0 0; }
+    .lad-line { margin: 6px 0 0; font-size: 13.5px; font-weight: 700; }
+    .lad-line .lk { color: #fbbf24; }
+    @media (prefers-reduced-motion: reduce) {
+      .flag-toggle button[aria-pressed="true"] { box-shadow: none; }
+      .gold-pick { box-shadow: var(--shadow); }
+    }
   </style>
 </head>
 <body>
@@ -801,7 +882,7 @@
           <h1>Proximity</h1>
         </div>
       </div>
-      <p class="sub">Weighs the factors a person can't hold in their head — form, injuries, the market and more — then ranks a likely winner. Probability, not certainty.</p>
+      <p class="sub">Flags only matches where research puts one side at 90% or more, and highlights that side in gold for Ladbrokes. Probability, not certainty.</p>
       <div class="hero-stats" id="heroStats"></div>
     </header>
     <div class="notice">
@@ -817,8 +898,8 @@
         <button type="button" id="tabWins" aria-pressed="false"><span class="ti" aria-hidden="true">🏆</span><span>Wins</span></button>
       </div>
       <div id="picksPane">
-      <div id="spotlight"></div>
       <div id="nearBox" class="near-box"></div>
+      <div id="spotlight"></div>
       <details class="how">
         <summary>How it works</summary>
         <div class="body">
@@ -830,6 +911,7 @@
             <li><strong>Political markets:</strong> example betting markets only, not a forecast of how people will vote.</li>
           </ul>
           Odds you type in are converted to an implied probability after the bookmaker's margin is removed. If the model and the market disagree by more than 5 percentage points, it flags “Line looks mispriced”. Example entries are labelled and are not real statistics. Real data is entered by hand.
+          <p><strong>90%+ picks</strong> (the default view) only flag a live match when the research-backed chance for one side is at least 90%. That figure starts from the bookmakers' no-vig price and moves only on cited evidence — injuries, weather, form, rest and the like. If a factor cannot be checked, it is marked unavailable and cannot raise confidence. Short-odds favourites pay little, so one upset wipes out several wins. These are estimates, not guarantees.</p>
         </div>
       </details>
       <div class="chips" id="chips" role="tablist" aria-label="Filter by sport"></div>
@@ -862,9 +944,9 @@
     <footer class="legal">
       Probability, not certainty. It can be wrong. General information only, not betting advice. Gamble responsibly. Gambling Help: 1800 858 858. <a href="https://www.gamblinghelponline.org.au/" target="_blank" rel="noopener noreferrer">gamblinghelponline.org.au</a>
       Hand-entered matchups are yours. Sample and demo matches are not shown.
-      Live AU odds come from The Odds API through a server-side job that refreshes every 12 hours. The API key is never stored in this page. Horse and greyhound racing have no live source in that feed. Form and injuries are still entered by hand.
+      Live AU odds come from The Odds API through a server-side job that refreshes every 12 hours. The API key is never stored in this page. Horse and greyhound racing have no live source in that feed. A research pass runs with that refresh, using public sources (Open-Meteo, ESPN, Fantasy Premier League) to adjust the no-vig market chance only when evidence is cited.
       The ledger, weekly fun budget, tracked calls and any stakes you enter stay in this browser only.
-      <span class="ver">Proximity v9.0 · Autoprod</span>
+      <span class="ver">Proximity v9.1 · Autoprod</span>
     </footer>
   </div>
   <script>
@@ -1677,36 +1759,43 @@
     }
     const all = ranked().filter(function (r) { return r.entry && !r.entry.isExample; });
     const rows = all.filter(function (r) { return filter === "all" || r.entry.sport === filter; });
-    if (!all.length) {
-      $("nearBox").className = "near-box hidden";
-      $("nearBox").innerHTML = "";
-    } else {
-      $("nearBox").className = "near-box" + emptyNearClass(all);
-      $("nearBox").innerHTML = renderNear(all);
-    }
+    renderFlagToggle();
+    renderNinetyBoard(all);
     let liveHtml = "";
     if (!liveCache) {
-      liveHtml = '<div class="empty">Loading live matches…</div>';
+      liveHtml = only90 ? "" : '<div class="empty">Loading live matches…</div>';
       $("sortNote").textContent = "";
       $("chips").innerHTML = "";
     } else if (!liveCache.ok) {
-      liveHtml = '<div class="empty">No live matches to show. Odds refresh at 6am and 6pm Sydney. Sample or demo matches are not used.</div>';
+      liveHtml = only90 ? "" : '<div class="empty">No live matches to show. Odds refresh at 6am and 6pm Sydney. Sample or demo matches are not used.</div>';
       $("sortNote").textContent = "";
       $("chips").innerHTML = "";
     } else {
       let liveRows = upcoming(liveCache);
-      renderLiveChips("chips", liveRows, "picks");
-      if (filterLivePicks !== "all") liveRows = liveRows.filter(function (e) { return (e.sport_title || e.sport_key) === filterLivePicks; });
-      $("sortNote").textContent = liveRows.length
-        ? (liveRows.length + " upcoming · " + liveBookTitle({ key: loadBookie() }) + " · Odds updated " + (liveCache.updated ? fmtSydney(liveCache.updated) : "—"))
-        : "";
-      liveHtml = liveRows.length
-        ? liveRows.map(renderLiveCard).join("")
-        : '<div class="empty">No upcoming live matches right now. Odds refresh at 6am and 6pm Sydney.</div>';
+      if (only90) {
+        $("chips").innerHTML = "";
+        const flagged = flaggedPicks();
+        const ids = {};
+        flagged.forEach(function (r) { ids[r.id] = true; });
+        liveRows = liveRows.filter(function (e) { return ids[e.id]; });
+        $("sortNote").textContent = flagged.length
+          ? (flagged.length + " research-backed 90%+ pick" + (flagged.length === 1 ? "" : "s") + " · " + liveBookTitle({ key: loadBookie() }))
+          : "";
+        liveHtml = liveRows.length ? liveRows.map(renderLiveCard).join("") : "";
+      } else {
+        renderLiveChips("chips", liveRows, "picks");
+        if (filterLivePicks !== "all") liveRows = liveRows.filter(function (e) { return (e.sport_title || e.sport_key) === filterLivePicks; });
+        $("sortNote").textContent = liveRows.length
+          ? (liveRows.length + " upcoming · " + liveBookTitle({ key: loadBookie() }) + " · Odds updated " + (liveCache.updated ? fmtSydney(liveCache.updated) : "—"))
+          : "";
+        liveHtml = liveRows.length
+          ? liveRows.map(renderLiveCard).join("")
+          : '<div class="empty">No upcoming live matches right now. Odds refresh at 6am and 6pm Sydney.</div>';
+      }
     }
-    const own = rows.length ? '<div class="sec-title">Your matchups</div>' + rows.map(renderCard).join("") : "";
+    const own = (!only90 && rows.length) ? '<div class="sec-title">Your matchups</div>' + rows.map(renderCard).join("") : "";
     $("matchupList").innerHTML = liveHtml + own;
-    $("multiWrap").innerHTML = renderMulti(all);
+    $("multiWrap").innerHTML = only90 ? "" : renderMulti(all);
     bindList();
     renderSpotlight();
     renderHero();
@@ -2559,8 +2648,11 @@
     const mineTitle = liveBookTitle(mine);
     const lad = mine.key === "ladbrokes_au";
     const look = sportLook(ev.sport_title || ev.sport_key);
-    let h = '<article class="card" data-live-id="' + esc(ev.id) + '" style="--sc:' + look.color + '">';
+    const res = researchById(ev.id);
+    const gold = !!(res && res.flagged && res.p >= 0.9);
+    let h = '<article class="card' + (gold ? " gold-pick" : "") + '" data-live-id="' + esc(ev.id) + '" style="--sc:' + (gold ? "#fbbf24" : look.color) + '">';
     h += '<div class="card-top"><span class="sport-tag"><span class="sp-ic" aria-hidden="true">' + look.icon + "</span>" + esc(ev.sport_title || ev.sport_key) + "</span>";
+    if (gold) h += '<span class="gold-badge">90%+ pick</span>';
     h += '<span class="bookie-tag">' + esc(mineTitle) + "</span></div>";
     h += '<div class="title">' + esc(ev.away_team || "Away") + " vs " + esc(ev.home_team || "Home") + "</div>";
     h += '<div class="kick">' + esc(fmtSydney(ev.commence_time));
@@ -3315,9 +3407,10 @@
   function initEdge() {
     const briefUrl = "./edge-brief.json";
     const closeUrl = "./closings.json";
-    Promise.all([fetchJson(briefUrl), fetchJson(closeUrl)]).then(function (pair) {
+    Promise.all([fetchJson(briefUrl), fetchJson(closeUrl), fetchResearch()]).then(function (pair) {
       if (pair[0] && pair[0].ok) edgeBrief = pair[0];
       if (pair[1] && pair[1].ok) closingsCache = pair[1];
+      if (pair[2] && pair[2].ok) researchCache = pair[2];
       ensureLive(function () {
         renderTodayEdge();
         if (mainTab === "edge") renderEdgePane();
@@ -3569,6 +3662,12 @@
     filterLivePicks = b.getAttribute("data-live");
     render();
   });
+  $("picksPane").addEventListener("click", function (ev) {
+    const b = ev.target.closest("[data-only90]");
+    if (!b) return;
+    saveOnly90(b.getAttribute("data-only90") === "1");
+    render();
+  });
   $("liveList").addEventListener("click", function (ev) {
     const b = ev.target.closest("[data-use-live]");
     if (!b) return;
@@ -3576,7 +3675,153 @@
   });
 
   /* ===================== v9 redesign: looks, calls, spotlight, trophies ===================== */
-  const PX_VERSION = "9.0";
+  const PX_VERSION = "9.1";
+
+  const RESEARCH_URLS = ["./research.json"];
+  const ONLY90_KEY = "proximity-only90-v1";
+  let researchCache = null;
+  let only90 = true;
+  function loadOnly90() {
+    try {
+      const v = localStorage.getItem(ONLY90_KEY);
+      if (v === "0") return false;
+      if (v === "1") return true;
+    } catch (e) {}
+    return true;
+  }
+  only90 = loadOnly90();
+  function saveOnly90(on) {
+    only90 = !!on;
+    try { localStorage.setItem(ONLY90_KEY, only90 ? "1" : "0"); } catch (e) {}
+  }
+  function fetchResearch() {
+    return new Promise(function (resolve) {
+      let i = 0;
+      function next() {
+        if (i >= RESEARCH_URLS.length) { resolve(null); return; }
+        const url = RESEARCH_URLS[i++];
+        fetch(url, { cache: "no-store" }).then(function (res) {
+          if (!res.ok) { next(); return; }
+          return res.json();
+        }).then(function (data) {
+          if (data && data.ok) resolve(data);
+          else next();
+        }).catch(function () { next(); });
+      }
+      next();
+    });
+  }
+  function researchById(id) {
+    const evs = (researchCache && researchCache.events) || [];
+    for (let i = 0; i < evs.length; i++) if (evs[i] && evs[i].id === id) return evs[i];
+    return null;
+  }
+  function flaggedPicks() {
+    const list = (researchCache && researchCache.flagged) || [];
+    return list.filter(function (r) {
+      return r && r.flagged && r.p >= 0.9 && r.commence_time && !eventStarted(r.commence_time);
+    });
+  }
+  function nearestCandidates() {
+    const list = (researchCache && researchCache.candidates) || [];
+    return list.filter(function (r) { return r && r.commence_time && !eventStarted(r.commence_time); });
+  }
+  function honestNote() {
+    const d = (researchCache && researchCache.disclaimer) ||
+      "Probabilities are estimates, not guarantees. Short-odds favourites around 90% pay little, so a single upset wipes out several wins.";
+    return '<p class="honest-note">' + esc(d) + "</p>";
+  }
+  function reasonList(res) {
+    const reasons = (res && res.reasons) || [];
+    if (!reasons.length) return "";
+    let h = '<ul class="reasons">';
+    reasons.forEach(function (r) {
+      const label = (r.factor || "note").replace(/_/g, " ");
+      h += '<li><span class="rf">' + esc(label) + "</span> " + esc(r.text || "");
+      if (r.url) h += ' <a href="' + esc(r.url) + '" target="_blank" rel="noopener noreferrer">Source</a>';
+      if (!r.available && !/raise confidence/i.test(r.text || "")) h += " <span class=\"tiny\">Not used to raise confidence.</span>";
+      h += "</li>";
+    });
+    return h + "</ul>";
+  }
+  function researchBlock(res) {
+    if (!res) return "";
+    let h = "";
+    if (res.ladbrokes_odds) {
+      h += '<div class="lad-line"><span class="lk">Ladbrokes</span> ' + esc(res.winner) + " " + fmtOdds(res.ladbrokes_odds);
+      h += " · $20 returns " + fmtMoney(20 * res.ladbrokes_odds) + "</div>";
+    } else {
+      h += '<div class="lad-line">No Ladbrokes price is in this feed for ' + esc(res.winner) + ".</div>";
+    }
+    const rl = reasonList(res);
+    if (rl) h += res.flagged ? rl : '<details class="how"><summary>Research reasons (' + ((res.reasons || []).length) + ')</summary>' + rl + "</details>";
+    if (res.last_researched_sydney || res.last_researched) {
+      h += '<div class="research-meta">Last researched ' +
+        esc(res.last_researched_sydney || (fmtSydney(res.last_researched))) + ".</div>";
+    }
+    return h;
+  }
+  function renderFlagToggle() {
+    const el = $("flagToggle");
+    if (!el) return;
+    const btns = el.querySelectorAll("[data-only90]");
+    btns.forEach(function (b) {
+      b.setAttribute("aria-pressed", (b.getAttribute("data-only90") === "1") === only90 ? "true" : "false");
+    });
+  }
+  function pickCard(res, flagged) {
+    const look = sportLook(res.sport_title || res.sport_key);
+    const when = res.commence_time ? fmtSydney(res.commence_time) : "—";
+    let h = '<article class="' + (flagged ? "card gold-pick" : "cand-card") + '" data-live-id="' + esc(res.id || "") + '" style="--sc:#fbbf24">';
+    h += '<div class="card-top"><span class="sport-tag"><span class="sp-ic" aria-hidden="true">' + look.icon + "</span>" + esc(res.sport_title || res.sport_key) + "</span>";
+    if (flagged) h += '<span class="gold-badge">90%+ pick</span>';
+    h += "</div>";
+    h += '<div class="title">' + esc(res.away_team || "Away") + " vs " + esc(res.home_team || "Home") + "</div>";
+    h += '<div class="kick">' + esc(when) + (res.home_team ? " · " + esc(res.home_team) + " at home" : "") + "</div>";
+    h += '<div class="pick-line">Assumed winner <strong class="winner-gold">' + esc(res.winner) + "</strong> · " + fmtPct(res.p, 1);
+    if (res.market_p != null && res.delta) h += ' <span class="tiny">market ' + fmtPct(res.market_p, 1) + "</span>";
+    h += "</div>";
+    h += researchBlock(res);
+    h += "</article>";
+    return h;
+  }
+  function renderNinetyBoard(allRanked) {
+    const el = $("nearBox");
+    if (!el) return;
+    const flagged = flaggedPicks();
+    const cands = nearestCandidates();
+    const waiting = !researchCache && !liveCache;
+    el.className = "near-box gold-board" + (flagged.length ? "" : " empty-near");
+    let h = '<div class="flag-toggle" id="flagToggle" role="tablist" aria-label="Show 90%+ picks or all upcoming matches">';
+    h += '<button type="button" data-only90="1" aria-pressed="' + (only90 ? "true" : "false") + '">90%+ picks</button>';
+    h += '<button type="button" data-only90="0" aria-pressed="' + (!only90 ? "true" : "false") + '">All upcoming</button></div>';
+    h += "<h2>90%+ picks</h2>" + honestNote();
+    if (waiting) {
+      h += '<p class="hint">Loading research…</p>';
+    } else if (!researchCache) {
+      h += '<p class="empty-90">Research is not available just now.</p>';
+      h += '<p class="hint">Odds still refresh at 6am and 6pm Sydney. No invented figures are shown.</p>';
+    } else if (!flagged.length) {
+      h += '<p class="empty-90">No 90%+ picks right now</p>';
+      h += '<p class="hint">Nothing in the current book reaches a research-backed 90% chance. That is the honest result — estimates are not pushed over the line without cited evidence.</p>';
+      if (cands.length) {
+        h += '<div class="cand-kicker">Nearest candidates</div>';
+        cands.forEach(function (r) { h += pickCard(r, false); });
+      }
+    } else {
+      flagged.forEach(function (r) { h += pickCard(r, true); });
+    }
+    const hand = (typeof collectNear === "function" && allRanked && allRanked.length) ? collectNear(allRanked) : [];
+    if (!only90 && hand.length) {
+      h += '<div class="cand-kicker">From your own matchups (market implied 90%+)</div>' +
+        '<p class="hint">These are hand-entered rows, not the live research pass.</p>';
+      hand.forEach(function (it) {
+        h += '<div class="cand-card"><div><span class="winner-gold">' + esc(it.name) + "</span> · " + esc(it.sportName) +
+          "</div><div class=\"tiny\">" + esc(it.event) + " · " + fmtPct(it.p) + " implied</div></div>";
+      });
+    }
+    el.innerHTML = h;
+  }
   const TRACK_KEY = "proximity-tracked-v1";
   const SPOT_KEY = "proximity-spotlight-v1";
   const SPORT_LOOK = [
@@ -3751,13 +3996,18 @@
     let topName = names[0];
     names.forEach(function (n) { if (a.fairP[n] > a.fairP[topName]) topName = n; });
     let h = '<div class="pbars" aria-label="Fair chance for each side">';
+    const res = researchById(ev.id);
+    const goldName = res && res.winner ? res.winner : (res && res.flagged ? topName : null);
+    const showGold = !!(res && (res.flagged || only90) && goldName);
     names.forEach(function (n) {
-      const p = a.fairP[n];
-      const cls = /^draw$/i.test(n) ? "draw" : (n === topName ? "fav" : "alt");
-      h += '<div class="pbar ' + cls + '"><span class="nm">' + esc(n) + '</span><span class="pc">' + fmtPct(p) + "</span>" +
+      const p = (res && res.winner === n && res.p != null) ? res.p : ((res && res.winner && n !== res.winner && res.p != null && names.length === 2) ? (1 - res.p) : a.fairP[n]);
+      const isGold = !!(res && res.winner && n === res.winner && res.flagged);
+      const cls = /^draw$/i.test(n) ? "draw" : (isGold ? "gold" : (n === topName ? "fav" : "alt"));
+      h += '<div class="pbar ' + cls + '"><span class="nm' + (isGold || (showGold && n === goldName) ? " gold-name" : "") + '">' + esc(n) + '</span><span class="pc">' + fmtPct(p, 1) + "</span>" +
         '<div class="trk"><div class="fill" style="width:' + (p * 100).toFixed(1) + '%"></div></div></div>';
     });
-    h += '<div class="pbar-cap">Fair chance from all books in the feed, margin removed. Probability, not certainty.</div></div>';
+    h += '<div class="pbar-cap">Fair chance from all books in the feed, margin removed' + (res && res.p != null ? ", then research-adjusted where evidence is cited" : "") + ". Probability, not certainty.</div></div>";
+    if (res) h += researchBlock(res);
     return h;
   }
   function trackRowHtml(ev) {
