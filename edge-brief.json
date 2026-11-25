@@ -1,9 +1,9 @@
 {
   "ok": true,
-  "generated": "2026-11-25T00:43:11Z",
+  "generated": "2026-11-25T07:00:11Z",
   "slot": "evening",
   "timezone": "Australia/Sydney",
-  "odds_updated": "2026-11-24T07:11:13Z",
+  "odds_updated": "2026-11-25T07:00:11Z",
   "min_edge": 0.02,
   "method": "Fair prices are the bookmakers' odds with their margin removed, then averaged across books. If a Betfair exchange price is in the feed, it gets twice the weight of a bookmaker, because it is a market between punters rather than a posted book. A price is value when a book pays more than that fair price. This is a comparison, not a tip.",
   "count": 0,
