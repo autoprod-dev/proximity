@@ -442,6 +442,9 @@
     .shop-line { font-size: 12.5px; color: var(--muted); line-height: 1.4; }
     .shop-line strong { color: var(--text); font-weight: 720; }
     .shop-line .extra { color: var(--good); font-weight: 720; }
+    .shop-other { font-size: 11.5px; color: var(--faint); }
+    .odds-stamp { color: var(--faint); font-size: 11.5px; margin-top: 2px; }
+    .bookie-tag { color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
     .budget-box, .ledger-box, .value-panel {
       margin: 0 0 14px;
     }
@@ -567,7 +570,7 @@
     <div id="formView" class="hidden"></div>
     <footer class="legal">
       Probability, not certainty. It can be wrong. General information only, not betting advice. Gamble responsibly. Gambling Help: 1800 858 858. <a href="https://www.gamblinghelponline.org.au/" target="_blank" rel="noopener noreferrer">gamblinghelponline.org.au</a>
-      Example matchups are labelled example data and are not real team, player, runner or polling statistics. Political entries are betting-market examples only.
+      Hand-entered matchups are yours. Sample and demo matches are not shown.
       Live AU odds come from The Odds API through a server-side job that refreshes every 12 hours. The API key is never stored in this page. Horse and greyhound racing have no live source in that feed. Form and injuries are still entered by hand.
       The ledger, weekly fun budget and any stakes you enter stay in this browser only.
     </footer>
@@ -1345,12 +1348,12 @@
   function loadEntries() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return EXAMPLES.map(clone);
+      if (!raw) return [];
       const parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed) || !parsed.length) return EXAMPLES.map(clone);
-      return parsed;
+      if (!Array.isArray(parsed)) return [];
+      return parsed.filter(function (e) { return e && !e.isExample; });
     } catch (e) {
-      return EXAMPLES.map(clone);
+      return [];
     }
   }
   function saveEntries() {
@@ -1380,13 +1383,37 @@
       bindForm();
       return;
     }
-    renderChips();
-    const all = ranked();
+    const all = ranked().filter(function (r) { return r.entry && !r.entry.isExample; });
     const rows = all.filter(function (r) { return filter === "all" || r.entry.sport === filter; });
-    $("sortNote").textContent = rows.length ? ("Ranked by confidence · " + rows.length + " " + (rows.length === 1 ? "entry" : "entries")) : "";
-    $("nearBox").className = "near-box" + emptyNearClass(all);
-    $("nearBox").innerHTML = renderNear(all);
-    $("matchupList").innerHTML = rows.length ? rows.map(renderCard).join("") : '<div class="empty">No matchups yet. Add one, or restore the example set.</div>';
+    if (!all.length) {
+      $("nearBox").className = "near-box hidden";
+      $("nearBox").innerHTML = "";
+    } else {
+      $("nearBox").className = "near-box" + emptyNearClass(all);
+      $("nearBox").innerHTML = renderNear(all);
+    }
+    let liveHtml = "";
+    if (!liveCache) {
+      liveHtml = '<div class="empty">Loading live matches…</div>';
+      $("sortNote").textContent = "";
+      $("chips").innerHTML = "";
+    } else if (!liveCache.ok) {
+      liveHtml = '<div class="empty">No live matches to show. Odds refresh at 6am and 6pm Sydney. Sample or demo matches are not used.</div>';
+      $("sortNote").textContent = "";
+      $("chips").innerHTML = "";
+    } else {
+      let liveRows = upcoming(liveCache);
+      renderLiveChips("chips", liveRows, "picks");
+      if (filterLivePicks !== "all") liveRows = liveRows.filter(function (e) { return (e.sport_title || e.sport_key) === filterLivePicks; });
+      $("sortNote").textContent = liveRows.length
+        ? (liveRows.length + " upcoming · " + liveBookTitle({ key: loadBookie() }) + " · Odds updated " + (liveCache.updated ? fmtSydney(liveCache.updated) : "—"))
+        : "";
+      liveHtml = liveRows.length
+        ? liveRows.map(renderLiveCard).join("")
+        : '<div class="empty">No upcoming live matches right now. Odds refresh at 6am and 6pm Sydney.</div>';
+    }
+    const own = rows.length ? '<div class="sec-title">Your matchups</div>' + rows.map(renderCard).join("") : "";
+    $("matchupList").innerHTML = liveHtml + own;
     $("multiWrap").innerHTML = renderMulti(all);
     bindList();
   }
@@ -1615,13 +1642,8 @@
     const sid = existing ? existing.sport : formSport;
     let h = '<button type="button" class="ghost back" id="cancelBtn">← Back</button>';
     h += "<h2>" + (existing ? "Edit matchup" : "Add a matchup") + "</h2>";
-    h += '<p class="hint">Enter your own figures. Samples are labelled example data and are not real statistics.</p>';
+    h += '<p class="hint">Enter figures from a real match. Sample and demo matchups are not offered.</p>';
     h += '<div class="stack">';
-    h += '<div><label class="field" for="sampleSelect">Start from a sample</label><select id="sampleSelect"><option value="">—</option>';
-    EXAMPLES.forEach(function (ex) {
-      h += '<option value="' + esc(ex.id) + '">' + esc(sport(ex.sport).name + " · " + eventTitle(ex)) + "</option>";
-    });
-    h += "</select></div>";
     h += '<div><label class="field" for="sportSelect">Sport</label><select id="sportSelect">';
     SPORT_ORDER.forEach(function (id) {
       h += '<option value="' + id + '"' + (id === sid ? " selected" : "") + ">" + esc(SPORTS[id].name) + "</option>";
@@ -1630,9 +1652,6 @@
     h += '<div id="formFields"></div>';
     h += '<button type="button" class="primary" id="saveBtn">Save</button>';
     if (existing) h += '<button type="button" class="danger" id="deleteBtn">Remove this matchup</button>';
-    if (!entries.some(function (e) { return e.isExample; })) {
-      h += '<button type="button" class="secondary" id="restoreBtn">Restore example set</button>';
-    }
     h += "</div>";
     return h;
   }
@@ -1648,26 +1667,10 @@
       $("formFields").innerHTML = fieldsHtml(seedForSport(formSport));
       bindFieldExtras();
     };
-    $("sampleSelect").onchange = function () {
-      const id = $("sampleSelect").value;
-      const ex = EXAMPLES.filter(function (x) { return x.id === id; })[0];
-      if (!ex) return;
-      formSport = ex.sport;
-      $("sportSelect").value = ex.sport;
-      $("formFields").innerHTML = fieldsHtml(clone(ex));
-      bindFieldExtras();
-    };
     $("saveBtn").onclick = saveForm;
     const del = $("deleteBtn");
     if (del) del.onclick = function () {
       entries = entries.filter(function (e) { return e.id !== editingId; });
-      saveEntries();
-      view = "list";
-      render();
-    };
-    const rs = $("restoreBtn");
-    if (rs) rs.onclick = function () {
-      entries = EXAMPLES.map(clone);
       saveEntries();
       view = "list";
       render();
@@ -1829,7 +1832,7 @@
         (sp.id === "horse" ? fld("Track condition", sel("trackCondition", TRACKS, m.trackCondition)) : fld("Weather", sel("weather", WEATHER, m.weather))) + "</div>";
       if (sp.id === "horse") h += fld("Weather", sel("weather", WEATHER, m.weather));
     }
-    h += fld("Note (optional)", inp("noteLbl", m.label, "Example data"));
+    h += fld("Note (optional)", inp("noteLbl", m.label, "Optional note"));
     h += '<div class="sec-title" style="margin-top:4px">' + esc(sp.runner) + "s</div>";
     (m.runners || []).forEach(function (r, i) { h += runnerEditor(r, i, sp); });
     h += '<button type="button" class="secondary" id="addRunnerBtn">Add ' + esc(sp.runner.toLowerCase()) + "</button>";
@@ -2108,6 +2111,7 @@
   let liveDraft = null;
   let liveCache = null;
   let liveFilter = "all";
+  let filterLivePicks = "all";
   function isLocalHost() {
     const h = (location && location.hostname) || "";
     return h === "localhost" || h === "127.0.0.1";
@@ -2140,13 +2144,34 @@
     const d = Date.parse(iso);
     return isFinite(d) && d <= Date.now();
   }
+  const BOOKIE_STORE = "proximity-bookie-v1";
+  const DEFAULT_BOOKIE = "ladbrokes_au";
+  function loadBookie() {
+    try {
+      const v = localStorage.getItem(BOOKIE_STORE);
+      if (v) return v;
+    } catch (e) {}
+    return DEFAULT_BOOKIE;
+  }
+  function saveBookie(k) {
+    try { localStorage.setItem(BOOKIE_STORE, k || DEFAULT_BOOKIE); } catch (e) {}
+  }
+  function myBook(ev) {
+    const key = loadBookie();
+    const books = ev && ev.bookmakers || [];
+    for (let i = 0; i < books.length; i++) {
+      if (books[i] && books[i].key === key && (books[i].outcomes || []).length) return books[i];
+    }
+    return null;
+  }
   function preferredBooks(ev) {
     const books = ev.bookmakers || [];
-    const order = ["ladbrokes_au", "sportsbet", "tab", "neds"];
+    const first = loadBookie();
+    const order = [first, "ladbrokes_au", "sportsbet", "tab", "neds"];
     const ranked = [];
     order.forEach(function (k) {
       const b = books.filter(function (x) { return x.key === k; })[0];
-      if (b) ranked.push(b);
+      if (b && !ranked.some(function (x) { return x.key === b.key; })) ranked.push(b);
     });
     books.forEach(function (b) {
       if (!ranked.some(function (x) { return x.key === b.key; })) ranked.push(b);
@@ -2164,8 +2189,26 @@
   }
   function upcoming(data) {
     return (data && data.events || []).filter(function (e) {
-      return e && e.commence_time && !eventStarted(e.commence_time) && (e.bookmakers || []).length;
+      return e && e.commence_time && !eventStarted(e.commence_time) && myBook(e);
     });
+  }
+  function oddsUpdatedStamp() {
+    return liveCache && liveCache.updated ? "Odds updated " + fmtSydney(liveCache.updated) : "";
+  }
+  function renderLiveChips(elId, rows, which) {
+    const el = $(elId);
+    if (!el) return;
+    const sports = [];
+    rows.forEach(function (e) {
+      const k = e.sport_title || e.sport_key;
+      if (sports.indexOf(k) < 0) sports.push(k);
+    });
+    const cur = which === "picks" ? filterLivePicks : liveFilter;
+    let ch = '<button type="button" data-live="all" aria-pressed="' + (cur === "all") + '">All</button>';
+    sports.forEach(function (s) {
+      ch += '<button type="button" data-live="' + esc(s) + '" aria-pressed="' + (cur === s) + '">' + esc(s) + "</button>";
+    });
+    el.innerHTML = ch;
   }
   function fetchLive() {
     return new Promise(function (resolve) {
@@ -2187,80 +2230,95 @@
   function renderLive(data) {
     const banner = $("liveBanner"), meta = $("liveMeta"), list = $("liveList"), chips = $("liveChips");
     banner.className = "live-banner";
-    banner.textContent = "Horse racing and greyhound racing have no live source in this feed, so no race fields are shown. Tennis is currently out of season on the odds feed.";
+    banner.textContent = "Only upcoming matches with a " + liveBookTitle({ key: loadBookie() }) + " price are listed. Games that have already started or finished are hidden. Horse racing and greyhound racing have no live source in this feed. Tennis is currently out of season.";
     if (!data || !data.ok) {
       banner.className = "live-banner err";
-      banner.textContent = "Live odds unavailable. Example matchups on the Picks tab are unchanged.";
+      banner.textContent = "Live odds unavailable. No matches to show — sample data is not used.";
       meta.textContent = "";
       chips.innerHTML = "";
-      list.innerHTML = "";
+      list.innerHTML = '<div class="empty">No live matches to show. Odds refresh at 6am and 6pm Sydney.</div>';
       return;
     }
     let rows = upcoming(data);
-    const sports = [];
-    rows.forEach(function (e) {
-      const k = e.sport_title || e.sport_key;
-      if (sports.indexOf(k) < 0) sports.push(k);
-    });
     if (liveFilter !== "all") rows = rows.filter(function (e) { return (e.sport_title || e.sport_key) === liveFilter; });
     const updated = data.updated ? fmtSydney(data.updated) : "—";
-    meta.textContent = "Odds updated " + updated + ". Refreshes every 12 hours. · " + rows.length + " upcoming · AU books (Ladbrokes, Sportsbet)";
-    let ch = '<button type="button" data-live="all" aria-pressed="' + (liveFilter === "all") + '">All</button>';
-    sports.forEach(function (s) {
-      ch += '<button type="button" data-live="' + esc(s) + '" aria-pressed="' + (liveFilter === s) + '">' + esc(s) + "</button>";
-    });
-    chips.innerHTML = ch;
+    meta.textContent = "Odds updated " + updated + ". Refreshes every 12 hours. · " + rows.length + " upcoming · " + liveBookTitle({ key: loadBookie() });
+    renderLiveChips("liveChips", upcoming(data), "live");
     if (!rows.length) {
-      list.innerHTML = '<div class="empty">No upcoming live events in this list.</div>';
+      list.innerHTML = '<div class="empty">No upcoming live matches right now. Odds refresh at 6am and 6pm Sydney.</div>';
       return;
     }
     list.innerHTML = rows.map(renderLiveCard).join("");
     renderTodayEdge();
   }
   function renderLiveCard(ev) {
-    const books = preferredBooks(ev).slice(0, 3);
+    const mine = myBook(ev);
+    if (!mine) return "";
+    const pr = pricesForSides(mine, ev.home_team, ev.away_team);
+    const mineTitle = liveBookTitle(mine);
+    const lad = mine.key === "ladbrokes_au";
     let h = '<article class="card" data-live-id="' + esc(ev.id) + '">';
-    h += '<div class="card-top"><span class="sport-tag">' + esc(ev.sport_title || ev.sport_key) + "</span></div>";
+    h += '<div class="card-top"><span class="sport-tag">' + esc(ev.sport_title || ev.sport_key) + "</span>";
+    h += '<span class="bookie-tag">' + esc(mineTitle) + "</span></div>";
     h += '<div class="title">' + esc(ev.away_team || "Away") + " vs " + esc(ev.home_team || "Home") + "</div>";
-    h += '<div class="kick">' + esc(fmtSydney(ev.commence_time)) + " · " + esc(ev.home_team) + " at home</div>";
-    h += '<div class="live-books">';
-    books.forEach(function (b) {
-      const pr = pricesForSides(b, ev.home_team, ev.away_team);
-      const lad = b.key === "ladbrokes_au";
-      h += '<div class="book' + (lad ? " ladbrokes" : "") + '">';
-      h += '<div class="book-head"><span class="bn">' + esc(lad ? "Ladbrokes" : (b.title || b.key)) + "</span>";
-      h += '<span class="prices">' + esc(ev.away_team) + " " + fmtOdds(pr.away) + " · " + esc(ev.home_team) + " " + fmtOdds(pr.home);
-      if (pr.draw) h += " · Draw " + fmtOdds(pr.draw);
-      h += "</span></div>";
-      h += returnsBrackets([
-        { name: ev.away_team, odds: pr.away },
-        { name: ev.home_team, odds: pr.home },
-        pr.draw ? { name: "Draw", odds: pr.draw } : null
-      ]);
-      h += "</div>";
-    });
+    h += '<div class="kick">' + esc(fmtSydney(ev.commence_time));
+    if (ev.home_team) h += " · " + esc(ev.home_team) + " at home";
     h += "</div>";
-    const shop = bestPrices(ev);
-    if (shop.length) {
-      h += '<div class="shop">';
-      shop.forEach(function (row) {
-        h += '<div class="shop-line">Best AU price for <strong>' + esc(row.selection) + "</strong>: " +
-          esc(row.bestBook) + " " + fmtOdds(row.bestPrice) +
-          ' · <span class="extra">' + fmtMoney(row.extraOn20) + " more on $20 than the average</span></div>";
-      });
-      h += "</div>";
-    }
+    const stamp = oddsUpdatedStamp();
+    if (stamp) h += '<div class="odds-stamp">' + esc(stamp) + "</div>";
+    h += '<div class="live-books">';
+    h += '<div class="book' + (lad ? " ladbrokes" : "") + '">';
+    h += '<div class="book-head"><span class="bn">' + esc(mineTitle) + "</span>";
+    h += '<span class="prices">' + esc(ev.away_team) + " " + fmtOdds(pr.away) + " · " + esc(ev.home_team) + " " + fmtOdds(pr.home);
+    if (pr.draw) h += " · Draw " + fmtOdds(pr.draw);
+    h += "</span></div>";
+    h += returnsBrackets([
+      { name: ev.away_team, odds: pr.away },
+      { name: ev.home_team, odds: pr.home },
+      pr.draw ? { name: "Draw", odds: pr.draw } : null
+    ]);
+    h += "</div></div>";
+    h += shopLines(ev, mine);
     const valFlags = valueSpotsForEvent(ev);
     if (valFlags.length) {
       h += '<div class="shop">';
       valFlags.forEach(function (s) {
         h += '<div class="shop-line"><span class="badge Value">Value · +' + (s.edge * 100).toFixed(1) + "%</span> " +
-          esc(s.book) + " " + esc(s.selection) + " " + fmtOdds(s.price) + " vs fair " + fmtOdds(s.fairOdds) + "</div>";
+          esc(s.selection) + " " + fmtOdds(s.price) + " vs fair " + fmtOdds(s.fairOdds) + "</div>";
       });
       h += "</div>";
     }
     if (mapLiveSport(ev.sport_key)) h += '<button type="button" class="secondary use-odds" data-use-live="' + esc(ev.id) + '">Use these odds</button>';
     h += "</article>";
+    return h;
+  }
+  function shopLines(ev, mine) {
+    const analysed = analyseEvent(ev);
+    if (!analysed || !mine) return "";
+    const myRow = analysed.books.filter(function (b) { return b.key === mine.key; })[0];
+    if (!myRow) return "";
+    let h = '<div class="shop">';
+    Object.keys(myRow.prices).forEach(function (name) {
+      h += '<div class="shop-line"><strong>' + esc(liveBookTitle(mine)) + "</strong> " + esc(name) + " " + fmtOdds(myRow.prices[name]) + "</div>";
+      const others = [];
+      analysed.books.forEach(function (book) {
+        if (book.key === mine.key || book.prices[name] == null) return;
+        others.push({ price: book.prices[name], title: book.title, key: book.key });
+      });
+      if (!others.length) return;
+      let sum = myRow.prices[name], n = 1;
+      others.forEach(function (q) { sum += q.price; n++; });
+      const avg = sum / n;
+      others.sort(function (a, b) { return b.price - a.price; });
+      const bestOther = others[0];
+      const extra = (bestOther.price - avg) * STAKE;
+      let line = esc(bestOther.title) + " " + fmtOdds(bestOther.price);
+      if (bestOther.price > myRow.prices[name] && extra > 0.004) {
+        line += " · " + fmtMoney(extra) + " more on $20 than the average";
+      }
+      h += '<div class="shop-line shop-other">' + line + "</div>";
+    });
+    h += "</div>";
     return h;
   }
 
@@ -2416,7 +2474,7 @@
   function renderParlay(data) {
     const banner = $("parlayBanner"), meta = $("parlayMeta"), list = $("parlayList");
     banner.className = "live-banner";
-    banner.textContent = "Combinations use live AU odds (Ladbrokes when available). Chance is the product of margin-removed implied probabilities, treating legs as independent — the true chance may be lower. Not betting advice. Racing is not included (no live source).";
+    banner.textContent = "Combinations use " + liveBookTitle({ key: loadBookie() }) + " odds only. Chance is the product of margin-removed implied probabilities, treating legs as independent — the true chance may be lower. Not betting advice. Racing is not included (no live source). Events without a " + liveBookTitle({ key: loadBookie() }) + " price are left out.";
     if (!data || !data.ok) {
       banner.className = "live-banner err";
       banner.textContent = "Live odds unavailable, so the parlay map has nothing to search. No combinations are invented.";
@@ -2467,7 +2525,7 @@
   const BETFAIR_WEIGHT = 2;
   const LEDGER_KEY = "proximity-ledger-v1";
   const BANKROLL_KEY = "proximity-bankroll-v1";
-  const EDGE_METHOD = "Fair prices are the bookmakers' odds with their margin removed, then averaged across books. If a Betfair exchange price is in the feed, it gets twice the weight of a bookmaker, because it is a market between punters rather than a posted book. A price is value when a book pays more than that fair price. This is a comparison, not a tip.";
+  const EDGE_METHOD = "Fair prices are the bookmakers' odds with their margin removed, then averaged across books. If a Betfair exchange price is in the feed, it gets twice the weight of a bookmaker, because it is a market between punters rather than a posted book. Value is flagged only when your bookie (Ladbrokes, unless you change My bookie) pays more than that fair price. This is a comparison, not a tip.";
   const EDGE_EMPTY = "No value today, keep your money";
   let edgeBrief = null;
   let closingsCache = null;
@@ -2530,7 +2588,9 @@
     if (!analysed) return [];
     if (minEdge == null) minEdge = EDGE_MIN;
     const spots = [];
+    const want = loadBookie();
     analysed.books.forEach(function (book) {
+      if (book.key !== want) return;
       Object.keys(book.prices).forEach(function (name) {
         const price = book.prices[name], fp = analysed.fairP[name], fo = analysed.fairOdds[name];
         if (fp == null || fo == null || price <= fo) return;
@@ -2898,10 +2958,51 @@
     h += "</section>";
     el.innerHTML = h;
   }
+  function bookieChoices() {
+    const seen = {};
+    const rows = [{ key: "ladbrokes_au", title: "Ladbrokes" }];
+    seen.ladbrokes_au = true;
+    (liveCache && liveCache.events || []).forEach(function (ev) {
+      (ev.bookmakers || []).forEach(function (b) {
+        if (!b || !b.key || seen[b.key]) return;
+        seen[b.key] = true;
+        rows.push({ key: b.key, title: liveBookTitle(b) });
+      });
+    });
+    return rows;
+  }
+  function renderBookie() {
+    const el = $("budgetBox");
+    if (!el) return;
+    // Rendered as a prefix inside budgetBox's previous sibling; dedicated box:
+  }
   function renderEdgePane() {
     renderValuePanel();
+    renderBookieBox();
     renderBudget();
     renderLedger();
+  }
+  function renderBookieBox() {
+    let box = $("bookieBox");
+    if (!box) {
+      box = document.createElement("div");
+      box.id = "bookieBox";
+      const pane = $("edgePane");
+      const budget = $("budgetBox");
+      if (pane && budget) pane.insertBefore(box, budget);
+      else if (pane) pane.appendChild(box);
+    }
+    const cur = loadBookie();
+    let h = '<section class="card budget-box"><h2 style="margin:0 0 6px;font-size:18px">My bookie</h2>';
+    h += '<p class="hint" style="margin:0 0 10px">Value, returns, stake suggestions and parlays use this book. Fair prices are still worked out from all books in the feed. Matches without a price from your bookie are hidden. Default is Ladbrokes.</p>';
+    h += '<div class="row-2" style="display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end">';
+    h += '<div><label class="field" for="bookieSelect">Bookie</label><select id="bookieSelect">';
+    bookieChoices().forEach(function (b) {
+      h += '<option value="' + esc(b.key) + '"' + (b.key === cur ? " selected" : "") + ">" + esc(b.title) + "</option>";
+    });
+    h += "</select></div>";
+    h += '<button type="button" class="secondary" id="bookieSave">Save</button></div></section>';
+    box.innerHTML = h;
   }
   function showEdge() {
     setMainTab("edge");
@@ -2916,6 +3017,8 @@
       ensureLive(function () {
         renderTodayEdge();
         if (mainTab === "edge") renderEdgePane();
+        if (mainTab === "picks" && view === "list") render();
+        if (mainTab === "live") renderLive(liveCache);
       });
     });
   }
@@ -2987,6 +3090,22 @@
       };
       showEdge();
       setTimeout(function () { const el = $("ledStake"); if (el) el.focus(); }, 50);
+      return;
+    }
+    if (ev.target.id === "bookieSave") {
+      const sel = $("bookieSelect");
+      if (sel && sel.value) saveBookie(sel.value);
+      if (liveCache) {
+        if (typeof parlayCache !== "undefined") parlayCache = null;
+        renderTodayEdge();
+        renderEdgePane();
+        if (mainTab === "live") renderLive(liveCache);
+        if (mainTab === "parlay") renderParlay(liveCache);
+        if (mainTab === "picks") render();
+      } else {
+        renderTodayEdge();
+        renderEdgePane();
+      }
       return;
     }
     if (ev.target.id === "budgetSave") {
@@ -3133,6 +3252,12 @@
     if (!b) return;
     liveFilter = b.getAttribute("data-live");
     renderLive(liveCache);
+  });
+  $("chips").addEventListener("click", function (ev) {
+    const b = ev.target.closest("[data-live]");
+    if (!b) return;
+    filterLivePicks = b.getAttribute("data-live");
+    render();
   });
   $("liveList").addEventListener("click", function (ev) {
     const b = ev.target.closest("[data-use-live]");
