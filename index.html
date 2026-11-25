@@ -396,6 +396,73 @@
     }
     .parlay-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0 6px; }
     .parlay-stats .metric:first-child { grid-column: 1 / -1; }
+
+    .seg button { padding: 9px 6px; font-size: 14px; }
+    #todayEdge { margin: 0 0 14px; }
+    .edge-card {
+      background: linear-gradient(180deg, rgba(62, 224, 160, 0.14), rgba(20, 28, 44, 0.78));
+      border: 1px solid rgba(62, 224, 160, 0.45);
+      box-shadow: var(--shadow), 0 0 28px rgba(62, 224, 160, 0.08);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+    }
+    .edge-card.empty-edge {
+      background: linear-gradient(180deg, rgba(30, 38, 58, 0.78), rgba(16, 22, 38, 0.68));
+      border-color: var(--line);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .edge-card h2 { font-size: 16px; letter-spacing: -.02em; margin: 0 0 6px; color: var(--good); }
+    .edge-card.empty-edge h2 { color: var(--text); }
+    .edge-card .edge-lead { margin: 0 0 8px; font-size: 13.5px; color: var(--text); }
+    .edge-card .edge-meta { margin: 0; font-size: 11.5px; color: var(--faint); line-height: 1.45; }
+    .edge-head { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
+    button.info-btn {
+      flex: 0 0 auto; border: 1px solid var(--line); background: rgba(8,12,22,0.4);
+      color: var(--muted); border-radius: 999px; padding: 3px 9px; font: inherit;
+      font-size: 11.5px; font-weight: 700; cursor: pointer;
+    }
+    button.info-btn[aria-expanded="true"], button.info-btn:hover { color: var(--text); border-color: var(--accent-2); }
+    .info-pop {
+      display: none; margin: 8px 0 10px; padding: 10px 12px; border-radius: 12px;
+      background: rgba(8,12,22,0.55); border: 1px solid var(--line);
+      color: var(--muted); font-size: 12.5px; line-height: 1.5;
+    }
+    .info-pop.open { display: block; }
+    .value-list { list-style: none; margin: 10px 0 0; padding: 0; }
+    .value-list li {
+      padding: 10px 0; border-top: 1px solid var(--line); font-size: 13.5px;
+    }
+    .value-list li:first-child { border-top: 0; padding-top: 2px; }
+    .value-list .nm { font-weight: 720; }
+    .value-list .edge-pct { color: var(--good); font-weight: 720; font-variant-numeric: tabular-nums; }
+    .value-list .why-s { color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+    .value-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; }
+    .badge.Value { background: var(--good-bg); color: var(--good); }
+    .shop { margin-top: 10px; display: flex; flex-direction: column; gap: 4px; }
+    .shop-line { font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+    .shop-line strong { color: var(--text); font-weight: 720; }
+    .shop-line .extra { color: var(--good); font-weight: 720; }
+    .budget-box, .ledger-box, .value-panel {
+      margin: 0 0 14px;
+    }
+    .budget-meter { height: 8px; background: var(--bg-2); border-radius: 99px; overflow: hidden; margin: 8px 0; }
+    .budget-meter span { display: block; height: 100%; background: var(--good); }
+    .budget-meter.lock span { background: var(--wait); }
+    .lock-msg {
+      margin: 8px 0 0; background: var(--wait-bg); color: #f8d998; border-radius: 10px;
+      padding: 8px 10px; font-size: 13px;
+    }
+    .ledger-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0 0 12px; }
+    .ledger-table { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+    .ledger-table th { text-align: left; color: var(--faint); font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; padding: 6px 6px 6px 0; }
+    .ledger-table td { padding: 8px 6px 8px 0; border-top: 1px solid var(--line); vertical-align: top; }
+    .ledger-table .nm { font-weight: 680; }
+    .pl-pos { color: var(--good); font-weight: 720; }
+    .pl-neg { color: var(--avoid); font-weight: 720; }
+    .ledger-form .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .rg-foot { margin: 8px 0 0; font-size: 11.5px; color: var(--faint); line-height: 1.45; }
+    .rg-foot a { color: var(--accent-2); }
+    footer.legal a { color: var(--accent-2); }
   </style>
 </head>
 <body>
@@ -447,13 +514,15 @@
       <p class="sub">Weighs the factors a person can't hold in their head — form, injuries, the market and more — then ranks a likely winner. Probability, not certainty.</p>
     </header>
     <div class="notice">
-      This is a probability, not a certainty — it can be wrong. General information only, not betting advice. Gamble responsibly. Gambling Help: 1800 858 858.
+      This is a probability, not a certainty — it can be wrong. General information only, not betting advice. Gamble responsibly. Gambling Help: 1800 858 858. <a href="https://www.gamblinghelponline.org.au/" target="_blank" rel="noopener noreferrer">gamblinghelponline.org.au</a>
     </div>
+    <div id="todayEdge"></div>
     <div id="listView">
-      <div class="seg" id="mainTabs" role="tablist" aria-label="Picks, live odds or parlay map">
+      <div class="seg" id="mainTabs" role="tablist" aria-label="Picks, live odds, parlay map or edge">
         <button type="button" id="tabPicks" aria-pressed="true">Picks</button>
         <button type="button" id="tabLive" aria-pressed="false">Live</button>
-        <button type="button" id="tabParlay" aria-pressed="false">Parlay map</button>
+        <button type="button" id="tabParlay" aria-pressed="false">Parlay</button>
+        <button type="button" id="tabEdge" aria-pressed="false">Edge</button>
       </div>
       <div id="picksPane">
       <div id="nearBox" class="near-box"></div>
@@ -489,12 +558,18 @@
         <p class="live-meta" id="parlayMeta"></p>
         <div id="parlayList"></div>
       </div>
+      <div id="edgePane" class="hidden">
+        <div id="valueBox"></div>
+        <div id="budgetBox"></div>
+        <div id="ledgerBox"></div>
+      </div>
     </div>
     <div id="formView" class="hidden"></div>
     <footer class="legal">
-      Probability, not certainty. It can be wrong. General information only, not betting advice. Gamble responsibly. Gambling Help: 1800 858 858.
+      Probability, not certainty. It can be wrong. General information only, not betting advice. Gamble responsibly. Gambling Help: 1800 858 858. <a href="https://www.gamblinghelponline.org.au/" target="_blank" rel="noopener noreferrer">gamblinghelponline.org.au</a>
       Example matchups are labelled example data and are not real team, player, runner or polling statistics. Political entries are betting-market examples only.
       Live AU odds come from The Odds API through a server-side job that refreshes every 12 hours. The API key is never stored in this page. Horse and greyhound racing have no live source in that feed. Form and injuries are still entered by hand.
+      The ledger, weekly fun budget and any stakes you enter stay in this browser only.
     </footer>
   </div>
   <script>
@@ -1906,6 +1981,7 @@
     entries = loadEntries();
     $("addBtn").onclick = startAdd;
     render();
+    initEdge();
   }
   let celeTimer = null;
   function reducedMotion() {
@@ -2139,6 +2215,7 @@
       return;
     }
     list.innerHTML = rows.map(renderLiveCard).join("");
+    renderTodayEdge();
   }
   function renderLiveCard(ev) {
     const books = preferredBooks(ev).slice(0, 3);
@@ -2163,6 +2240,25 @@
       h += "</div>";
     });
     h += "</div>";
+    const shop = bestPrices(ev);
+    if (shop.length) {
+      h += '<div class="shop">';
+      shop.forEach(function (row) {
+        h += '<div class="shop-line">Best AU price for <strong>' + esc(row.selection) + "</strong>: " +
+          esc(row.bestBook) + " " + fmtOdds(row.bestPrice) +
+          ' · <span class="extra">' + fmtMoney(row.extraOn20) + " more on $20 than the average</span></div>";
+      });
+      h += "</div>";
+    }
+    const valFlags = valueSpotsForEvent(ev);
+    if (valFlags.length) {
+      h += '<div class="shop">';
+      valFlags.forEach(function (s) {
+        h += '<div class="shop-line"><span class="badge Value">Value · +' + (s.edge * 100).toFixed(1) + "%</span> " +
+          esc(s.book) + " " + esc(s.selection) + " " + fmtOdds(s.price) + " vs fair " + fmtOdds(s.fairOdds) + "</div>";
+      });
+      h += "</div>";
+    }
     if (mapLiveSport(ev.sport_key)) h += '<button type="button" class="secondary use-odds" data-use-live="' + esc(ev.id) + '">Use these odds</button>';
     h += "</article>";
     return h;
@@ -2364,14 +2460,614 @@
     list.innerHTML = h;
   }
 
+
+  const EDGE_MIN = 0.02;
+  const KELLY_FRAC = 0.25;
+  const KELLY_CAP = 0.05;
+  const BETFAIR_WEIGHT = 2;
+  const LEDGER_KEY = "proximity-ledger-v1";
+  const BANKROLL_KEY = "proximity-bankroll-v1";
+  const EDGE_METHOD = "Fair prices are the bookmakers' odds with their margin removed, then averaged across books. If a Betfair exchange price is in the feed, it gets twice the weight of a bookmaker, because it is a market between punters rather than a posted book. A price is value when a book pays more than that fair price. This is a comparison, not a tip.";
+  const EDGE_EMPTY = "No value today, keep your money";
+  let edgeBrief = null;
+  let closingsCache = null;
+  let edgeInfoOpen = false;
+  let ledgerDraft = null;
+
+  function isBetfair(key) { return String(key || "").toLowerCase().indexOf("betfair") === 0; }
+  function bookWeight(key) { return isBetfair(key) ? BETFAIR_WEIGHT : 1; }
+  function liveBookTitle(book) {
+    if (!book) return "Book";
+    if (book.key === "ladbrokes_au") return "Ladbrokes";
+    return book.title || book.key || "Book";
+  }
+  function devigOutcomes(outcomes) {
+    const raw = (outcomes || []).map(function (o) {
+      const p = num(o && o.price);
+      return p != null && p > 1 ? 1 / p : null;
+    });
+    let sum = 0, n = 0;
+    for (let i = 0; i < raw.length; i++) if (raw[i] != null) { sum += raw[i]; n++; }
+    if (n < 2 || sum <= 0) return null;
+    return raw.map(function (r) { return r == null ? null : r / sum; });
+  }
+  function analyseEvent(ev) {
+    const weights = {};
+    const bookRows = [];
+    (ev && ev.bookmakers || []).forEach(function (b) {
+      const outs = b.outcomes || [];
+      const fair = devigOutcomes(outs);
+      if (!fair) return;
+      const w = bookWeight(b.key);
+      const prices = {}, fairs = {};
+      outs.forEach(function (o, i) {
+        if (fair[i] == null || !o || !o.name) return;
+        const price = num(o.price);
+        if (price == null || price <= 1) return;
+        prices[o.name] = price;
+        fairs[o.name] = fair[i];
+        if (!weights[o.name]) weights[o.name] = [];
+        weights[o.name].push({ w: w, p: fair[i] });
+      });
+      if (Object.keys(prices).length) bookRows.push({ key: b.key, title: liveBookTitle(b), prices: prices, fair: fairs });
+    });
+    if (!bookRows.length) return null;
+    const cons = {};
+    Object.keys(weights).forEach(function (name) {
+      let tw = 0, acc = 0;
+      weights[name].forEach(function (pt) { tw += pt.w; acc += pt.w * pt.p; });
+      if (tw > 0) cons[name] = acc / tw;
+    });
+    let total = 0;
+    Object.keys(cons).forEach(function (k) { total += cons[k]; });
+    if (total > 0) Object.keys(cons).forEach(function (k) { cons[k] = cons[k] / total; });
+    const fairOdds = {};
+    Object.keys(cons).forEach(function (k) { fairOdds[k] = cons[k] > 0 ? 1 / cons[k] : null; });
+    return { books: bookRows, fairP: cons, fairOdds: fairOdds };
+  }
+  function valueSpotsForEvent(ev, minEdge) {
+    const analysed = analyseEvent(ev);
+    if (!analysed) return [];
+    if (minEdge == null) minEdge = EDGE_MIN;
+    const spots = [];
+    analysed.books.forEach(function (book) {
+      Object.keys(book.prices).forEach(function (name) {
+        const price = book.prices[name], fp = analysed.fairP[name], fo = analysed.fairOdds[name];
+        if (fp == null || fo == null || price <= fo) return;
+        const edge = price * fp - 1;
+        if (edge + 1e-12 < minEdge) return;
+        spots.push({
+          eventId: ev.id,
+          sport: ev.sport_title || ev.sport_key,
+          event: (ev.away_team || "Away") + " vs " + (ev.home_team || "Home"),
+          commence: ev.commence_time,
+          selection: name,
+          bookKey: book.key,
+          book: book.title,
+          price: price,
+          fairOdds: fo,
+          fairP: fp,
+          edge: edge
+        });
+      });
+    });
+    spots.sort(function (a, b) { return b.edge - a.edge; });
+    return spots;
+  }
+  function allValueSpots(data) {
+    const out = [];
+    upcoming(data).forEach(function (ev) {
+      valueSpotsForEvent(ev).forEach(function (s) { out.push(s); });
+    });
+    out.sort(function (a, b) { return b.edge - a.edge; });
+    return out;
+  }
+  function bestPrices(ev) {
+    const analysed = analyseEvent(ev);
+    if (!analysed) return [];
+    const rows = [];
+    Object.keys(analysed.fairP).forEach(function (name) {
+      const quotes = [];
+      analysed.books.forEach(function (book) {
+        if (book.prices[name] != null) quotes.push({ price: book.prices[name], title: book.title, key: book.key });
+      });
+      if (quotes.length < 2) return;
+      quotes.sort(function (a, b) { return b.price - a.price; });
+      const best = quotes[0];
+      let sum = 0;
+      quotes.forEach(function (q) { sum += q.price; });
+      const avg = sum / quotes.length;
+      const extra = (best.price - avg) * STAKE;
+      if (extra <= 0.004) return;
+      rows.push({ selection: name, bestBook: best.title, bestKey: best.key, bestPrice: best.price, avgPrice: avg, extraOn20: extra });
+    });
+    return rows;
+  }
+  function fetchJson(url) {
+    return fetch(url, { cache: "no-store" }).then(function (res) {
+      if (!res.ok) return null;
+      return res.json();
+    }).catch(function () { return null; });
+  }
+  function loadLedger() {
+    try {
+      const raw = localStorage.getItem(LEDGER_KEY);
+      if (!raw) return { version: 1, bets: [] };
+      const d = JSON.parse(raw);
+      if (!d || !Array.isArray(d.bets)) return { version: 1, bets: [] };
+      return d;
+    } catch (e) { return { version: 1, bets: [] }; }
+  }
+  function saveLedger(d) {
+    try { localStorage.setItem(LEDGER_KEY, JSON.stringify(d)); } catch (e) {}
+  }
+  function loadBankroll() {
+    try {
+      const raw = localStorage.getItem(BANKROLL_KEY);
+      if (!raw) return { weeklyBudget: null };
+      const d = JSON.parse(raw);
+      if (!d) return { weeklyBudget: null };
+      const n = num(d.weeklyBudget);
+      return { weeklyBudget: n != null && n > 0 ? n : null };
+    } catch (e) { return { weeklyBudget: null }; }
+  }
+  function saveBankroll(d) {
+    try { localStorage.setItem(BANKROLL_KEY, JSON.stringify(d)); } catch (e) {}
+  }
+  function sydneyParts(d) {
+    const parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Australia/Sydney", weekday: "short", year: "numeric", month: "2-digit", day: "2-digit"
+    }).formatToParts(d || new Date());
+    const get = function (t) {
+      for (let i = 0; i < parts.length; i++) if (parts[i].type === t) return parts[i].value;
+      return "";
+    };
+    return { y: +get("year"), m: +get("month"), d: +get("day"), wd: get("weekday") };
+  }
+  function mondayWeekKey(d) {
+    const p = sydneyParts(d);
+    const map = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+    const dow = map[p.wd];
+    const back = dow === 0 ? 6 : dow - 1;
+    const utc = Date.UTC(p.y, p.m - 1, p.d - back);
+    const x = new Date(utc);
+    const y = x.getUTCFullYear(), m = x.getUTCMonth() + 1, dd = x.getUTCDate();
+    return y + "-" + String(m).padStart(2, "0") + "-" + String(dd).padStart(2, "0");
+  }
+  function weekSpent(ledger, weekKey) {
+    let sum = 0;
+    (ledger.bets || []).forEach(function (b) {
+      if (b.result === "void") return;
+      const when = Date.parse(b.added);
+      if (!isFinite(when)) return;
+      if (mondayWeekKey(new Date(when)) !== weekKey) return;
+      const st = num(b.stake);
+      if (st != null && st > 0) sum += st;
+    });
+    return sum;
+  }
+  function suggestedStake(fairP, odds, budget, remaining) {
+    const p = num(fairP), o = num(odds), bank = num(budget), left = num(remaining);
+    if (p == null || o == null || o <= 1 || p <= 0 || bank == null || bank <= 0) return null;
+    const ev = p * o - 1;
+    if (ev <= 0) return null;
+    const kelly = ev / (o - 1);
+    let stake = KELLY_FRAC * kelly * bank;
+    const cap = KELLY_CAP * bank;
+    if (stake > cap) stake = cap;
+    if (left != null) {
+      if (left <= 0) return 0;
+      if (stake > left) stake = left;
+    }
+    if (stake < 0.5) return null;
+    return Math.round(stake * 100) / 100;
+  }
+  function budgetState() {
+    const br = loadBankroll();
+    const week = mondayWeekKey(new Date());
+    const spent = weekSpent(loadLedger(), week);
+    const budget = br.weeklyBudget;
+    const remaining = budget != null ? Math.max(0, budget - spent) : null;
+    const locked = budget != null && spent >= budget - 1e-9;
+    return { budget: budget, spent: spent, remaining: remaining, locked: locked, week: week };
+  }
+  function betPL(b) {
+    const st = num(b.stake), o = num(b.odds);
+    if (st == null) return null;
+    if (b.result === "won") return o != null && o > 1 ? (o - 1) * st : null;
+    if (b.result === "lost") return -st;
+    if (b.result === "void") return 0;
+    return null;
+  }
+  function closeAvailable(bet, pack) {
+    if (bet.closeOdds != null && (eventStarted(bet.commence) || (pack && pack.closed))) return true;
+    if (!pack) return false;
+    if (pack.closed) return true;
+    return eventStarted(bet.commence || pack.commence_time);
+  }
+  function closeOddsFor(bet) {
+    const pack = closingsCache && closingsCache.events && bet.eventId ? closingsCache.events[bet.eventId] : null;
+    if (bet.closeOdds != null && closeAvailable(bet, pack)) return num(bet.closeOdds);
+    if (!pack || !pack.outcomes || !closeAvailable(bet, pack)) return null;
+    const rec = pack.outcomes[bet.selection];
+    if (!rec) return null;
+    if (bet.bookieKey && rec.books && rec.books[bet.bookieKey] && rec.books[bet.bookieKey].price) {
+      return num(rec.books[bet.bookieKey].price);
+    }
+    return num(rec.fair_odds);
+  }
+  function clvPct(bet) {
+    const close = closeOddsFor(bet);
+    const o = num(bet.odds);
+    if (close == null || close <= 1 || o == null || o <= 1) return null;
+    return (o / close - 1) * 100;
+  }
+  function ledgerStats(ledger) {
+    let staked = 0, pl = 0, won = 0, lost = 0, clvSum = 0, clvN = 0, openStake = 0;
+    (ledger.bets || []).forEach(function (b) {
+      const st = num(b.stake) || 0;
+      if (b.result === "pending") { openStake += st; return; }
+      if (b.result === "void") return;
+      staked += st;
+      const p = betPL(b);
+      if (p != null) pl += p;
+      if (b.result === "won") won++;
+      if (b.result === "lost") lost++;
+      const c = clvPct(b);
+      if (c != null) { clvSum += c; clvN++; }
+    });
+    const settled = won + lost;
+    return {
+      staked: staked, pl: pl,
+      roi: staked > 0 ? pl / staked : null,
+      strike: settled > 0 ? won / settled : null,
+      won: won, lost: lost, settled: settled,
+      clv: clvN ? clvSum / clvN : null, clvN: clvN,
+      openStake: openStake, count: (ledger.bets || []).length
+    };
+  }
+  function infoPopBtn(id) {
+    return '<button type="button" class="info-btn" data-edge-info="' + id + '" aria-expanded="' + (edgeInfoOpen ? "true" : "false") + '">How this is worked out</button>';
+  }
+  function infoPopBody(id) {
+    return '<div class="info-pop' + (edgeInfoOpen ? " open" : "") + '" id="' + id + '">' + esc(EDGE_METHOD) + "</div>";
+  }
+  function valueItemsHtml(spots, opts) {
+    opts = opts || {};
+    if (!spots.length) return '<p class="edge-lead">' + esc(EDGE_EMPTY) + "</p>";
+    const bud = budgetState();
+    let h = '<ul class="value-list">';
+    spots.forEach(function (s) {
+      h += "<li>";
+      h += '<div class="nm">' + esc(s.selection) + ' <span class="edge-pct">Value · +' + (s.edge * 100).toFixed(1) + "%</span></div>";
+      h += '<div class="why-s">' + esc(s.event) + " · " + esc(s.sport) + " · " + esc(s.book) + " " + fmtOdds(s.price) +
+        " · fair " + fmtOdds(s.fairOdds) + (s.commence ? " · " + esc(fmtSydney(s.commence)) : "") + "</div>";
+      const sug = bud.budget != null ? suggestedStake(s.fairP, s.price, bud.budget, bud.remaining) : null;
+      h += '<div class="value-actions">';
+      if (bud.locked) {
+        h += '<span class="tiny">Suggestions paused this week.</span>';
+      } else if (sug != null) {
+        h += '<span class="tiny">Suggested stake ' + fmtMoney(sug) + " (quarter Kelly, capped at 5% of this week's fun budget).</span>";
+      } else if (bud.budget == null) {
+        h += '<span class="tiny">Set a weekly fun budget on the Edge tab to see a suggested stake.</span>';
+      }
+      if (!opts.noLog && !bud.locked) {
+        h += '<button type="button" class="secondary" data-log-value="' + esc(s.eventId || "") +
+          '" data-selection="' + esc(s.selection) + '" data-book="' + esc(s.book) +
+          '" data-book-key="' + esc(s.bookKey || "") + '" data-odds="' + esc(String(s.price)) +
+          '" data-event="' + esc(s.event) + '" data-sport="' + esc(s.sport || "") +
+          '" data-commence="' + esc(s.commence || "") + '"' +
+          (sug != null ? ' data-stake="' + sug + '"' : "") + ">Log this</button>";
+      }
+      h += "</div></li>";
+    });
+    h += "</ul>";
+    return h;
+  }
+  function spotsFromBriefOrLive() {
+    if (liveCache && liveCache.ok) return allValueSpots(liveCache);
+    if (edgeBrief && edgeBrief.ok && edgeBrief.spots) {
+      return (edgeBrief.spots || []).map(function (s) {
+        return {
+          eventId: s.event_id, sport: s.sport, event: s.event, commence: s.commence_time,
+          selection: s.selection, bookKey: s.book_key, book: s.book, price: s.price,
+          fairOdds: s.fair_odds, fairP: s.fair_p, edge: s.edge != null ? s.edge : (s.edge_pct || 0) / 100
+        };
+      });
+    }
+    return [];
+  }
+  function renderTodayEdge() {
+    const el = $("todayEdge");
+    if (!el) return;
+    const spots = spotsFromBriefOrLive();
+    const top = spots.slice(0, 3);
+    const updated = (liveCache && liveCache.updated) || (edgeBrief && edgeBrief.odds_updated);
+    const slot = edgeBrief && edgeBrief.slot;
+    const when = updated ? fmtSydney(updated) : "—";
+    const slotLbl = slot === "morning" ? "morning refresh" : (slot === "evening" ? "evening refresh" : "latest refresh");
+    const empty = !top.length;
+    let h = '<div class="edge-card' + (empty ? " empty-edge" : "") + '">';
+    h += '<div class="edge-head"><h2>Today\'s Edge</h2>' + infoPopBtn("todayEdgeInfo") + "</div>" + infoPopBody("todayEdgeInfo");
+    if (empty) {
+      h += '<p class="edge-lead">' + esc(EDGE_EMPTY) + "</p>";
+    } else {
+      h += '<p class="edge-lead">Top ' + top.length + " value spot" + (top.length === 1 ? "" : "s") + " after the bookmaker margin is removed.</p>";
+      h += valueItemsHtml(top, { noLog: false });
+    }
+    h += '<p class="edge-meta">Based on the ' + slotLbl + " · odds updated " + esc(when) + ". Comparison only, not betting advice.</p>";
+    h += "</div>";
+    el.innerHTML = h;
+  }
+  function renderValuePanel() {
+    const el = $("valueBox");
+    if (!el) return;
+    const spots = spotsFromBriefOrLive();
+    let h = '<section class="card value-panel"><div class="edge-head"><h2 style="margin:0;font-size:18px">Value today</h2>' + infoPopBtn("valueInfo") + "</div>" + infoPopBody("valueInfo");
+    h += valueItemsHtml(spots, {});
+    if (spots.length) h += '<p class="edge-meta" style="margin-top:10px">Listed when a book pays at least 2% more than the fair price. Usually a short list.</p>';
+    h += "</section>";
+    el.innerHTML = h;
+  }
+  function renderBudget() {
+    const el = $("budgetBox");
+    if (!el) return;
+    const st = budgetState();
+    const has = st.budget != null;
+    const pct = has && st.budget > 0 ? Math.min(100, (st.spent / st.budget) * 100) : 0;
+    let h = '<section class="card budget-box"><h2 style="margin:0 0 6px;font-size:18px">Weekly fun budget</h2>';
+    h += '<p class="hint" style="margin:0 0 10px">This is a fun spend cap for the week (Monday to Sunday, Sydney time), kept separate from any pay or savings goal. It stays on this device only.</p>';
+    h += '<div class="row-2" style="display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end">';
+    h += '<div><label class="field" for="budgetIn">Weekly fun budget ($)</label>';
+    h += '<input type="number" id="budgetIn" min="0" step="1" inputmode="decimal" placeholder="e.g. a weekly amount" value="' + (has ? esc(String(st.budget)) : "") + '"></div>';
+    h += '<button type="button" class="secondary" id="budgetSave">Save</button></div>';
+    if (has) {
+      h += '<div class="budget-meter' + (st.locked ? " lock" : "") + '"><span style="width:' + pct.toFixed(1) + '%"></span></div>';
+      h += '<p class="tiny">This week ' + fmtMoney(st.spent) + " of " + fmtMoney(st.budget) + " used · " + fmtMoney(st.remaining) + " left.</p>";
+      if (st.locked) h += '<div class="lock-msg">You\'ve reached this week\'s fun budget, so bet suggestions are paused until next Monday. Have a good one.</div>';
+    }
+    h += "</section>";
+    el.innerHTML = h;
+  }
+  function resultLabel(r) {
+    if (r === "won") return "Won";
+    if (r === "lost") return "Lost";
+    if (r === "void") return "Void";
+    return "Open";
+  }
+  function renderLedger() {
+    const el = $("ledgerBox");
+    if (!el) return;
+    const ledger = loadLedger();
+    const stats = ledgerStats(ledger);
+    const d = ledgerDraft || {};
+    let h = '<section class="card ledger-box"><h2 style="margin:0 0 6px;font-size:18px">Honest ledger</h2>';
+    h += '<p class="hint" style="margin:0 0 10px">A private record of bets on this device. Nothing here is published. You can export a copy or import one back.</p>';
+    h += '<div class="ledger-stats">';
+    h += metric("Profit / loss", stats.staked || stats.pl ? fmtMoney(stats.pl) : "—");
+    h += metric("ROI", stats.roi == null ? "—" : fmtPct(stats.roi, 1));
+    h += metric("Strike rate", stats.strike == null ? "—" : fmtPct(stats.strike, 0) + " (" + stats.won + "/" + stats.settled + ")");
+    h += metric("Closing line", stats.clv == null ? "—" : ((stats.clv >= 0 ? "+" : "") + stats.clv.toFixed(1) + "% avg · " + stats.clvN + " bet" + (stats.clvN === 1 ? "" : "s")));
+    h += "</div>";
+    if (stats.openStake) h += '<p class="tiny">Open stakes ' + fmtMoney(stats.openStake) + ".</p>";
+    h += '<div class="sec-title">Log a bet</div><div class="ledger-form stack">';
+    h += '<div><label class="field" for="ledEvent">Event</label><input type="text" id="ledEvent" maxlength="120" value="' + esc(d.event || "") + '" placeholder="Team A vs Team B"></div>';
+    h += '<div class="row-2"><div><label class="field" for="ledSel">Selection</label><input type="text" id="ledSel" maxlength="80" value="' + esc(d.selection || "") + '"></div>';
+    h += '<div><label class="field" for="ledBook">Bookie</label><input type="text" id="ledBook" maxlength="40" value="' + esc(d.book || "") + '" placeholder="Ladbrokes"></div></div>';
+    h += '<div class="row-2"><div><label class="field" for="ledOdds">Decimal odds</label><input type="number" id="ledOdds" min="1.01" step="0.01" inputmode="decimal" value="' + esc(d.odds != null ? String(d.odds) : "") + '"></div>';
+    h += '<div><label class="field" for="ledStake">Stake ($)</label><input type="number" id="ledStake" min="0" step="0.01" inputmode="decimal" value="' + esc(d.stake != null ? String(d.stake) : "") + '"></div></div>';
+    h += '<input type="hidden" id="ledEventId" value="' + esc(d.eventId || "") + '">';
+    h += '<input type="hidden" id="ledBookKey" value="' + esc(d.bookKey || "") + '">';
+    h += '<input type="hidden" id="ledSport" value="' + esc(d.sport || "") + '">';
+    h += '<input type="hidden" id="ledCommence" value="' + esc(d.commence || "") + '">';
+    const bud = budgetState();
+    if (bud.locked) h += '<div class="lock-msg">You\'ve reached this week\'s fun budget, so new bets can still be recorded later, but stake suggestions stay paused until next Monday.</div>';
+    h += '<button type="button" class="primary" id="ledAdd">Add to ledger</button>';
+    h += "</div>";
+    h += '<div class="sec-title">Bets</div>';
+    if (!ledger.bets.length) {
+      h += '<p class="hint">No bets logged yet.</p>';
+    } else {
+      h += '<table class="ledger-table"><thead><tr><th>Bet</th><th>Stake</th><th>Result</th></tr></thead><tbody>';
+      ledger.bets.slice().reverse().forEach(function (b) {
+        const p = betPL(b);
+        const c = clvPct(b);
+        h += '<tr data-bet-id="' + esc(b.id) + '"><td><div class="nm">' + esc(b.selection) + " · " + fmtOdds(b.odds) + "</div>";
+        h += '<div class="tiny">' + esc(b.event) + (b.book ? " · " + esc(b.book) : "") + "</div>";
+        if (c != null) h += '<div class="tiny">CLV ' + (c >= 0 ? "+" : "") + c.toFixed(1) + "% vs last price before the start</div>";
+        h += "</td><td>" + fmtMoney(b.stake);
+        if (p != null) h += '<div class="' + (p > 0 ? "pl-pos" : p < 0 ? "pl-neg" : "tiny") + '">' + fmtMoney(p) + "</div>";
+        h += "</td><td>" + esc(resultLabel(b.result));
+        if (b.result === "pending") {
+          h += '<div class="value-actions">';
+          h += '<button type="button" class="linkish" data-settle="won">Won</button>';
+          h += '<button type="button" class="linkish" data-settle="lost">Lost</button>';
+          h += '<button type="button" class="linkish" data-settle="void">Void</button>';
+          h += "</div>";
+        }
+        h += "</td></tr>";
+      });
+      h += "</tbody></table>";
+    }
+    h += '<div class="value-actions" style="margin-top:12px">';
+    h += '<button type="button" class="secondary" id="ledExport">Export JSON</button>';
+    h += '<button type="button" class="secondary" id="ledImport">Import JSON</button>';
+    h += '<input type="file" id="ledgerFile" accept="application/json,.json" class="hidden">';
+    h += "</div>";
+    h += '<p class="rg-foot">General information only, not betting advice. Gamble responsibly. Gambling Help: 1800 858 858 · <a href="https://www.gamblinghelponline.org.au/" target="_blank" rel="noopener noreferrer">gamblinghelponline.org.au</a></p>';
+    h += "</section>";
+    el.innerHTML = h;
+  }
+  function renderEdgePane() {
+    renderValuePanel();
+    renderBudget();
+    renderLedger();
+  }
+  function showEdge() {
+    setMainTab("edge");
+    renderEdgePane();
+  }
+  function initEdge() {
+    const briefUrl = "./edge-brief.json";
+    const closeUrl = "./closings.json";
+    Promise.all([fetchJson(briefUrl), fetchJson(closeUrl)]).then(function (pair) {
+      if (pair[0] && pair[0].ok) edgeBrief = pair[0];
+      if (pair[1] && pair[1].ok) closingsCache = pair[1];
+      ensureLive(function () {
+        renderTodayEdge();
+        if (mainTab === "edge") renderEdgePane();
+      });
+    });
+  }
+  function collectLedgerForm() {
+    return {
+      event: ($("ledEvent") && $("ledEvent").value || "").trim(),
+      selection: ($("ledSel") && $("ledSel").value || "").trim(),
+      book: ($("ledBook") && $("ledBook").value || "").trim(),
+      bookKey: ($("ledBookKey") && $("ledBookKey").value || "").trim(),
+      odds: num($("ledOdds") && $("ledOdds").value),
+      stake: num($("ledStake") && $("ledStake").value),
+      eventId: ($("ledEventId") && $("ledEventId").value || "").trim(),
+      sport: ($("ledSport") && $("ledSport").value || "").trim(),
+      commence: ($("ledCommence") && $("ledCommence").value || "").trim()
+    };
+  }
+  function addLedgerBet(fields) {
+    const bud = budgetState();
+    if (!fields.event || !fields.selection) return { ok: false, err: "Please enter the event and selection." };
+    if (fields.odds == null || fields.odds <= 1) return { ok: false, err: "Enter decimal odds above 1." };
+    if (fields.stake == null || fields.stake <= 0) return { ok: false, err: "Enter a stake." };
+    const closePre = closeOddsFor({ eventId: fields.eventId, selection: fields.selection, bookieKey: fields.bookKey, odds: fields.odds });
+    const bet = {
+      id: uid("b"),
+      added: new Date().toISOString(),
+      eventId: fields.eventId || "",
+      event: fields.event,
+      sport: fields.sport || "",
+      commence: fields.commence || "",
+      selection: fields.selection,
+      bookie: fields.book || "",
+      bookieKey: fields.bookKey || "",
+      odds: fields.odds,
+      stake: fields.stake,
+      result: "pending",
+      settled: null,
+      closeOdds: (fields.commence && eventStarted(fields.commence)) ? closePre : null
+    };
+    const ledger = loadLedger();
+    ledger.bets.push(bet);
+    saveLedger(ledger);
+    ledgerDraft = null;
+    return { ok: true };
+  }
+
+  document.addEventListener("click", function (ev) {
+    const info = ev.target.closest && ev.target.closest("[data-edge-info]");
+    if (info) {
+      ev.preventDefault();
+      edgeInfoOpen = !edgeInfoOpen;
+      renderTodayEdge();
+      if (mainTab === "edge") renderEdgePane();
+      return;
+    }
+    const logBtn = ev.target.closest && ev.target.closest("[data-log-value]");
+    if (logBtn) {
+      ev.preventDefault();
+      if (budgetState().locked) { showEdge(); return; }
+      ledgerDraft = {
+        eventId: logBtn.getAttribute("data-log-value") || "",
+        event: logBtn.getAttribute("data-event") || "",
+        selection: logBtn.getAttribute("data-selection") || "",
+        book: logBtn.getAttribute("data-book") || "",
+        bookKey: logBtn.getAttribute("data-book-key") || "",
+        odds: num(logBtn.getAttribute("data-odds")),
+        stake: num(logBtn.getAttribute("data-stake")),
+        sport: logBtn.getAttribute("data-sport") || "",
+        commence: logBtn.getAttribute("data-commence") || ""
+      };
+      showEdge();
+      setTimeout(function () { const el = $("ledStake"); if (el) el.focus(); }, 50);
+      return;
+    }
+    if (ev.target.id === "budgetSave") {
+      const n = num($("budgetIn") && $("budgetIn").value);
+      if (n == null || n < 0) return;
+      saveBankroll({ weeklyBudget: n === 0 ? null : n });
+      renderTodayEdge();
+      renderEdgePane();
+      return;
+    }
+    if (ev.target.id === "ledAdd") {
+      const res = addLedgerBet(collectLedgerForm());
+      if (!res.ok && res.err && res.err !== "locked") alert(res.err);
+      renderTodayEdge();
+      renderEdgePane();
+      return;
+    }
+    if (ev.target.id === "ledExport") {
+      const blob = new Blob([JSON.stringify(loadLedger(), null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "proximity-ledger.json";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+      return;
+    }
+    if (ev.target.id === "ledImport") {
+      const f = $("ledgerFile");
+      if (f) f.click();
+      return;
+    }
+    const settle = ev.target.closest && ev.target.closest("[data-settle]");
+    if (settle) {
+      const tr = settle.closest("tr[data-bet-id]");
+      if (!tr) return;
+      const id = tr.getAttribute("data-bet-id");
+      const result = settle.getAttribute("data-settle");
+      const ledger = loadLedger();
+      ledger.bets.forEach(function (b) {
+        if (b.id !== id) return;
+        b.result = result;
+        b.settled = new Date().toISOString();
+        const close = closeOddsFor(b);
+        if (close != null) b.closeOdds = close;
+      });
+      saveLedger(ledger);
+      renderEdgePane();
+      return;
+    }
+  });
+  document.addEventListener("change", function (ev) {
+    if (ev.target && ev.target.id === "ledgerFile") {
+      const file = ev.target.files && ev.target.files[0];
+      ev.target.value = "";
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function () {
+        try {
+          const data = JSON.parse(String(reader.result || ""));
+          if (!data || !Array.isArray(data.bets)) { alert("That file is not a Proximity ledger."); return; }
+          if (!confirm("Replace the ledger on this device with the imported file? This cannot be undone.")) return;
+          saveLedger({ version: 1, bets: data.bets });
+          renderTodayEdge();
+          renderEdgePane();
+        } catch (e) { alert("That file could not be read."); }
+      };
+      reader.readAsText(file);
+    }
+  });
+
   function setMainTab(tab) {
     mainTab = tab;
     $("tabPicks").setAttribute("aria-pressed", tab === "picks" ? "true" : "false");
     $("tabLive").setAttribute("aria-pressed", tab === "live" ? "true" : "false");
     $("tabParlay").setAttribute("aria-pressed", tab === "parlay" ? "true" : "false");
+    $("tabEdge").setAttribute("aria-pressed", tab === "edge" ? "true" : "false");
     $("picksPane").classList.toggle("hidden", tab !== "picks");
     $("livePane").classList.toggle("hidden", tab !== "live");
     $("parlayPane").classList.toggle("hidden", tab !== "parlay");
+    $("edgePane").classList.toggle("hidden", tab !== "edge");
   }
   function ensureLive(then) {
     if (liveCache) { then(liveCache); return; }
@@ -2419,6 +3115,7 @@
   $("tabLive").onclick = showLive;
   $("tabPicks").onclick = showPicks;
   $("tabParlay").onclick = showParlay;
+  $("tabEdge").onclick = showEdge;
   $("nearBox").addEventListener("click", function (ev) {
     const item = ev.target.closest("[data-near-id]");
     if (!item) return;
