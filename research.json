@@ -2,8 +2,8 @@
   "ok": true,
   "version": "9.1",
   "threshold": 0.9,
-  "updated": "2026-11-25T19:01:34Z",
-  "odds_updated": "2026-11-25T19:01:34Z",
+  "updated": "2026-11-26T07:59:03Z",
+  "odds_updated": "2026-11-26T07:59:02Z",
   "method": "Start from the no-vig (margin-removed) average of the bookmakers in the live AU odds file. Adjust only when a cited public source supports the change. If a factor cannot be checked, it is marked unavailable and is not allowed to raise confidence. Weather comes from Open-Meteo; injuries, recent form and rest come from ESPN's public site API where the sport is covered.",
   "disclaimer": "Probabilities are estimates, not guarantees. Short-odds favourites around 90% pay little, so a single upset wipes out several wins.",
   "sources": [
@@ -25,7 +25,7 @@
     }
   ],
   "count_flagged": 1,
-  "count_researched": 104,
+  "count_researched": 100,
   "flagged": [
     {
       "id": "fafaa6620907488091eb78a74707e8f2",
@@ -93,8 +93,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     }
   ],
@@ -165,8 +165,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -235,8 +235,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -305,8 +305,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -375,37 +375,37 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
-      "id": "60fd73164f7b0d1848f998d922155d87",
+      "id": "428050645d1dc8b16d84287e21de55fa",
       "sport_key": "basketball_nba",
       "sport_title": "NBA",
-      "commence_time": "2026-11-26T01:40:00Z",
-      "home_team": "Houston Rockets",
-      "away_team": "Phoenix Suns",
-      "winner": "Houston Rockets",
-      "winner_side": "home",
-      "p": 0.7673,
-      "market_p": 0.7593,
-      "delta": 0.008,
-      "ladbrokes_odds": 1.26,
+      "commence_time": "2026-11-28T02:40:00Z",
+      "home_team": "Utah Jazz",
+      "away_team": "Denver Nuggets",
+      "winner": "Denver Nuggets",
+      "winner_side": "away",
+      "p": 0.7657,
+      "market_p": 0.7457,
+      "delta": 0.02,
+      "ladbrokes_odds": 1.3,
       "flagged": false,
       "reasons": [
         {
           "factor": "market",
-          "text": "No-vig market chance for Houston Rockets is 75.9% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.26 on Houston Rockets. This is the starting figure.",
+          "text": "No-vig market chance for Denver Nuggets is 74.6% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.30 on Denver Nuggets. This is the starting figure.",
           "url": "https://the-odds-api.com/",
           "effect": 0.0,
           "available": true
         },
         {
           "factor": "injuries",
-          "text": "No current listed absence for Houston Rockets. Phoenix Suns absences: Mark Williams (Out). Source: ESPN injury report.",
+          "text": "No current listed absence for Denver Nuggets. Utah Jazz absences: Jaxson Hayes (Day-To-Day), Jusuf Nurkic (Out), Lauri Markkanen (Out), Jaren Jackson Jr. (Out). Source: ESPN injury report.",
           "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
-          "effect": 0.008,
+          "effect": 0.02,
           "available": true
         },
         {
@@ -417,56 +417,56 @@
         },
         {
           "factor": "form",
-          "text": "Houston Rockets recent (loaded games): WLWLW Phoenix Suns recent (loaded games): LWWWW Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
+          "text": "Denver Nuggets recent (loaded games): LWWWL Utah Jazz recent (loaded games): WWLLL Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
           "effect": 0.0,
           "available": true
         },
         {
           "factor": "rest",
-          "text": "Houston Rockets last played 2 days earlier; Phoenix Suns last played 2 days earlier. Source: ESPN scoreboard. A back-to-back can slightly lower confidence; it is never used to raise it.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
+          "text": "Denver Nuggets last played 3 days earlier; Utah Jazz last played 4 days earlier. Source: ESPN scoreboard. A back-to-back can slightly lower confidence; it is never used to raise it.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
           "effect": 0.0,
           "available": true
         },
         {
           "factor": "head_to_head",
           "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
           "effect": 0.0,
           "available": false
         },
         {
           "factor": "venue",
-          "text": "Listed venue: Toyota Center (Houston Rockets at home). Home advantage is already in the market odds, so it is not added again.",
+          "text": "Listed venue: Delta Center (Utah Jazz at home). Home advantage is already in the market odds, so it is not added again.",
           "url": null,
           "effect": 0.0,
           "available": true
         }
       ],
-      "venue": "Toyota Center",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "venue": "Delta Center",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
-      "id": "f427299353d39efbc9fb4ded5c551228",
-      "sport_key": "boxing_boxing",
-      "sport_title": "Boxing",
-      "commence_time": "2026-11-26T09:00:00Z",
-      "home_team": "Takeshi Ishii",
-      "away_team": "Zyvyr John Medecilo",
-      "winner": "Takeshi Ishii",
+      "id": "b6b6418ef8930c168a89cebaa361ffb3",
+      "sport_key": "mma_mixed_martial_arts",
+      "sport_title": "MMA",
+      "commence_time": "2026-12-05T15:00:00Z",
+      "home_team": "Mario Pinto",
+      "away_team": "Sergey Spivak",
+      "winner": "Mario Pinto",
       "winner_side": "home",
-      "p": 0.7607,
-      "market_p": 0.7607,
+      "p": 0.751,
+      "market_p": 0.751,
       "delta": 0.0,
-      "ladbrokes_odds": 1.22,
+      "ladbrokes_odds": 1.26,
       "flagged": false,
       "reasons": [
         {
           "factor": "market",
-          "text": "No-vig market chance for Takeshi Ishii is 76.1% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.22 on Takeshi Ishii. This is the starting figure.",
+          "text": "No-vig market chance for Mario Pinto is 75.1% (average of 1 book: Ladbrokes). Ladbrokes are paying 1.26 on Mario Pinto. This is the starting figure.",
           "url": "https://the-odds-api.com/",
           "effect": 0.0,
           "available": true
@@ -515,8 +515,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     }
   ],
@@ -587,8 +587,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -657,8 +657,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -727,8 +727,8 @@
         }
       ],
       "venue": "Melbourne Cricket Ground",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -797,8 +797,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -867,8 +867,8 @@
         }
       ],
       "venue": "People First Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -937,8 +937,8 @@
         }
       ],
       "venue": "Marvel Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -1007,8 +1007,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -1077,8 +1077,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -1147,8 +1147,8 @@
         }
       ],
       "venue": "Melbourne Cricket Ground",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -1217,8 +1217,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -1287,78 +1287,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
-      "deep": true
-    },
-    {
-      "id": "60fd73164f7b0d1848f998d922155d87",
-      "sport_key": "basketball_nba",
-      "sport_title": "NBA",
-      "commence_time": "2026-11-26T01:40:00Z",
-      "home_team": "Houston Rockets",
-      "away_team": "Phoenix Suns",
-      "winner": "Houston Rockets",
-      "winner_side": "home",
-      "p": 0.7673,
-      "market_p": 0.7593,
-      "delta": 0.008,
-      "ladbrokes_odds": 1.26,
-      "flagged": false,
-      "reasons": [
-        {
-          "factor": "market",
-          "text": "No-vig market chance for Houston Rockets is 75.9% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.26 on Houston Rockets. This is the starting figure.",
-          "url": "https://the-odds-api.com/",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "injuries",
-          "text": "No current listed absence for Houston Rockets. Phoenix Suns absences: Mark Williams (Out). Source: ESPN injury report.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
-          "effect": 0.008,
-          "available": true
-        },
-        {
-          "factor": "weather",
-          "text": "This is an indoor sport, so weather is not applied.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "form",
-          "text": "Houston Rockets recent (loaded games): WLWLW Phoenix Suns recent (loaded games): LWWWW Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "rest",
-          "text": "Houston Rockets last played 2 days earlier; Phoenix Suns last played 2 days earlier. Source: ESPN scoreboard. A back-to-back can slightly lower confidence; it is never used to raise it.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "head_to_head",
-          "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": false
-        },
-        {
-          "factor": "venue",
-          "text": "Listed venue: Toyota Center (Houston Rockets at home). Home advantage is already in the market odds, so it is not added again.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        }
-      ],
-      "venue": "Toyota Center",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -1370,15 +1300,15 @@
       "away_team": "Zyvyr John Medecilo",
       "winner": "Takeshi Ishii",
       "winner_side": "home",
-      "p": 0.7607,
-      "market_p": 0.7607,
+      "p": 0.7759,
+      "market_p": 0.7759,
       "delta": 0.0,
-      "ladbrokes_odds": 1.22,
+      "ladbrokes_odds": null,
       "flagged": false,
       "reasons": [
         {
           "factor": "market",
-          "text": "No-vig market chance for Takeshi Ishii is 76.1% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.22 on Takeshi Ishii. This is the starting figure.",
+          "text": "No-vig market chance for Takeshi Ishii is 77.6% (average of 1 book: SportsBet). No Ladbrokes price is in this feed. This is the starting figure.",
           "url": "https://the-odds-api.com/",
           "effect": 0.0,
           "available": true
@@ -1427,8 +1357,78 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
+      "deep": true
+    },
+    {
+      "id": "428050645d1dc8b16d84287e21de55fa",
+      "sport_key": "basketball_nba",
+      "sport_title": "NBA",
+      "commence_time": "2026-11-28T02:40:00Z",
+      "home_team": "Utah Jazz",
+      "away_team": "Denver Nuggets",
+      "winner": "Denver Nuggets",
+      "winner_side": "away",
+      "p": 0.7657,
+      "market_p": 0.7457,
+      "delta": 0.02,
+      "ladbrokes_odds": 1.3,
+      "flagged": false,
+      "reasons": [
+        {
+          "factor": "market",
+          "text": "No-vig market chance for Denver Nuggets is 74.6% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.30 on Denver Nuggets. This is the starting figure.",
+          "url": "https://the-odds-api.com/",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "injuries",
+          "text": "No current listed absence for Denver Nuggets. Utah Jazz absences: Jaxson Hayes (Day-To-Day), Jusuf Nurkic (Out), Lauri Markkanen (Out), Jaren Jackson Jr. (Out). Source: ESPN injury report.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
+          "effect": 0.02,
+          "available": true
+        },
+        {
+          "factor": "weather",
+          "text": "This is an indoor sport, so weather is not applied.",
+          "url": null,
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "form",
+          "text": "Denver Nuggets recent (loaded games): LWWWL Utah Jazz recent (loaded games): WWLLL Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "rest",
+          "text": "Denver Nuggets last played 3 days earlier; Utah Jazz last played 4 days earlier. Source: ESPN scoreboard. A back-to-back can slightly lower confidence; it is never used to raise it.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "head_to_head",
+          "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
+          "effect": 0.0,
+          "available": false
+        },
+        {
+          "factor": "venue",
+          "text": "Listed venue: Delta Center (Utah Jazz at home). Home advantage is already in the market odds, so it is not added again.",
+          "url": null,
+          "effect": 0.0,
+          "available": true
+        }
+      ],
+      "venue": "Delta Center",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -1436,10 +1436,10 @@
       "sport_key": "mma_mixed_martial_arts",
       "sport_title": "MMA",
       "commence_time": "2026-12-05T15:00:00Z",
-      "home_team": "Sergey Spivak",
-      "away_team": "Mario Pinto",
+      "home_team": "Mario Pinto",
+      "away_team": "Sergey Spivak",
       "winner": "Mario Pinto",
-      "winner_side": "away",
+      "winner_side": "home",
       "p": 0.751,
       "market_p": 0.751,
       "delta": 0.0,
@@ -1497,8 +1497,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -1567,8 +1567,78 @@
         }
       ],
       "venue": "Suncorp Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
+      "deep": true
+    },
+    {
+      "id": "c5dc35b4116988de2c1425df17456478",
+      "sport_key": "basketball_nba",
+      "sport_title": "NBA",
+      "commence_time": "2026-11-28T01:10:00Z",
+      "home_team": "Boston Celtics",
+      "away_team": "Atlanta Hawks",
+      "winner": "Boston Celtics",
+      "winner_side": "home",
+      "p": 0.7421,
+      "market_p": 0.7541,
+      "delta": -0.012,
+      "ladbrokes_odds": 1.28,
+      "flagged": false,
+      "reasons": [
+        {
+          "factor": "market",
+          "text": "No-vig market chance for Boston Celtics is 75.4% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.28 on Boston Celtics. This is the starting figure.",
+          "url": "https://the-odds-api.com/",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "injuries",
+          "text": "Boston Celtics absences: Mitchell Robinson (Out). Atlanta Hawks absences: Jock Landale (Out), Asa Newell (Out), CJ McCollum (Out), Mouhamed Gueye (Out) and 1 more. Source: ESPN injury report.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
+          "effect": -0.012,
+          "available": true
+        },
+        {
+          "factor": "weather",
+          "text": "This is an indoor sport, so weather is not applied.",
+          "url": null,
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "form",
+          "text": "Boston Celtics recent (loaded games): LLLLW Atlanta Hawks recent (loaded games): WWW Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "rest",
+          "text": "Boston Celtics last played 3 days earlier; Atlanta Hawks last played 6 days earlier. Source: ESPN scoreboard. A back-to-back can slightly lower confidence; it is never used to raise it.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "head_to_head",
+          "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
+          "effect": 0.0,
+          "available": false
+        },
+        {
+          "factor": "venue",
+          "text": "Listed venue: TD Garden (Boston Celtics at home). Home advantage is already in the market odds, so it is not added again.",
+          "url": null,
+          "effect": 0.0,
+          "available": true
+        }
+      ],
+      "venue": "TD Garden",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -1637,8 +1707,8 @@
         }
       ],
       "venue": "Optus Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -1646,10 +1716,10 @@
       "sport_key": "mma_mixed_martial_arts",
       "sport_title": "MMA",
       "commence_time": "2026-12-05T15:00:00Z",
-      "home_team": "Mairon Santos",
-      "away_team": "Akbar Abdullaev",
+      "home_team": "Akbar Abdullaev",
+      "away_team": "Mairon Santos",
       "winner": "Akbar Abdullaev",
-      "winner_side": "away",
+      "winner_side": "home",
       "p": 0.7158,
       "market_p": 0.7158,
       "delta": 0.0,
@@ -1707,8 +1777,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -1777,8 +1847,8 @@
         }
       ],
       "venue": "Adelaide Oval",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -1847,8 +1917,8 @@
         }
       ],
       "venue": "ENGIE Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -1917,8 +1987,8 @@
         }
       ],
       "venue": "AAMI Park",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -1930,15 +2000,15 @@
       "away_team": "Miel Fajardo",
       "winner": "Masamichi Yabuki",
       "winner_side": "home",
-      "p": 0.7014,
-      "market_p": 0.7014,
+      "p": 0.699,
+      "market_p": 0.699,
       "delta": 0.0,
-      "ladbrokes_odds": 1.3,
+      "ladbrokes_odds": 1.33,
       "flagged": false,
       "reasons": [
         {
           "factor": "market",
-          "text": "No-vig market chance for Masamichi Yabuki is 70.1% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.30 on Masamichi Yabuki. This is the starting figure.",
+          "text": "No-vig market chance for Masamichi Yabuki is 69.9% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.33 on Masamichi Yabuki. This is the starting figure.",
           "url": "https://the-odds-api.com/",
           "effect": 0.0,
           "available": true
@@ -1987,8 +2057,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -2057,8 +2127,8 @@
         }
       ],
       "venue": "Marvel Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -2127,8 +2197,8 @@
         }
       ],
       "venue": "Marvel Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -2197,8 +2267,8 @@
         }
       ],
       "venue": "The Gabba",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -2267,8 +2337,8 @@
         }
       ],
       "venue": "WIN Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -2337,79 +2407,9 @@
         }
       ],
       "venue": "Adelaide Oval",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
-    },
-    {
-      "id": "e6df92326adb480e427bb7c10f445c60",
-      "sport_key": "basketball_nba",
-      "sport_title": "NBA",
-      "commence_time": "2026-11-26T03:10:00Z",
-      "home_team": "Golden State Warriors",
-      "away_team": "Sacramento Kings",
-      "winner": "Golden State Warriors",
-      "winner_side": "home",
-      "p": 0.66,
-      "market_p": 0.7,
-      "delta": -0.04,
-      "ladbrokes_odds": 1.36,
-      "flagged": false,
-      "reasons": [
-        {
-          "factor": "market",
-          "text": "No-vig market chance for Golden State Warriors is 70.0% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.36 on Golden State Warriors. This is the starting figure.",
-          "url": "https://the-odds-api.com/",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "injuries",
-          "text": "Golden State Warriors absences: Brandon Williams (Out), Stephen Curry (Out), Kristaps Porzingis (Out), Moses Moody (Out) and 1 more. Sacramento Kings absences: Maxime Raynaud (Out), Ben Simmons (Out). Source: ESPN injury report.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
-          "effect": -0.04,
-          "available": true
-        },
-        {
-          "factor": "weather",
-          "text": "This is an indoor sport, so weather is not applied.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "form",
-          "text": "Golden State Warriors recent (loaded games): LLLLW Sacramento Kings recent (loaded games): LLLWL Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "rest",
-          "text": "Golden State Warriors last played 3 days earlier; Sacramento Kings last played 2 days earlier. Source: ESPN scoreboard. A back-to-back can slightly lower confidence; it is never used to raise it.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "head_to_head",
-          "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": false
-        },
-        {
-          "factor": "venue",
-          "text": "Listed venue: Chase Center (Golden State Warriors at home). Home advantage is already in the market odds, so it is not added again.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        }
-      ],
-      "venue": "Chase Center",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
-      "deep": true
     },
     {
       "id": "0815c9d9b45514f13d9aa16028d66b73",
@@ -2477,89 +2477,19 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
-    },
-    {
-      "id": "698d6d78acf30f4ff4e4aaf6670249ee",
-      "sport_key": "basketball_nba",
-      "sport_title": "NBA",
-      "commence_time": "2026-11-26T01:10:00Z",
-      "home_team": "Memphis Grizzlies",
-      "away_team": "Los Angeles Clippers",
-      "winner": "Memphis Grizzlies",
-      "winner_side": "home",
-      "p": 0.6561,
-      "market_p": 0.6961,
-      "delta": -0.04,
-      "ladbrokes_odds": 1.38,
-      "flagged": false,
-      "reasons": [
-        {
-          "factor": "market",
-          "text": "No-vig market chance for Memphis Grizzlies is 69.6% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.38 on Memphis Grizzlies. This is the starting figure.",
-          "url": "https://the-odds-api.com/",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "injuries",
-          "text": "Memphis Grizzlies absences: Scotty Pippen Jr. (Out), Cameron Boozer (Out), Jerami Grant (Out), GG Jackson (Out) and 1 more. No current listed absence for Los Angeles Clippers. Source: ESPN injury report.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
-          "effect": -0.04,
-          "available": true
-        },
-        {
-          "factor": "weather",
-          "text": "This is an indoor sport, so weather is not applied.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "form",
-          "text": "Memphis Grizzlies recent (loaded games): WWWLW Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "rest",
-          "text": "Memphis Grizzlies last played 2 days earlier. Source: ESPN scoreboard. A back-to-back can slightly lower confidence; it is never used to raise it.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "head_to_head",
-          "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": false
-        },
-        {
-          "factor": "venue",
-          "text": "Listed venue: FedExForum (Memphis Grizzlies at home). Home advantage is already in the market odds, so it is not added again.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        }
-      ],
-      "venue": "FedExForum",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
-      "deep": true
     },
     {
       "id": "a9bfd20752c6309195c13f973b8871fe",
       "sport_key": "mma_mixed_martial_arts",
       "sport_title": "MMA",
       "commence_time": "2026-12-05T15:00:00Z",
-      "home_team": "Levan Chokheli",
-      "away_team": "Islam Dulatov",
+      "home_team": "Islam Dulatov",
+      "away_team": "Levan Chokheli",
       "winner": "Islam Dulatov",
-      "winner_side": "away",
+      "winner_side": "home",
       "p": 0.6416,
       "market_p": 0.6416,
       "delta": 0.0,
@@ -2617,8 +2547,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -2687,8 +2617,8 @@
         }
       ],
       "venue": "Allianz Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -2757,8 +2687,8 @@
         }
       ],
       "venue": "AAMI Park",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -2827,8 +2757,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -2862,10 +2792,10 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at Elland Road around 2026-11-28T15:00: 4°C 1.3 mm rain 67% chance of precipitation wind 24 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Open-Meteo did not return a forecast for Elland Road. This factor does not raise confidence.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
-          "available": true
+          "available": false
         },
         {
           "factor": "form",
@@ -2897,8 +2827,8 @@
         }
       ],
       "venue": "Elland Road",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -2967,8 +2897,8 @@
         }
       ],
       "venue": "Marvel Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -3037,8 +2967,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -3107,8 +3037,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -3177,8 +3107,8 @@
         }
       ],
       "venue": "Optus Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -3247,8 +3177,8 @@
         }
       ],
       "venue": "Queensland Country Bank Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -3256,10 +3186,10 @@
       "sport_key": "mma_mixed_martial_arts",
       "sport_title": "MMA",
       "commence_time": "2026-12-05T15:00:00Z",
-      "home_team": "Magomed Tuchalov",
-      "away_team": "Ion Cutelaba",
+      "home_team": "Ion Cutelaba",
+      "away_team": "Magomed Tuchalov",
       "winner": "Magomed Tuchalov",
-      "winner_side": "home",
+      "winner_side": "away",
       "p": 0.6203,
       "market_p": 0.6203,
       "delta": 0.0,
@@ -3317,8 +3247,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -3387,8 +3317,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -3457,8 +3387,8 @@
         }
       ],
       "venue": "Suncorp Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -3466,10 +3396,10 @@
       "sport_key": "mma_mixed_martial_arts",
       "sport_title": "MMA",
       "commence_time": "2026-12-05T15:00:00Z",
-      "home_team": "Marco Tulio Silva",
-      "away_team": "Jun Yong Park",
+      "home_team": "Jun Yong Park",
+      "away_team": "Marco Tulio Silva",
       "winner": "Marco Tulio Silva",
-      "winner_side": "home",
+      "winner_side": "away",
       "p": 0.6173,
       "market_p": 0.6173,
       "delta": 0.0,
@@ -3527,8 +3457,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -3597,8 +3527,8 @@
         }
       ],
       "venue": "Marvel Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -3667,8 +3597,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -3702,7 +3632,7 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at Anfield around 2026-12-02T19:00: 8°C 0.0 mm rain 20% chance of precipitation wind 14 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Forecast at Anfield around 2026-12-02T19:00: 8°C 0.0 mm rain 33% chance of precipitation wind 8 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
           "available": true
@@ -3737,8 +3667,8 @@
         }
       ],
       "venue": "Anfield",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -3807,8 +3737,8 @@
         }
       ],
       "venue": "Optus Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -3877,8 +3807,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -3947,8 +3877,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -4017,8 +3947,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -4087,8 +4017,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -4157,8 +4087,78 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
+      "deep": true
+    },
+    {
+      "id": "13d9ca3bcb664829c603755d31401002",
+      "sport_key": "basketball_nba",
+      "sport_title": "NBA",
+      "commence_time": "2026-11-28T02:40:00Z",
+      "home_team": "San Antonio Spurs",
+      "away_team": "Los Angeles Lakers",
+      "winner": "San Antonio Spurs",
+      "winner_side": "home",
+      "p": 0.5973,
+      "market_p": 0.6373,
+      "delta": -0.04,
+      "ladbrokes_odds": 1.5,
+      "flagged": false,
+      "reasons": [
+        {
+          "factor": "market",
+          "text": "No-vig market chance for San Antonio Spurs is 63.7% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.50 on San Antonio Spurs. This is the starting figure.",
+          "url": "https://the-odds-api.com/",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "injuries",
+          "text": "San Antonio Spurs absences: De'Aaron Fox (Day-To-Day), Dylan Harper (Out), Tobias Harris (Out), Jayden Quaintance (Out). Los Angeles Lakers absences: Austin Reaves (Out). Source: ESPN injury report.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
+          "effect": -0.04,
+          "available": true
+        },
+        {
+          "factor": "weather",
+          "text": "This is an indoor sport, so weather is not applied.",
+          "url": null,
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "form",
+          "text": "San Antonio Spurs recent (loaded games): LWWWL Los Angeles Lakers recent (loaded games): WLWW Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "rest",
+          "text": "San Antonio Spurs last played 2 days earlier; Los Angeles Lakers last played 4 days earlier. Source: ESPN scoreboard. A back-to-back can slightly lower confidence; it is never used to raise it.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "head_to_head",
+          "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
+          "effect": 0.0,
+          "available": false
+        },
+        {
+          "factor": "venue",
+          "text": "Listed venue: Frost Bank Center (San Antonio Spurs at home). Home advantage is already in the market odds, so it is not added again.",
+          "url": null,
+          "effect": 0.0,
+          "available": true
+        }
+      ],
+      "venue": "Frost Bank Center",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -4227,8 +4227,8 @@
         }
       ],
       "venue": "CommBank Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -4297,8 +4297,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -4367,79 +4367,9 @@
         }
       ],
       "venue": "Melbourne Cricket Ground",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
-    },
-    {
-      "id": "158c893daf73ec4d5242e91852ab660f",
-      "sport_key": "mma_mixed_martial_arts",
-      "sport_title": "MMA",
-      "commence_time": "2026-12-05T15:00:00Z",
-      "home_team": "Modestino Rodrigues",
-      "away_team": "Matthieu Duclos",
-      "winner": "Matthieu Duclos",
-      "winner_side": "away",
-      "p": 0.5897,
-      "market_p": 0.5897,
-      "delta": 0.0,
-      "ladbrokes_odds": 1.6,
-      "flagged": false,
-      "reasons": [
-        {
-          "factor": "market",
-          "text": "No-vig market chance for Matthieu Duclos is 59.0% (average of 1 book: Ladbrokes). Ladbrokes are paying 1.60 on Matthieu Duclos. This is the starting figure.",
-          "url": "https://the-odds-api.com/",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "injuries",
-          "text": "No official, current withdrawal or medical list was found for this bout. This factor does not raise confidence.",
-          "url": null,
-          "effect": 0.0,
-          "available": false
-        },
-        {
-          "factor": "weather",
-          "text": "This is an indoor sport, so weather is not applied.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "form",
-          "text": "No verified recent bout record was loaded for both fighters in this run. This factor does not raise confidence.",
-          "url": null,
-          "effect": 0.0,
-          "available": false
-        },
-        {
-          "factor": "rest",
-          "text": "Layoff and travel could not be confirmed from a public schedule source. This factor does not raise confidence.",
-          "url": null,
-          "effect": 0.0,
-          "available": false
-        },
-        {
-          "factor": "venue",
-          "text": "Combat sports are treated as venue-neutral here (no extra home lift).",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "head_to_head",
-          "text": "A sourced prior meeting record was not found. This factor does not raise confidence.",
-          "url": null,
-          "effect": 0.0,
-          "available": false
-        }
-      ],
-      "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
-      "deep": true
     },
     {
       "id": "10abd18165c999264777913e42c9f96c",
@@ -4472,10 +4402,10 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at Etihad Stadium around 2026-12-02T19:00: 8°C 0.0 mm rain 25% chance of precipitation wind 8 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Open-Meteo did not return a forecast for Etihad Stadium. This factor does not raise confidence.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
-          "available": true
+          "available": false
         },
         {
           "factor": "form",
@@ -4507,8 +4437,78 @@
         }
       ],
       "venue": "Etihad Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
+      "deep": true
+    },
+    {
+      "id": "5b64071f3e3bf67b0fdea8d1ac81d0ec",
+      "sport_key": "basketball_nba",
+      "sport_title": "NBA",
+      "commence_time": "2026-11-28T00:40:00Z",
+      "home_team": "Indiana Pacers",
+      "away_team": "Philadelphia 76ers",
+      "winner": "Philadelphia 76ers",
+      "winner_side": "away",
+      "p": 0.5886,
+      "market_p": 0.6126,
+      "delta": -0.024,
+      "ladbrokes_odds": 1.57,
+      "flagged": false,
+      "reasons": [
+        {
+          "factor": "market",
+          "text": "No-vig market chance for Philadelphia 76ers is 61.3% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.57 on Philadelphia 76ers. This is the starting figure.",
+          "url": "https://the-odds-api.com/",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "injuries",
+          "text": "Philadelphia 76ers absences: Joel Embiid (Day-To-Day), Ariel Hukporti (Out). Indiana Pacers absences: Tyrese Haliburton (Out), Aaron Nesmith (Day-To-Day), Ben Sheppard (Out). Source: ESPN injury report.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
+          "effect": -0.024,
+          "available": true
+        },
+        {
+          "factor": "weather",
+          "text": "This is an indoor sport, so weather is not applied.",
+          "url": null,
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "form",
+          "text": "Philadelphia 76ers recent (loaded games): WWWLW Indiana Pacers recent (loaded games): LLLW Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "rest",
+          "text": "Philadelphia 76ers last played 3 days earlier; Indiana Pacers last played 4 days earlier. Source: ESPN scoreboard. A back-to-back can slightly lower confidence; it is never used to raise it.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "head_to_head",
+          "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
+          "effect": 0.0,
+          "available": false
+        },
+        {
+          "factor": "venue",
+          "text": "Listed venue: Gainbridge Fieldhouse (Indiana Pacers at home). Home advantage is already in the market odds, so it is not added again.",
+          "url": null,
+          "effect": 0.0,
+          "available": true
+        }
+      ],
+      "venue": "Gainbridge Fieldhouse",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -4577,8 +4577,8 @@
         }
       ],
       "venue": "Marvel Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -4586,10 +4586,10 @@
       "sport_key": "mma_mixed_martial_arts",
       "sport_title": "MMA",
       "commence_time": "2026-12-05T15:00:00Z",
-      "home_team": "Luke Riley",
-      "away_team": "Gabriel Santos",
+      "home_team": "Gabriel Santos",
+      "away_team": "Luke Riley",
       "winner": "Luke Riley",
-      "winner_side": "home",
+      "winner_side": "away",
       "p": 0.5867,
       "market_p": 0.5867,
       "delta": 0.0,
@@ -4647,8 +4647,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -4717,8 +4717,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -4726,10 +4726,10 @@
       "sport_key": "mma_mixed_martial_arts",
       "sport_title": "MMA",
       "commence_time": "2026-12-05T15:00:00Z",
-      "home_team": "Abdul Hussein",
-      "away_team": "Enrique Hecher Sosa",
+      "home_team": "Enrique Hecher Sosa",
+      "away_team": "Abdul Hussein",
       "winner": "Abdul Hussein",
-      "winner_side": "home",
+      "winner_side": "away",
       "p": 0.5823,
       "market_p": 0.5823,
       "delta": 0.0,
@@ -4787,8 +4787,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -4857,8 +4857,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -4927,8 +4927,8 @@
         }
       ],
       "venue": "Accor Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -4962,10 +4962,10 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at American Express Stadium around 2026-11-29T14:00: 8°C 0.0 mm rain 12% chance of precipitation wind 8 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Open-Meteo did not return a forecast for American Express Stadium. This factor does not raise confidence.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
-          "available": true
+          "available": false
         },
         {
           "factor": "form",
@@ -4997,8 +4997,78 @@
         }
       ],
       "venue": "American Express Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
+      "deep": true
+    },
+    {
+      "id": "3c522e32c3035d7dc3e1734903b84654",
+      "sport_key": "basketball_nba",
+      "sport_title": "NBA",
+      "commence_time": "2026-11-28T00:10:00Z",
+      "home_team": "New York Knicks",
+      "away_team": "Miami Heat",
+      "winner": "New York Knicks",
+      "winner_side": "home",
+      "p": 0.5632,
+      "market_p": 0.5992,
+      "delta": -0.036,
+      "ladbrokes_odds": 1.6,
+      "flagged": false,
+      "reasons": [
+        {
+          "factor": "market",
+          "text": "No-vig market chance for New York Knicks is 59.9% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.60 on New York Knicks. This is the starting figure.",
+          "url": "https://the-odds-api.com/",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "injuries",
+          "text": "New York Knicks absences: Miles McBride (Day-To-Day), OG Anunoby (Out), Jordan Clarkson (Out). No current listed absence for Miami Heat. Source: ESPN injury report.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
+          "effect": -0.036,
+          "available": true
+        },
+        {
+          "factor": "weather",
+          "text": "This is an indoor sport, so weather is not applied.",
+          "url": null,
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "form",
+          "text": "New York Knicks recent (loaded games): WWWWW Miami Heat recent (loaded games): WWWL Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "rest",
+          "text": "New York Knicks last played 2 days earlier; Miami Heat last played 3 days earlier. Source: ESPN scoreboard. A back-to-back can slightly lower confidence; it is never used to raise it.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "head_to_head",
+          "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261129",
+          "effect": 0.0,
+          "available": false
+        },
+        {
+          "factor": "venue",
+          "text": "Listed venue: Madison Square Garden (New York Knicks at home). Home advantage is already in the market odds, so it is not added again.",
+          "url": null,
+          "effect": 0.0,
+          "available": true
+        }
+      ],
+      "venue": "Madison Square Garden",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -5067,9 +5137,79 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
+    },
+    {
+      "id": "158c893daf73ec4d5242e91852ab660f",
+      "sport_key": "mma_mixed_martial_arts",
+      "sport_title": "MMA",
+      "commence_time": "2026-12-05T15:00:00Z",
+      "home_team": "Matthieu Duclos",
+      "away_team": "Modestino Rodrigues",
+      "winner": "Matthieu Duclos",
+      "winner_side": "home",
+      "p": 0.5584,
+      "market_p": 0.5584,
+      "delta": 0.0,
+      "ladbrokes_odds": 1.7,
+      "flagged": false,
+      "reasons": [
+        {
+          "factor": "market",
+          "text": "No-vig market chance for Matthieu Duclos is 55.8% (average of 1 book: Ladbrokes). Ladbrokes are paying 1.70 on Matthieu Duclos. This is the starting figure.",
+          "url": "https://the-odds-api.com/",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "injuries",
+          "text": "No official, current withdrawal or medical list was found for this bout. This factor does not raise confidence.",
+          "url": null,
+          "effect": 0.0,
+          "available": false
+        },
+        {
+          "factor": "weather",
+          "text": "This is an indoor sport, so weather is not applied.",
+          "url": null,
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "form",
+          "text": "No verified recent bout record was loaded for both fighters in this run. This factor does not raise confidence.",
+          "url": null,
+          "effect": 0.0,
+          "available": false
+        },
+        {
+          "factor": "rest",
+          "text": "Layoff and travel could not be confirmed from a public schedule source. This factor does not raise confidence.",
+          "url": null,
+          "effect": 0.0,
+          "available": false
+        },
+        {
+          "factor": "venue",
+          "text": "Combat sports are treated as venue-neutral here (no extra home lift).",
+          "url": null,
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "head_to_head",
+          "text": "A sourced prior meeting record was not found. This factor does not raise confidence.",
+          "url": null,
+          "effect": 0.0,
+          "available": false
+        }
+      ],
+      "venue": null,
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
+      "deep": true
     },
     {
       "id": "ae2d8dbd5af0e0cb50bad15082c50b71",
@@ -5137,79 +5277,9 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
-    },
-    {
-      "id": "87ce247fb83685389ca8ffb21be6cd3e",
-      "sport_key": "basketball_nba",
-      "sport_title": "NBA",
-      "commence_time": "2026-11-26T00:10:00Z",
-      "home_team": "Charlotte Hornets",
-      "away_team": "Chicago Bulls",
-      "winner": "Charlotte Hornets",
-      "winner_side": "home",
-      "p": 0.5463,
-      "market_p": 0.5863,
-      "delta": -0.04,
-      "ladbrokes_odds": 1.62,
-      "flagged": false,
-      "reasons": [
-        {
-          "factor": "market",
-          "text": "No-vig market chance for Charlotte Hornets is 58.6% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.62 on Charlotte Hornets. This is the starting figure.",
-          "url": "https://the-odds-api.com/",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "injuries",
-          "text": "Charlotte Hornets absences: Ryan Kalkbrenner (Out), Grayson Allen (Out), Dennis Schroder (Out), Kon Knueppel (Out). Chicago Bulls absences: Norman Powell (Out), Caleb Wilson (Out). Source: ESPN injury report.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
-          "effect": -0.04,
-          "available": true
-        },
-        {
-          "factor": "weather",
-          "text": "This is an indoor sport, so weather is not applied.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "form",
-          "text": "Charlotte Hornets recent (loaded games): LLLL Chicago Bulls recent (loaded games): LWLLW Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "rest",
-          "text": "Charlotte Hornets last played 2 days earlier; Chicago Bulls last played 2 days earlier. Source: ESPN scoreboard. A back-to-back can slightly lower confidence; it is never used to raise it.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "head_to_head",
-          "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": false
-        },
-        {
-          "factor": "venue",
-          "text": "Listed venue: Spectrum Center (Charlotte Hornets at home). Home advantage is already in the market odds, so it is not added again.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        }
-      ],
-      "venue": "Spectrum Center",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
-      "deep": true
     },
     {
       "id": "836ad618789e171f7357649ce8e62b49",
@@ -5242,10 +5312,10 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at Stamford Bridge around 2026-12-02T19:00: 12°C 0.3 mm rain 28% chance of precipitation wind 13 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Open-Meteo did not return a forecast for Stamford Bridge. This factor does not raise confidence.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
-          "available": true
+          "available": false
         },
         {
           "factor": "form",
@@ -5277,8 +5347,8 @@
         }
       ],
       "venue": "Stamford Bridge",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -5286,10 +5356,10 @@
       "sport_key": "mma_mixed_martial_arts",
       "sport_title": "MMA",
       "commence_time": "2026-12-05T15:00:00Z",
-      "home_team": "Bruno Silva",
-      "away_team": "Jafel Filho",
+      "home_team": "Jafel Filho",
+      "away_team": "Bruno Silva",
       "winner": "Jafel Filho",
-      "winner_side": "away",
+      "winner_side": "home",
       "p": 0.5423,
       "market_p": 0.5423,
       "delta": 0.0,
@@ -5347,78 +5417,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
-      "deep": true
-    },
-    {
-      "id": "9aa9f220709533d70d11f85fae886771",
-      "sport_key": "basketball_nba",
-      "sport_title": "NBA",
-      "commence_time": "2026-11-26T03:10:00Z",
-      "home_team": "Portland Trail Blazers",
-      "away_team": "San Antonio Spurs",
-      "winner": "San Antonio Spurs",
-      "winner_side": "away",
-      "p": 0.5421,
-      "market_p": 0.5781,
-      "delta": -0.036,
-      "ladbrokes_odds": 1.67,
-      "flagged": false,
-      "reasons": [
-        {
-          "factor": "market",
-          "text": "No-vig market chance for San Antonio Spurs is 57.8% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.67 on San Antonio Spurs. This is the starting figure.",
-          "url": "https://the-odds-api.com/",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "injuries",
-          "text": "San Antonio Spurs absences: Dylan Harper (Out), Tobias Harris (Out), Jayden Quaintance (Out). Portland Trail Blazers absences: Chris Youngblood (Out), Vit Krejci (Out), Ja Morant (Out), Shaedon Sharpe (Out). Source: ESPN injury report.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
-          "effect": -0.036,
-          "available": true
-        },
-        {
-          "factor": "weather",
-          "text": "This is an indoor sport, so weather is not applied.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "form",
-          "text": "San Antonio Spurs recent (loaded games): WLWWW Portland Trail Blazers recent (loaded games): LLWLW Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "rest",
-          "text": "San Antonio Spurs last played 2 days earlier; Portland Trail Blazers last played 2 days earlier. Source: ESPN scoreboard. A back-to-back can slightly lower confidence; it is never used to raise it.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "head_to_head",
-          "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": false
-        },
-        {
-          "factor": "venue",
-          "text": "Listed venue: Moda Center (Portland Trail Blazers at home). Home advantage is already in the market odds, so it is not added again.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        }
-      ],
-      "venue": "Moda Center",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -5452,7 +5452,7 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at Tottenham Hotspur Stadium around 2026-12-03T20:00: 9°C 0.0 mm rain 6% chance of precipitation wind 8 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Forecast at Tottenham Hotspur Stadium around 2026-12-03T20:00: 5°C 0.0 mm rain 1% chance of precipitation wind 11 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
           "available": true
@@ -5487,8 +5487,8 @@
         }
       ],
       "venue": "Tottenham Hotspur Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -5557,8 +5557,8 @@
         }
       ],
       "venue": "WIN Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -5627,8 +5627,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -5697,78 +5697,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
-      "deep": true
-    },
-    {
-      "id": "9e203cbbc6d37b7b0d9c08cb89fe0b28",
-      "sport_key": "basketball_nba",
-      "sport_title": "NBA",
-      "commence_time": "2026-11-26T01:10:00Z",
-      "home_team": "Milwaukee Bucks",
-      "away_team": "Brooklyn Nets",
-      "winner": "Milwaukee Bucks",
-      "winner_side": "home",
-      "p": 0.5263,
-      "market_p": 0.5183,
-      "delta": 0.008,
-      "ladbrokes_odds": 1.83,
-      "flagged": false,
-      "reasons": [
-        {
-          "factor": "market",
-          "text": "No-vig market chance for Milwaukee Bucks is 51.8% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.83 on Milwaukee Bucks. This is the starting figure.",
-          "url": "https://the-odds-api.com/",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "injuries",
-          "text": "No current listed absence for Milwaukee Bucks. Brooklyn Nets absences: Nolan Traore (Out). Source: ESPN injury report.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
-          "effect": 0.008,
-          "available": true
-        },
-        {
-          "factor": "weather",
-          "text": "This is an indoor sport, so weather is not applied.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "form",
-          "text": "Milwaukee Bucks recent (loaded games): LLLLW Brooklyn Nets recent (loaded games): LLLLL Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "rest",
-          "text": "Milwaukee Bucks last played 2 days earlier; Brooklyn Nets last played 2 days earlier. Source: ESPN scoreboard. A back-to-back can slightly lower confidence; it is never used to raise it.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "head_to_head",
-          "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": false
-        },
-        {
-          "factor": "venue",
-          "text": "Listed venue: Fiserv Forum (Milwaukee Bucks at home). Home advantage is already in the market odds, so it is not added again.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        }
-      ],
-      "venue": "Fiserv Forum",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -5837,8 +5767,8 @@
         }
       ],
       "venue": "GMHBA Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -5907,8 +5837,8 @@
         }
       ],
       "venue": null,
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -5977,8 +5907,8 @@
         }
       ],
       "venue": "CommBank Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -6012,10 +5942,10 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at MKM Stadium around 2026-12-02T19:00: 9°C 0.0 mm rain 28% chance of precipitation wind 18 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Open-Meteo did not return a forecast for MKM Stadium. This factor does not raise confidence.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
-          "available": true
+          "available": false
         },
         {
           "factor": "form",
@@ -6047,8 +5977,8 @@
         }
       ],
       "venue": "MKM Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -6117,8 +6047,8 @@
         }
       ],
       "venue": "McDonald Jones Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -6152,7 +6082,7 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at Sky Stadium around 2026-12-06T02:00: 16°C 0.0 mm rain 1% chance of precipitation wind 40 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Forecast at Sky Stadium around 2026-12-06T02:00: 17°C 0.1 mm rain 10% chance of precipitation wind 43 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
           "available": true
@@ -6187,78 +6117,8 @@
         }
       ],
       "venue": "Sky Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
-      "deep": true
-    },
-    {
-      "id": "07421d1675d6bc51bb5fa91f84a09eb3",
-      "sport_key": "basketball_nba",
-      "sport_title": "NBA",
-      "commence_time": "2026-11-26T00:40:00Z",
-      "home_team": "Oklahoma City Thunder",
-      "away_team": "Minnesota Timberwolves",
-      "winner": "Oklahoma City Thunder",
-      "winner_side": "home",
-      "p": 0.5065,
-      "market_p": 0.5465,
-      "delta": -0.04,
-      "ladbrokes_odds": 1.75,
-      "flagged": false,
-      "reasons": [
-        {
-          "factor": "market",
-          "text": "No-vig market chance for Oklahoma City Thunder is 54.7% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.75 on Oklahoma City Thunder. This is the starting figure.",
-          "url": "https://the-odds-api.com/",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "injuries",
-          "text": "Oklahoma City Thunder absences: Nikola Topic (Out), Jaylin Williams (Out), Aday Mara (Out), Jalen Williams (Out) and 3 more. Minnesota Timberwolves absences: Donte DiVincenzo (Out), Jaylen Clark (Out), Anthony Edwards (Out). Source: ESPN injury report.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
-          "effect": -0.04,
-          "available": true
-        },
-        {
-          "factor": "weather",
-          "text": "This is an indoor sport, so weather is not applied.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "form",
-          "text": "Oklahoma City Thunder recent (loaded games): WLWLL Minnesota Timberwolves recent (loaded games): WWLWW Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "rest",
-          "text": "Oklahoma City Thunder last played 2 days earlier; Minnesota Timberwolves last played 2 days earlier. Source: ESPN scoreboard. A back-to-back can slightly lower confidence; it is never used to raise it.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "head_to_head",
-          "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": false
-        },
-        {
-          "factor": "venue",
-          "text": "Listed venue: Paycom Center (Oklahoma City Thunder at home). Home advantage is already in the market odds, so it is not added again.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        }
-      ],
-      "venue": "Paycom Center",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -6327,8 +6187,8 @@
         }
       ],
       "venue": "4 Pines Park",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -6338,8 +6198,8 @@
       "commence_time": "2026-12-15T08:15:00Z",
       "home_team": "Brisbane Heat",
       "away_team": "Sydney Sixers",
-      "winner": "Sydney Sixers",
-      "winner_side": "away",
+      "winner": "Brisbane Heat",
+      "winner_side": "home",
       "p": 0.5,
       "market_p": 0.5,
       "delta": 0.0,
@@ -6348,7 +6208,7 @@
       "reasons": [
         {
           "factor": "market",
-          "text": "No-vig market chance for Sydney Sixers is 50.0% (average of 1 book: SportsBet). No Ladbrokes price is in this feed. This is the starting figure.",
+          "text": "No-vig market chance for Brisbane Heat is 50.0% (average of 1 book: SportsBet). No Ladbrokes price is in this feed. This is the starting figure.",
           "url": "https://the-odds-api.com/",
           "effect": 0.0,
           "available": true
@@ -6397,8 +6257,8 @@
         }
       ],
       "venue": "The Gabba",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -6408,8 +6268,8 @@
       "commence_time": "2026-12-16T08:15:00Z",
       "home_team": "Sydney Thunder",
       "away_team": "Adelaide Strikers",
-      "winner": "Adelaide Strikers",
-      "winner_side": "away",
+      "winner": "Sydney Thunder",
+      "winner_side": "home",
       "p": 0.5,
       "market_p": 0.5,
       "delta": 0.0,
@@ -6418,7 +6278,7 @@
       "reasons": [
         {
           "factor": "market",
-          "text": "No-vig market chance for Adelaide Strikers is 50.0% (average of 1 book: SportsBet). No Ladbrokes price is in this feed. This is the starting figure.",
+          "text": "No-vig market chance for Sydney Thunder is 50.0% (average of 1 book: SportsBet). No Ladbrokes price is in this feed. This is the starting figure.",
           "url": "https://the-odds-api.com/",
           "effect": 0.0,
           "available": true
@@ -6467,8 +6327,8 @@
         }
       ],
       "venue": "ENGIE Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -6478,8 +6338,8 @@
       "commence_time": "2027-03-07T07:15:00Z",
       "home_team": "Canberra Raiders",
       "away_team": "South Sydney Rabbitohs",
-      "winner": "Canberra Raiders",
-      "winner_side": "home",
+      "winner": "South Sydney Rabbitohs",
+      "winner_side": "away",
       "p": 0.5,
       "market_p": 0.5,
       "delta": 0.0,
@@ -6488,7 +6348,7 @@
       "reasons": [
         {
           "factor": "market",
-          "text": "No-vig market chance for Canberra Raiders is 50.0% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.90 on Canberra Raiders. This is the starting figure.",
+          "text": "No-vig market chance for South Sydney Rabbitohs is 50.0% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.90 on South Sydney Rabbitohs. This is the starting figure.",
           "url": "https://the-odds-api.com/",
           "effect": 0.0,
           "available": true
@@ -6537,8 +6397,8 @@
         }
       ],
       "venue": "GIO Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
     },
     {
@@ -6548,8 +6408,8 @@
       "commence_time": "2027-03-17T08:30:00Z",
       "home_team": "Sydney Swans",
       "away_team": "Geelong Cats",
-      "winner": "Sydney Swans",
-      "winner_side": "home",
+      "winner": "Geelong Cats",
+      "winner_side": "away",
       "p": 0.5,
       "market_p": 0.5,
       "delta": 0.0,
@@ -6558,7 +6418,7 @@
       "reasons": [
         {
           "factor": "market",
-          "text": "No-vig market chance for Sydney Swans is 50.0% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.90 on Sydney Swans. This is the starting figure.",
+          "text": "No-vig market chance for Geelong Cats is 50.0% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.90 on Geelong Cats. This is the starting figure.",
           "url": "https://the-odds-api.com/",
           "effect": 0.0,
           "available": true
@@ -6607,79 +6467,9 @@
         }
       ],
       "venue": "SCG",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": false
-    },
-    {
-      "id": "4f6d199bb67cf3a517a3880fd2f00b26",
-      "sport_key": "basketball_nba",
-      "sport_title": "NBA",
-      "commence_time": "2026-11-25T22:10:00Z",
-      "home_team": "Philadelphia 76ers",
-      "away_team": "Miami Heat",
-      "winner": "Philadelphia 76ers",
-      "winner_side": "home",
-      "p": 0.4982,
-      "market_p": 0.5202,
-      "delta": -0.022,
-      "ladbrokes_odds": 1.83,
-      "flagged": false,
-      "reasons": [
-        {
-          "factor": "market",
-          "text": "No-vig market chance for Philadelphia 76ers is 52.0% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.83 on Philadelphia 76ers. This is the starting figure.",
-          "url": "https://the-odds-api.com/",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "injuries",
-          "text": "Philadelphia 76ers absences: Ariel Hukporti (Out). Miami Heat listed but not clearly out: Giannis Antetokounmpo (Day-To-Day). Source: ESPN injury report.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
-          "effect": -0.012,
-          "available": true
-        },
-        {
-          "factor": "weather",
-          "text": "This is an indoor sport, so weather is not applied.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "form",
-          "text": "Philadelphia 76ers recent (loaded games): WWWWL Miami Heat recent (loaded games): WWWWW Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "rest",
-          "text": "Philadelphia 76ers last played 1 day earlier; (Philadelphia 76ers on a back-to-back); Miami Heat last played 3 days earlier. Source: ESPN scoreboard. A back-to-back can slightly lower confidence; it is never used to raise it.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": -0.01,
-          "available": true
-        },
-        {
-          "factor": "head_to_head",
-          "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
-          "effect": 0.0,
-          "available": false
-        },
-        {
-          "factor": "venue",
-          "text": "Listed venue: Xfinity Mobile Arena (Philadelphia 76ers at home). Home advantage is already in the market odds, so it is not added again.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        }
-      ],
-      "venue": "Xfinity Mobile Arena",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
-      "deep": true
     },
     {
       "id": "5f5235df01a384e23ff224101ff175e1",
@@ -6712,7 +6502,7 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at Gtech Community Stadium around 2026-12-02T20:00: 12°C 0.3 mm rain 28% chance of precipitation wind 9 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Forecast at Gtech Community Stadium around 2026-12-02T20:00: 12°C 0.9 mm rain 24% chance of precipitation wind 14 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
           "available": true
@@ -6747,78 +6537,78 @@
         }
       ],
       "venue": "Gtech Community Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
-      "id": "f08629281f1510f47d91cc408f86a2a8",
-      "sport_key": "basketball_nba",
-      "sport_title": "NBA",
-      "commence_time": "2026-11-26T00:40:00Z",
-      "home_team": "New York Knicks",
-      "away_team": "Cleveland Cavaliers",
-      "winner": "New York Knicks",
-      "winner_side": "home",
-      "p": 0.492,
-      "market_p": 0.528,
-      "delta": -0.036,
+      "id": "f45e9062c2f755b977c98d496c22697b",
+      "sport_key": "soccer_epl",
+      "sport_title": "EPL",
+      "commence_time": "2026-11-29T12:00:00Z",
+      "home_team": "Everton",
+      "away_team": "Liverpool",
+      "winner": "Liverpool",
+      "winner_side": "away",
+      "p": 0.4841,
+      "market_p": 0.5241,
+      "delta": -0.04,
       "ladbrokes_odds": 1.8,
       "flagged": false,
       "reasons": [
         {
           "factor": "market",
-          "text": "No-vig market chance for New York Knicks is 52.8% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.80 on New York Knicks. This is the starting figure.",
+          "text": "No-vig market chance for Liverpool is 52.4% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.80 on Liverpool. This is the starting figure.",
           "url": "https://the-odds-api.com/",
           "effect": 0.0,
           "available": true
         },
         {
           "factor": "injuries",
-          "text": "New York Knicks absences: Miles McBride (Out), Jordan Clarkson (Out), OG Anunoby (Out). Cleveland Cavaliers absences: Nae'Qwan Tomlin (Out), Evan Mobley (Out). Source: ESPN injury report.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
-          "effect": -0.036,
+          "text": "Liverpool absences: Vitezslav Jaros (Injured, 0% chance), Conor Bradley (Injured, 0% chance), Giovanni Leoni (Injured, 0% chance), Hugo Ekitiké (Injured, 0% chance). Everton absences: James Tarkowski (Suspended). Source: Fantasy Premier League player news.",
+          "url": "https://fantasy.premierleague.com/",
+          "effect": -0.04,
           "available": true
         },
         {
           "factor": "weather",
-          "text": "This is an indoor sport, so weather is not applied.",
-          "url": null,
+          "text": "Open-Meteo did not return a forecast for Hill Dickinson Stadium. This factor does not raise confidence.",
+          "url": "https://open-meteo.com/",
           "effect": 0.0,
-          "available": true
+          "available": false
         },
         {
           "factor": "form",
-          "text": "New York Knicks recent (loaded games): WWWWW Cleveland Cavaliers recent (loaded games): WWLWL Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
+          "text": "Liverpool recent (loaded games): W Everton recent (loaded games): L Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261204",
           "effect": 0.0,
           "available": true
         },
         {
           "factor": "rest",
-          "text": "New York Knicks last played 3 days earlier; Cleveland Cavaliers last played 2 days earlier. Source: ESPN scoreboard. A back-to-back can slightly lower confidence; it is never used to raise it.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
+          "text": "Liverpool last played 7 days earlier; Everton last played 6 days earlier. Source: ESPN scoreboard (league fixtures only; cup games may be missing). A back-to-back can slightly lower confidence; it is never used to raise it.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261204",
           "effect": 0.0,
           "available": true
         },
         {
           "factor": "head_to_head",
           "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261127",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261204",
           "effect": 0.0,
           "available": false
         },
         {
           "factor": "venue",
-          "text": "Listed venue: Madison Square Garden (New York Knicks at home). Home advantage is already in the market odds, so it is not added again.",
+          "text": "Listed venue: Hill Dickinson Stadium (Everton at home). Home advantage is already in the market odds, so it is not added again.",
           "url": null,
           "effect": 0.0,
           "available": true
         }
       ],
-      "venue": "Madison Square Garden",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "venue": "Hill Dickinson Stadium",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -6852,7 +6642,7 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at Industree Group Stadium around 2026-11-28T09:00: 25°C 0.0 mm rain 2% chance of precipitation wind 9 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Forecast at Industree Group Stadium around 2026-11-28T09:00: 25°C 0.0 mm rain 5% chance of precipitation wind 11 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
           "available": true
@@ -6887,8 +6677,8 @@
         }
       ],
       "venue": "Industree Group Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -6922,10 +6712,10 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at Stadium of Light around 2026-11-29T14:00: 8°C 0.0 mm rain 9% chance of precipitation wind 27 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Open-Meteo did not return a forecast for Stadium of Light. This factor does not raise confidence.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
-          "available": true
+          "available": false
         },
         {
           "factor": "form",
@@ -6957,78 +6747,8 @@
         }
       ],
       "venue": "Stadium of Light",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
-      "deep": true
-    },
-    {
-      "id": "f45e9062c2f755b977c98d496c22697b",
-      "sport_key": "soccer_epl",
-      "sport_title": "EPL",
-      "commence_time": "2026-11-29T12:00:00Z",
-      "home_team": "Everton",
-      "away_team": "Liverpool",
-      "winner": "Liverpool",
-      "winner_side": "away",
-      "p": 0.4746,
-      "market_p": 0.5146,
-      "delta": -0.04,
-      "ladbrokes_odds": 1.83,
-      "flagged": false,
-      "reasons": [
-        {
-          "factor": "market",
-          "text": "No-vig market chance for Liverpool is 51.5% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.83 on Liverpool. This is the starting figure.",
-          "url": "https://the-odds-api.com/",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "injuries",
-          "text": "Liverpool absences: Vitezslav Jaros (Injured, 0% chance), Conor Bradley (Injured, 0% chance), Giovanni Leoni (Injured, 0% chance), Hugo Ekitiké (Injured, 0% chance). Everton absences: James Tarkowski (Suspended). Source: Fantasy Premier League player news.",
-          "url": "https://fantasy.premierleague.com/",
-          "effect": -0.04,
-          "available": true
-        },
-        {
-          "factor": "weather",
-          "text": "Forecast at Hill Dickinson Stadium around 2026-11-29T12:00: 7°C 0.0 mm rain 18% chance of precipitation wind 12 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
-          "url": "https://open-meteo.com/",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "form",
-          "text": "Liverpool recent (loaded games): W Everton recent (loaded games): L Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261204",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "rest",
-          "text": "Liverpool last played 7 days earlier; Everton last played 6 days earlier. Source: ESPN scoreboard (league fixtures only; cup games may be missing). A back-to-back can slightly lower confidence; it is never used to raise it.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261204",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "head_to_head",
-          "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261204",
-          "effect": 0.0,
-          "available": false
-        },
-        {
-          "factor": "venue",
-          "text": "Listed venue: Hill Dickinson Stadium (Everton at home). Home advantage is already in the market odds, so it is not added again.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        }
-      ],
-      "venue": "Hill Dickinson Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -7040,15 +6760,15 @@
       "away_team": "Hull City",
       "winner": "Crystal Palace",
       "winner_side": "home",
-      "p": 0.4699,
-      "market_p": 0.5099,
+      "p": 0.4706,
+      "market_p": 0.5106,
       "delta": -0.04,
       "ladbrokes_odds": 1.83,
       "flagged": false,
       "reasons": [
         {
           "factor": "market",
-          "text": "No-vig market chance for Crystal Palace is 51.0% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.83 on Crystal Palace. This is the starting figure.",
+          "text": "No-vig market chance for Crystal Palace is 51.1% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 1.83 on Crystal Palace. This is the starting figure.",
           "url": "https://the-odds-api.com/",
           "effect": 0.0,
           "available": true
@@ -7062,10 +6782,10 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at Selhurst Park around 2026-11-29T14:00: 8°C 0.0 mm rain 11% chance of precipitation wind 9 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Open-Meteo did not return a forecast for Selhurst Park. This factor does not raise confidence.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
-          "available": true
+          "available": false
         },
         {
           "factor": "form",
@@ -7097,8 +6817,8 @@
         }
       ],
       "venue": "Selhurst Park",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -7132,10 +6852,10 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at Emirates Stadium around 2026-11-29T16:00: 9°C 0.0 mm rain 3% chance of precipitation wind 8 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Open-Meteo did not return a forecast for Emirates Stadium. This factor does not raise confidence.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
-          "available": true
+          "available": false
         },
         {
           "factor": "form",
@@ -7167,8 +6887,8 @@
         }
       ],
       "venue": "Emirates Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -7202,7 +6922,7 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at Campbelltown Sports Stadium around 2026-11-27T09:00: 23°C 0.0 mm rain 7% chance of precipitation wind 9 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Forecast at Campbelltown Sports Stadium around 2026-11-27T09:00: 23°C 0.0 mm rain 4% chance of precipitation wind 10 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
           "available": true
@@ -7237,8 +6957,8 @@
         }
       ],
       "venue": "Campbelltown Sports Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -7272,10 +6992,10 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at Portman Road around 2026-11-28T17:00: 4°C 0.2 mm rain 35% chance of precipitation wind 23 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Open-Meteo did not return a forecast for Portman Road. This factor does not raise confidence.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
-          "available": true
+          "available": false
         },
         {
           "factor": "form",
@@ -7307,8 +7027,8 @@
         }
       ],
       "venue": "Portman Road",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -7342,7 +7062,7 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at Villa Park around 2026-12-02T20:00: 8°C 0.0 mm rain 30% chance of precipitation wind 15 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Forecast at Villa Park around 2026-12-02T20:00: 7°C 1.9 mm rain 23% chance of precipitation wind 16 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
           "available": true
@@ -7377,8 +7097,8 @@
         }
       ],
       "venue": "Villa Park",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -7390,32 +7110,32 @@
       "away_team": "Brentford",
       "winner": "Manchester United",
       "winner_side": "home",
-      "p": 0.415,
-      "market_p": 0.455,
+      "p": 0.4064,
+      "market_p": 0.4464,
       "delta": -0.04,
-      "ladbrokes_odds": 2.05,
+      "ladbrokes_odds": 2.1,
       "flagged": false,
       "reasons": [
         {
           "factor": "market",
-          "text": "No-vig market chance for Manchester United is 45.5% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 2.05 on Manchester United. This is the starting figure.",
+          "text": "No-vig market chance for Manchester United is 44.6% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 2.10 on Manchester United. This is the starting figure.",
           "url": "https://the-odds-api.com/",
           "effect": 0.0,
           "available": true
         },
         {
           "factor": "injuries",
-          "text": "Manchester United absences: Carlos Baleba (Injured, 0% chance), Luke Shaw (Doubtful, 0% chance), Marcus Rashford (Injured, 0% chance), Manuel Ugarte Ribeiro (Injured, 0% chance) and 1 more. Brentford absences: Nathan Collins (Injured, 0% chance), Rico Henry (Injured, 0% chance), Aaron Hickey (Injured, 0% chance), Antoni Milambo (Injured, 0% chance) and 3 more. Source: Fantasy Premier League player news.",
+          "text": "Manchester United absences: Carlos Baleba (Injured, 0% chance), Marcus Rashford (Injured, 0% chance), Manuel Ugarte Ribeiro (Injured, 0% chance), Benjamin Sesko (Injured, 0% chance). Brentford absences: Nathan Collins (Injured, 0% chance), Rico Henry (Injured, 0% chance), Aaron Hickey (Injured, 0% chance), Antoni Milambo (Injured, 0% chance) and 3 more. Source: Fantasy Premier League player news.",
           "url": "https://fantasy.premierleague.com/",
           "effect": -0.04,
           "available": true
         },
         {
           "factor": "weather",
-          "text": "Forecast at Old Trafford around 2026-11-28T15:00: 8°C 1.3 mm rain 65% chance of precipitation wind 24 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Open-Meteo did not return a forecast for Old Trafford. This factor does not raise confidence.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
-          "available": true
+          "available": false
         },
         {
           "factor": "form",
@@ -7447,8 +7167,8 @@
         }
       ],
       "venue": "Old Trafford",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -7460,15 +7180,15 @@
       "away_team": "Chelsea",
       "winner": "Nottingham Forest",
       "winner_side": "home",
-      "p": 0.3935,
-      "market_p": 0.3735,
+      "p": 0.3868,
+      "market_p": 0.3668,
       "delta": 0.02,
       "ladbrokes_odds": 2.6,
       "flagged": false,
       "reasons": [
         {
           "factor": "market",
-          "text": "No-vig market chance for Nottingham Forest is 37.3% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 2.60 on Nottingham Forest. This is the starting figure.",
+          "text": "No-vig market chance for Nottingham Forest is 36.7% (average of 2 books: Ladbrokes and SportsBet). Ladbrokes are paying 2.60 on Nottingham Forest. This is the starting figure.",
           "url": "https://the-odds-api.com/",
           "effect": 0.0,
           "available": true
@@ -7482,10 +7202,10 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at City Ground around 2026-11-27T20:00: 2°C 0.0 mm rain 73% chance of precipitation wind 15 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Open-Meteo did not return a forecast for City Ground. This factor does not raise confidence.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
-          "available": true
+          "available": false
         },
         {
           "factor": "form",
@@ -7517,8 +7237,8 @@
         }
       ],
       "venue": "City Ground",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -7552,10 +7272,10 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at Coventry Building Society Arena around 2026-12-01T20:00: 9°C 0.3 mm rain 32% chance of precipitation wind 24 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Open-Meteo did not return a forecast for Coventry Building Society Arena. This factor does not raise confidence.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
-          "available": true
+          "available": false
         },
         {
           "factor": "form",
@@ -7587,8 +7307,8 @@
         }
       ],
       "venue": "Coventry Building Society Arena",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -7622,7 +7342,7 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at Vitality Stadium around 2026-12-02T20:00: 12°C 0.1 mm rain 25% chance of precipitation wind 9 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Forecast at Vitality Stadium around 2026-12-02T20:00: 12°C 1.6 mm rain 25% chance of precipitation wind 24 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
           "available": true
@@ -7657,78 +7377,8 @@
         }
       ],
       "venue": "Vitality Stadium",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
-      "deep": true
-    },
-    {
-      "id": "0c405290d0f977236962e55ba90c2c04",
-      "sport_key": "soccer_epl",
-      "sport_title": "EPL",
-      "commence_time": "2026-12-02T20:15:00Z",
-      "home_team": "Newcastle United",
-      "away_team": "Manchester United",
-      "winner": "Newcastle United",
-      "winner_side": "home",
-      "p": 0.3522,
-      "market_p": 0.3762,
-      "delta": -0.024,
-      "ladbrokes_odds": null,
-      "flagged": false,
-      "reasons": [
-        {
-          "factor": "market",
-          "text": "No-vig market chance for Newcastle United is 37.6% (average of 1 book: SportsBet). No Ladbrokes price is in this feed. This is the starting figure.",
-          "url": "https://the-odds-api.com/",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "injuries",
-          "text": "Newcastle United absences: Ewen Jaouen (Injured, 0% chance), Joelinton Cássio Apolinário de Lira (Injured, 0% chance). Manchester United absences: Carlos Baleba (Injured, 0% chance), Luke Shaw (Doubtful, 0% chance), Marcus Rashford (Injured, 0% chance), Manuel Ugarte Ribeiro (Injured, 0% chance) and 1 more. Source: Fantasy Premier League player news.",
-          "url": "https://fantasy.premierleague.com/",
-          "effect": -0.024,
-          "available": true
-        },
-        {
-          "factor": "weather",
-          "text": "Forecast at St James' Park around 2026-12-02T20:00: 5°C 0.0 mm rain 14% chance of precipitation wind 8 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
-          "url": "https://open-meteo.com/",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "form",
-          "text": "Newcastle United recent (loaded games): ? Manchester United recent (loaded games): L Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261204",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "rest",
-          "text": "Newcastle United last played 11 days earlier; Manchester United last played 10 days earlier. Source: ESPN scoreboard (league fixtures only; cup games may be missing). A back-to-back can slightly lower confidence; it is never used to raise it.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261204",
-          "effect": 0.0,
-          "available": true
-        },
-        {
-          "factor": "head_to_head",
-          "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
-          "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261204",
-          "effect": 0.0,
-          "available": false
-        },
-        {
-          "factor": "venue",
-          "text": "Listed venue: St James' Park (Newcastle United at home). Home advantage is already in the market odds, so it is not added again.",
-          "url": null,
-          "effect": 0.0,
-          "available": true
-        }
-      ],
-      "venue": "St James' Park",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     },
     {
@@ -7762,10 +7412,10 @@
         },
         {
           "factor": "weather",
-          "text": "Forecast at Craven Cottage around 2026-11-29T14:00: 9°C 0.0 mm rain 9% chance of precipitation wind 8 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "text": "Open-Meteo did not return a forecast for Craven Cottage. This factor does not raise confidence.",
           "url": "https://open-meteo.com/",
           "effect": 0.0,
-          "available": true
+          "available": false
         },
         {
           "factor": "form",
@@ -7797,8 +7447,78 @@
         }
       ],
       "venue": "Craven Cottage",
-      "last_researched": "2026-11-25T19:01:34Z",
-      "last_researched_sydney": "26 Nov 2026, 6:01 AM AEDT",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
+      "deep": true
+    },
+    {
+      "id": "0c405290d0f977236962e55ba90c2c04",
+      "sport_key": "soccer_epl",
+      "sport_title": "EPL",
+      "commence_time": "2026-12-02T20:15:00Z",
+      "home_team": "Newcastle United",
+      "away_team": "Manchester United",
+      "winner": "Manchester United",
+      "winner_side": "away",
+      "p": 0.3362,
+      "market_p": 0.3762,
+      "delta": -0.04,
+      "ladbrokes_odds": null,
+      "flagged": false,
+      "reasons": [
+        {
+          "factor": "market",
+          "text": "No-vig market chance for Manchester United is 37.6% (average of 1 book: SportsBet). No Ladbrokes price is in this feed. This is the starting figure.",
+          "url": "https://the-odds-api.com/",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "injuries",
+          "text": "Manchester United absences: Carlos Baleba (Injured, 0% chance), Marcus Rashford (Injured, 0% chance), Manuel Ugarte Ribeiro (Injured, 0% chance), Benjamin Sesko (Injured, 0% chance). Newcastle United absences: Ewen Jaouen (Injured, 0% chance), Joelinton Cássio Apolinário de Lira (Injured, 0% chance). Source: Fantasy Premier League player news.",
+          "url": "https://fantasy.premierleague.com/",
+          "effect": -0.04,
+          "available": true
+        },
+        {
+          "factor": "weather",
+          "text": "Forecast at St James' Park around 2026-12-02T20:00: 6°C 0.0 mm rain 13% chance of precipitation wind 11 km/h Nothing here is used to raise confidence — the market already prices ordinary weather. Source: Open-Meteo.",
+          "url": "https://open-meteo.com/",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "form",
+          "text": "Manchester United recent (loaded games): L Newcastle United recent (loaded games): ? Form is already in the market, so it is not used to raise confidence. Source: ESPN scoreboard.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261204",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "rest",
+          "text": "Manchester United last played 10 days earlier; Newcastle United last played 11 days earlier. Source: ESPN scoreboard (league fixtures only; cup games may be missing). A back-to-back can slightly lower confidence; it is never used to raise it.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261204",
+          "effect": 0.0,
+          "available": true
+        },
+        {
+          "factor": "head_to_head",
+          "text": "No recent head-to-head was present in the loaded ESPN window. This factor does not raise confidence.",
+          "url": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20261204",
+          "effect": 0.0,
+          "available": false
+        },
+        {
+          "factor": "venue",
+          "text": "Listed venue: St James' Park (Newcastle United at home). Home advantage is already in the market odds, so it is not added again.",
+          "url": null,
+          "effect": 0.0,
+          "available": true
+        }
+      ],
+      "venue": "St James' Park",
+      "last_researched": "2026-11-26T07:59:03Z",
+      "last_researched_sydney": "26 Nov 2026, 6:59 PM AEDT",
       "deep": true
     }
   ]
